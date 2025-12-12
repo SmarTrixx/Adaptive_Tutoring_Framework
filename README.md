@@ -414,7 +414,7 @@ Academic Research Project - Licensed for educational and research use
 If using this framework in research, please cite as:
 ```
 Adaptive Intelligent Tutoring Framework for Engagement-Driven CBT Preparation (2024)
-[Your Institution]
+[SmartHubz]
 ```
 
 ## Support & Issues
@@ -425,6 +425,5 @@ Adaptive Intelligent Tutoring Framework for Engagement-Driven CBT Preparation (2
 
 ---
 
-**Version**: 1.0.0  
-**Status**: Production Ready  
-**Last Updated**: January 2024
+**Version**: 1.0.0    
+**Last Updated**: December 2025
