@@ -1040,8 +1040,8 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
         const data = await response.json();
         console.log('Question response:', data);
         
-        // Check if test is completed
-        if (data.status === 'completed') {
+        // Check if test is completed (data.question.status when wrapped by route)
+        if (data.question && data.question.status === 'completed') {
             // Mark session as completed
             if (currentSession) {
                 currentSession.status = 'completed';
@@ -1050,14 +1050,14 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
             }
             
             const content = document.getElementById('content');
-            const scorePercent = data.final_score ? Math.round(data.final_score) : 0;
+            const scorePercent = data.question.final_score ? Math.round(data.question.final_score) : 0;
             const performanceLevel = scorePercent >= 80 ? 'Excellent!' : scorePercent >= 60 ? 'Good!' : 'Keep practicing!';
             
             content.innerHTML = `
                 <div style="max-width: 800px; margin: 0 auto; padding: 30px 20px; text-align: center;">
                     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 50px 30px; border-radius: 12px; color: white; margin-bottom: 30px;">
                         <h1 style="margin: 0 0 20px 0; font-size: 48px; font-weight: bold;">🎉 Test Complete!</h1>
-                        <p style="margin: 0; font-size: 20px; opacity: 0.95;">${data.message || 'You have completed all questions.'}</p>
+                        <p style="margin: 0; font-size: 20px; opacity: 0.95;">${data.question.message || 'You have completed all questions.'}</p>
                     </div>
                     
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;">
@@ -1067,7 +1067,7 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
                         </div>
                         <div style="background: #f0fff4; padding: 25px; border-radius: 8px; border-left: 4px solid #48bb78;">
                             <div style="color: #999; font-size: 13px; margin-bottom: 8px; text-transform: uppercase;">Correct Answers</div>
-                            <div style="font-size: 36px; font-weight: bold; color: #48bb78;">${data.correct_answers}/${data.total_questions}</div>
+                            <div style="font-size: 36px; font-weight: bold; color: #48bb78;">${data.question.correct_answers}/${data.question.total_questions}</div>
                         </div>
                         <div style="background: #fffff0; padding: 25px; border-radius: 8px; border-left: 4px solid #f6ad55;">
                             <div style="color: #999; font-size: 13px; margin-bottom: 8px; text-transform: uppercase;">Performance</div>
