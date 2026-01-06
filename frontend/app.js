@@ -985,6 +985,9 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
         const historyItem = sessionQuestionHistory[revisitIndex];
         const question = historyItem.question;
         
+        // PRESERVE navigation count if it was incremented by button click
+        const preservedNavigationCount = currentQuestionState.navigationCount || 0;
+        
         // Sync TEST_STATE with revisit
         TEST_STATE.setCurrentQuestionIndex(revisitIndex);
         currentQuestionIndex = revisitIndex;
@@ -995,7 +998,7 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
             initialOption: null,
             finalOption: null,
             optionChangeCount: 0,
-            navigationCount: 0,  // Will be loaded from previous response below
+            navigationCount: preservedNavigationCount,  // Use preserved count, will be updated from backend below
             optionChangeHistory: [],
             interactionStartTime: Date.now(),
             questionDisplayTime: Date.now(),
@@ -1029,17 +1032,23 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
                     // Restore previous hints
                     currentQuestionState.hints_used = prevData.response.hints_used_array || [];
                     currentQuestionState.hints_requested = prevData.response.hints_used || 0;
-                    // Restore previous navigation count
-                    currentQuestionState.navigationCount = prevData.response.navigation_frequency || 0;
+                    // Use max of (preserved from button click, previous response count)
+                    // This ensures navigation increments are preserved across revisits
+                    currentQuestionState.navigationCount = Math.max(
+                        preservedNavigationCount,
+                        prevData.response.navigation_frequency || 0
+                    );
                     console.log('[REVISIT] Loaded previous response data:', {
                         hints_used: currentQuestionState.hints_requested,
-                        navigation_count: currentQuestionState.navigationCount
+                        navigation_count: currentQuestionState.navigationCount,
+                        preserved: preservedNavigationCount
                     });
                 }
             }
         } catch (error) {
             console.log('[REVISIT] Could not load previous response data:', error.message);
-            // Continue with fresh state
+            // Continue with preserved navigation count
+            console.log('[REVISIT] Using preserved navigation count:', preservedNavigationCount);
         }
         
         questionStartTime = Date.now();
