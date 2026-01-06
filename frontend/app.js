@@ -1317,7 +1317,10 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
             <!-- Progress Bar -->
             <div style="margin-bottom: 30px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 14px; color: #999;">Progress</span>
+                    <div>
+                        <span style="font-size: 14px; color: #999;">Progress</span>
+                        <span id="time-counter" style="margin-left: 20px; font-size: 14px; color: #f56565; font-weight: 600;">0:00</span>
+                    </div>
                     <span style="font-size: 14px; color: #667eea; font-weight: 600;">
                         ${(currentSession.questions_completed || 0)} of ${currentSession.num_questions}
                     </span>
