@@ -1317,10 +1317,7 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
             <!-- Progress Bar -->
             <div style="margin-bottom: 30px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <div>
-                        <span style="font-size: 14px; color: #999;">Progress</span>
-                        <span id="time-counter" style="margin-left: 20px; font-size: 14px; color: #f56565; font-weight: 600;">0:00</span>
-                    </div>
+                    <span style="font-size: 14px; color: #999;">Progress</span>
                     <span style="font-size: 14px; color: #667eea; font-weight: 600;">
                         ${(currentSession.questions_completed || 0)} of ${currentSession.num_questions}
                     </span>
@@ -1328,6 +1325,27 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
                 <div style="background: #e8eaf6; height: 8px; border-radius: 10px; overflow: hidden;">
                     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); height: 100%; width: ${progressPercent}%; transition: width 0.3s;"></div>
                 </div>
+            </div>
+            
+            <!-- Stats Grid with Time & Attempts -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 30px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">CORRECT</div>
+                    <div style="font-size: 28px; font-weight: bold;">${currentSession.correct_answers || 0}</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">DIFFICULTY</div>
+                    <div style="font-size: 28px; font-weight: bold;">${(currentSession.current_difficulty * 100).toFixed(0)}%</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">ENGAGEMENT</div>
+                    <div style="font-size: 28px; font-weight: bold;" id="engagement-score">--</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">TIME</div>
+                    <div style="font-size: 20px; font-weight: bold;" id="time-counter">0:00</div>
+                </div>
+            </div>
             </div>
             
             <!-- Question Card -->
