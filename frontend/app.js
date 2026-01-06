@@ -1040,65 +1040,78 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
         const data = await response.json();
         console.log('Question response:', data);
         
-        // Check if test is completed (data.question.status when wrapped by route)
-        if (data.question && data.question.status === 'completed') {
-            // Mark session as completed
-            if (currentSession) {
-                currentSession.status = 'completed';
-                localStorage.setItem('session', JSON.stringify(currentSession));
-                updateNavigation();  // Re-enable Dashboard and Start Test buttons
-            }
-            
-            const content = document.getElementById('content');
-            const scorePercent = data.question.final_score ? Math.round(data.question.final_score) : 0;
-            const performanceLevel = scorePercent >= 80 ? 'Excellent!' : scorePercent >= 60 ? 'Good!' : 'Keep practicing!';
-            
-            content.innerHTML = `
-                <div style="max-width: 800px; margin: 0 auto; padding: 30px 20px; text-align: center;">
-                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 50px 30px; border-radius: 12px; color: white; margin-bottom: 30px;">
-                        <h1 style="margin: 0 0 20px 0; font-size: 48px; font-weight: bold;">🎉 Test Complete!</h1>
-                        <p style="margin: 0; font-size: 20px; opacity: 0.95;">${data.question.message || 'You have completed all questions.'}</p>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;">
-                        <div style="background: #f0f5ff; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea;">
-                            <div style="color: #999; font-size: 13px; margin-bottom: 8px; text-transform: uppercase;">Final Score</div>
-                            <div style="font-size: 36px; font-weight: bold; color: #667eea;">${scorePercent}%</div>
-                        </div>
-                        <div style="background: #f0fff4; padding: 25px; border-radius: 8px; border-left: 4px solid #48bb78;">
-                            <div style="color: #999; font-size: 13px; margin-bottom: 8px; text-transform: uppercase;">Correct Answers</div>
-                            <div style="font-size: 36px; font-weight: bold; color: #48bb78;">${data.question.correct_answers}/${data.question.total_questions}</div>
-                        </div>
-                        <div style="background: #fffff0; padding: 25px; border-radius: 8px; border-left: 4px solid #f6ad55;">
-                            <div style="color: #999; font-size: 13px; margin-bottom: 8px; text-transform: uppercase;">Performance</div>
-                            <div style="font-size: 28px; font-weight: bold; color: #f6ad55;">${performanceLevel}</div>
-                        </div>
-                    </div>
-                    
-                    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); margin-bottom: 30px;">
-                        <p style="color: #666; font-size: 16px; line-height: 1.6; margin: 0;">
-                            Thank you for taking the test! Your responses have been saved and will help us personalize your learning experience.
-                        </p>
-                    </div>
-                    
-                    <div style="display: flex; gap: 15px; justify-content: center;">
-                        <button onclick="showDashboard()" style="padding: 14px 30px; font-size: 16px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">📊 View Dashboard</button>
-                        <button onclick="showTestPage()" style="padding: 14px 30px; font-size: 16px; font-weight: 600; cursor: pointer; background: white; border: 2px solid #667eea; color: #667eea; border-radius: 8px; transition: all 0.2s;" onmouseover="this.style.background='#f0f5ff'" onmouseout="this.style.background='white';">🔄 Start New Test</button>
-                    </div>
-                </div>
-            `;
-            return;
-        }
-        
         if (data.success) {
             const question = data.question;
             
-            // Validate question object
-            if (!question || !question.question_id) {
+            // Validate question object - check for both normal question AND completion status
+            if (!question) {
+                console.error('No question data in response:', data);
+                alert('Error: No question data received.');
+                showTestPage();
+                return;
+            }
+            
+            // If question has a status field, it's a completion message, not a question
+            if (question.status) {
+                console.log('Received status message instead of question:', question.status);
+                // Handle completion
+                if (question.status === 'completed') {
+                    // Mark session as completed
+                    if (currentSession) {
+                        currentSession.status = 'completed';
+                        localStorage.setItem('session', JSON.stringify(currentSession));
+                        updateNavigation();  // Re-enable Dashboard and Start Test buttons
+                    }
+                    
+                    const content = document.getElementById('content');
+                    const scorePercent = question.final_score ? Math.round(question.final_score) : 0;
+                    const performanceLevel = scorePercent >= 80 ? 'Excellent!' : scorePercent >= 60 ? 'Good!' : 'Keep practicing!';
+                    
+                    content.innerHTML = `
+                        <div style="max-width: 800px; margin: 0 auto; padding: 30px 20px; text-align: center;">
+                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 50px 30px; border-radius: 12px; color: white; margin-bottom: 30px;">
+                                <h1 style="margin: 0 0 20px 0; font-size: 48px; font-weight: bold;">🎉 Test Complete!</h1>
+                                <p style="margin: 0; font-size: 20px; opacity: 0.95;">${question.message || 'You have completed all questions.'}</p>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;">
+                                <div style="background: #f0f5ff; padding: 25px; border-radius: 8px; border-left: 4px solid #667eea;">
+                                    <div style="color: #999; font-size: 13px; margin-bottom: 8px; text-transform: uppercase;">Final Score</div>
+                                    <div style="font-size: 36px; font-weight: bold; color: #667eea;">${scorePercent}%</div>
+                                </div>
+                                <div style="background: #f0fff4; padding: 25px; border-radius: 8px; border-left: 4px solid #48bb78;">
+                                    <div style="color: #999; font-size: 13px; margin-bottom: 8px; text-transform: uppercase;">Correct Answers</div>
+                                    <div style="font-size: 36px; font-weight: bold; color: #48bb78;">${question.correct_answers}/${question.total_questions}</div>
+                                </div>
+                                <div style="background: #fffff0; padding: 25px; border-radius: 8px; border-left: 4px solid #f6ad55;">
+                                    <div style="color: #999; font-size: 13px; margin-bottom: 8px; text-transform: uppercase;">Performance</div>
+                                    <div style="font-size: 28px; font-weight: bold; color: #f6ad55;">${performanceLevel}</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); margin-bottom: 30px;">
+                                <p style="color: #666; font-size: 16px; line-height: 1.6; margin: 0;">
+                                    Thank you for taking the test! Your responses have been saved and will help us personalize your learning experience.
+                                </p>
+                            </div>
+                            
+                            <div style="display: flex; gap: 15px; justify-content: center;">
+                                <button onclick="showDashboard()" style="padding: 14px 30px; font-size: 16px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">📊 View Dashboard</button>
+                                <button onclick="showTestPage()" style="padding: 14px 30px; font-size: 16px; font-weight: 600; cursor: pointer; background: white; border: 2px solid #667eea; color: #667eea; border-radius: 8px; transition: all 0.2s;" onmouseover="this.style.background='#f0f5ff'" onmouseout="this.style.background='white';">🔄 Start New Test</button>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+            }
+            
+            // Validate it's an actual question, not a status message
+            if (!question.question_id) {
                 console.error('Invalid question object received:', question);
                 console.log('Full response:', data);
-                alert('Error: Invalid question data received. Refreshing...');
-                showQuestion();  // Retry
+                console.error('Database may be empty or corrupted. Please contact support.');
+                alert('Error: No questions available in the system. Please contact your administrator.');
+                showTestPage();
                 return;
             }
             
