@@ -1214,7 +1214,7 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
                 <div style="background: #e8eaf6; height: 8px; border-radius: 10px; overflow: hidden;">
                     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); height: 100%; width: ${progressPercent}%; transition: width 0.3s;"></div>
                 </div>
-            </div>`
+            </div>
             
             <!-- Question Card -->
             <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); margin-bottom: 30px;">
