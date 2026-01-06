@@ -42,7 +42,10 @@ class EngagementIndicatorTracker:
             if attempts_count == 1 and latest_response.attempts is None:
                 print(f"WARNING: attempts is None for session {session_id}")
             
-            hints_requested = latest_response.hints_used if latest_response.hints_used is not None else 0
+            # FIX: Use hints_used_array (new field) instead of hints_used (legacy)
+            # hints_used_array is an array of hint objects with timestamps
+            hints_used_array = latest_response.hints_used_array if latest_response.hints_used_array else []
+            hints_requested = len(hints_used_array) if isinstance(hints_used_array, list) else (latest_response.hints_used if latest_response.hints_used is not None else 0)
         else:
             # Fallback to response_data or defaults
             response_time_seconds = response_data.get('response_time_seconds', 0)
