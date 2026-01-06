@@ -286,7 +286,7 @@ async function loginOrRegisterStudent(email, name) {
     try {
         console.log('Attempting login/register for:', email);
         
-        const response = await fetch(`${API_BASE_URL}/api/cbt/student`, {
+        const response = await fetch(`${API_BASE_URL}/cbt/student`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -341,7 +341,7 @@ async function startSession(subject) {
     try {
         console.log('Starting session for student:', currentStudent.id, 'subject:', subject);
         
-        const response = await fetch(`${API_BASE_URL}/api/cbt/session/start`, {
+        const response = await fetch(`${API_BASE_URL}/cbt/session/start`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -473,7 +473,7 @@ async function submitAnswer(questionId, answer, responseTime) {
         
         console.log('[SUBMISSION] Complete interaction payload:', submissionPayload);
         
-        const response = await fetch(`${API_BASE_URL}/api/cbt/response/submit`, {
+        const response = await fetch(`${API_BASE_URL}/cbt/response/submit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -564,7 +564,7 @@ async function trackEngagement(responseData) {
         }
         
         // Also send tracking data for analytics
-        await fetch(`${API_BASE_URL}/api/engagement/track`, {
+        await fetch(`${API_BASE_URL}/engagement/track`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -582,7 +582,7 @@ async function trackEngagement(responseData) {
 
 async function fetchAndDisplayEngagementScore() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/engagement/get/${currentSession.id}`);
+        const response = await fetch(`${API_BASE_URL}/engagement/get/${currentSession.id}`);
         if (response.ok) {
             const data = await response.json();
             if (data.success && data.engagement_metrics) {
@@ -883,7 +883,7 @@ async function fetchNextNewQuestion() {
     try {
         console.log('[FETCH-NEXT] Fetching next NEW question for session:', currentSession.id);
         const response = await fetch(
-            `${API_BASE_URL}/api/cbt/question/next/${currentSession.id}`
+            `${API_BASE_URL}/cbt/question/next/${currentSession.id}`
         );
         
         if (!response.ok) {
@@ -1024,7 +1024,7 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
         // Load previous response data from backend for this question (hints + navigation)
         try {
             const prevResponse = await fetch(
-                `${API_BASE_URL}/api/cbt/response/${currentSession.id}/${question.question_id}`
+                `${API_BASE_URL}/cbt/response/${currentSession.id}/${question.question_id}`
             );
             if (prevResponse.ok) {
                 const prevData = await prevResponse.json();
@@ -1063,7 +1063,7 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
     try {
         console.log('Fetching question for session:', currentSession.id);
         const response = await fetch(
-            `${API_BASE_URL}/api/cbt/question/next/${currentSession.id}`
+            `${API_BASE_URL}/cbt/question/next/${currentSession.id}`
         );
         
         if (!response.ok) {
@@ -1407,7 +1407,7 @@ async function getHint(sessionId, questionId) {
     try {
         recordInteractionActivity();
         const response = await fetch(
-            `${API_BASE_URL}/api/cbt/hint/${sessionId}/${questionId}`
+            `${API_BASE_URL}/cbt/hint/${sessionId}/${questionId}`
         );
         const data = await response.json();
         
@@ -1610,7 +1610,7 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
 async function exportFacialData(sessionId) {
     try {
         const response = await fetch(
-            `${API_BASE_URL}/api/analytics/export/facial-data/${sessionId}`
+            `${API_BASE_URL}/analytics/export/facial-data/${sessionId}`
         );
         
         if (!response.ok) {
@@ -1642,7 +1642,7 @@ async function exportFacialData(sessionId) {
 async function exportAllStudentData(studentId) {
     try {
         const response = await fetch(
-            `${API_BASE_URL}/api/analytics/export/all-data/${studentId}`
+            `${API_BASE_URL}/analytics/export/all-data/${studentId}`
         );
         
         if (!response.ok) {
@@ -1674,7 +1674,7 @@ async function exportAllStudentData(studentId) {
 async function exportAsCSV(studentId) {
     try {
         const response = await fetch(
-            `${API_BASE_URL}/api/analytics/export/csv/${studentId}`
+            `${API_BASE_URL}/analytics/export/csv/${studentId}`
         );
         
         if (!response.ok) {
@@ -1711,7 +1711,7 @@ async function showDashboard() {
     
     try {
         const response = await fetch(
-            `${API_BASE_URL}/api/analytics/dashboard/${currentStudent.id}`
+            `${API_BASE_URL}/analytics/dashboard/${currentStudent.id}`
         );
         const data = await response.json();
         
@@ -1922,7 +1922,7 @@ class WebcamFacialCapture {
                     
                     // Send to backend
                     try {
-                        const response = await fetch(`${API_BASE_URL}/api/analytics/affective/record-facial`, {
+                        const response = await fetch(`${API_BASE_URL}/analytics/affective/record-facial`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
