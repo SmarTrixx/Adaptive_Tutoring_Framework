@@ -995,7 +995,7 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
             initialOption: null,
             finalOption: null,
             optionChangeCount: 0,
-            navigationCount: 0,  // FIXED: Each question starts with 0 navigation count
+            navigationCount: 0,  // Will be loaded from previous response below
             optionChangeHistory: [],
             interactionStartTime: Date.now(),
             questionDisplayTime: Date.now(),
@@ -1018,25 +1018,28 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
             hints_used: []
         };
         
-        // Load previous hints from backend for this question
+        // Load previous response data from backend for this question (hints + navigation)
         try {
-            const hintResponse = await fetch(
+            const prevResponse = await fetch(
                 `${API_BASE_URL}/cbt/response/${currentSession.id}/${question.question_id}`
             );
-            if (hintResponse.ok) {
-                const hintData = await hintResponse.json();
-                if (hintData.success && hintData.response) {
-                    currentQuestionState.hints_used = hintData.response.hints_used_array || [];
-                    currentQuestionState.hints_requested = hintData.response.hints_used || 0;
-                    console.log('[REVISIT] Loaded previous hints:', {
+            if (prevResponse.ok) {
+                const prevData = await prevResponse.json();
+                if (prevData.success && prevData.response) {
+                    // Restore previous hints
+                    currentQuestionState.hints_used = prevData.response.hints_used_array || [];
+                    currentQuestionState.hints_requested = prevData.response.hints_used || 0;
+                    // Restore previous navigation count
+                    currentQuestionState.navigationCount = prevData.response.navigation_frequency || 0;
+                    console.log('[REVISIT] Loaded previous response data:', {
                         hints_used: currentQuestionState.hints_requested,
-                        hint_array_length: currentQuestionState.hints_used.length
+                        navigation_count: currentQuestionState.navigationCount
                     });
                 }
             }
         } catch (error) {
-            console.log('[REVISIT] Could not load previous hints:', error.message);
-            // Continue without loading previous hints - start fresh
+            console.log('[REVISIT] Could not load previous response data:', error.message);
+            // Continue with fresh state
         }
         
         questionStartTime = Date.now();

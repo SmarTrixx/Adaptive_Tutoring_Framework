@@ -239,6 +239,7 @@ def get_previous_response(session_id, question_id):
             'response': {
                 'hints_used': len(response.hints_used_array) if response.hints_used_array else 0,
                 'hints_used_array': response.hints_used_array if response.hints_used_array else [],
+                'navigation_frequency': response.navigation_frequency if response.navigation_frequency is not None else 0,
                 'student_answer': response.student_answer,
                 'is_correct': response.is_correct
             }

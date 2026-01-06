@@ -1284,3 +1284,53 @@ def export_as_csv(student_id):
         traceback.print_exc()
         return jsonify({'error': f'Failed to export CSV: {str(e)}'}), 500
 
+@analytics_bp.route('/system/reset-data', methods=['POST'])
+def reset_all_data():
+    """Reset all session, response, and engagement data (for fresh testing)
+    
+    WARNING: This deletes all test data. Students can be recreated.
+    Questions database is preserved.
+    """
+    try:
+        # Delete in proper order due to foreign key constraints
+        print("[RESET] Starting data reset...", flush=True)
+        
+        # Delete engagement metrics first
+        deleted_metrics = db.session.query(EngagementMetric).delete()
+        print(f"[RESET] Deleted {deleted_metrics} engagement metrics", flush=True)
+        
+        # Delete responses
+        deleted_responses = db.session.query(StudentResponse).delete()
+        print(f"[RESET] Deleted {deleted_responses} student responses", flush=True)
+        
+        # Delete sessions
+        deleted_sessions = db.session.query(Session).delete()
+        print(f"[RESET] Deleted {deleted_sessions} sessions", flush=True)
+        
+        # Delete students
+        deleted_students = db.session.query(Student).delete()
+        print(f"[RESET] Deleted {deleted_students} student records", flush=True)
+        
+        # Commit all deletions
+        db.session.commit()
+        
+        print("[RESET] Data reset complete", flush=True)
+        
+        return jsonify({
+            'success': True,
+            'message': 'All test data reset successfully',
+            'deleted': {
+                'students': deleted_students,
+                'sessions': deleted_sessions,
+                'responses': deleted_responses,
+                'engagement_metrics': deleted_metrics
+            }
+        }), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        print(f"[RESET] Error: {e}", flush=True)
+        return jsonify({
+            'success': False,
+            'error': f'Reset failed: {str(e)}'
+        }), 500
