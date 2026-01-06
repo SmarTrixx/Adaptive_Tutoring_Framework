@@ -30,7 +30,19 @@ let currentQuestionState = {
         rapidClicking: false,
         longHesitation: false,
         frequentSwitching: false
-    }
+    },
+    // Facial monitoring data per question
+    facial_data: {
+        camera_enabled: false,
+        face_detected_count: 0,
+        face_lost_count: 0,
+        attention_scores: [],  // Array of attention scores
+        emotions_detected: [],  // Array of {emotion, confidence, timestamp}
+        face_presence_duration_seconds: 0
+    },
+    // Hint usage per question
+    hints_requested: 0,
+    hints_used: []  // Array of {hint_text, timestamp}
 };
 
 // Session-level Navigation & History Tracking
@@ -236,10 +248,19 @@ function updateNavigation() {
             <a href="#" onclick="showLoginPage()" style="padding: 10px 20px; cursor: pointer; text-decoration: none; color: white; border-radius: 6px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">Login</a>
         `;
     } else {
-        // Logged in - show dashboard, start test, and logout
+        // Logged in - check if session is active
+        const sessionActive = currentSession && currentSession.id && currentSession.status === 'active';
+        
+        // Disable Dashboard and Start Test if session is active
+        const dashboardDisabled = sessionActive ? 'disabled' : '';
+        const testPageDisabled = sessionActive ? 'disabled' : '';
+        const dashboardStyle = sessionActive ? 'color: #ccc; opacity: 0.5; cursor: not-allowed;' : 'color: #667eea;';
+        const testPageStyle = sessionActive ? 'color: #ccc; opacity: 0.5; cursor: not-allowed;' : 'color: #667eea;';
+        
+        // Show dashboard, start test, and logout
         navLinks.innerHTML = `
-            <a href="#" onclick="showDashboard()" style="padding: 10px 20px; cursor: pointer; text-decoration: none; color: #667eea; font-weight: 600; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f0f5ff'" onmouseout="this.style.background='transparent';">Dashboard</a>
-            <a href="#" onclick="showTestPage()" style="padding: 10px 20px; cursor: pointer; text-decoration: none; color: #667eea; font-weight: 600; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#f0f5ff'" onmouseout="this.style.background='transparent';">Start Test</a>
+            <a href="#" onclick="${sessionActive ? 'return false;' : 'showDashboard();'}" style="padding: 10px 20px; cursor: pointer; text-decoration: none; ${dashboardStyle} font-weight: 600; border-radius: 6px; transition: all 0.2s;" ${sessionActive ? '' : 'onmouseover="this.style.background=\'#f0f5ff\'" onmouseout="this.style.background=\'transparent\'"'}>Dashboard</a>
+            <a href="#" onclick="${sessionActive ? 'return false;' : 'showTestPage();'}" style="padding: 10px 20px; cursor: pointer; text-decoration: none; ${testPageStyle} font-weight: 600; border-radius: 6px; transition: all 0.2s;" ${sessionActive ? '' : 'onmouseover="this.style.background=\'#f0f5ff\'" onmouseout="this.style.background=\'transparent\'"'}>Start Test</a>
             <a href="#" onclick="logout()" style="padding: 10px 20px; cursor: pointer; text-decoration: none; color: white; font-weight: 600; border-radius: 6px; background: #ff6b6b; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 107, 107, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">Logout</a>
         `;
         userInfo.innerHTML = `<span style="color: #333; font-weight: 600;">👤 ${currentStudent.name}</span>`;
@@ -422,6 +443,22 @@ async function submitAnswer(questionId, answer, responseTime) {
             // Cognitive: Behavioral Patterns
             hesitation_flags: currentQuestionState.hesitationFlags,
             navigation_pattern: 'sequential', // Can be revisit, skip, backtrack
+            
+            // Facial Monitoring Data
+            facial_metrics: {
+                camera_enabled: currentQuestionState.facial_data.camera_enabled || facialMonitoringEnabled || false,
+                face_detected_count: currentQuestionState.facial_data.face_detected_count || 0,
+                face_lost_count: currentQuestionState.facial_data.face_lost_count || 0,
+                attention_score: currentQuestionState.facial_data.attention_scores.length > 0 
+                    ? (currentQuestionState.facial_data.attention_scores.reduce((a, b) => a + b, 0) / currentQuestionState.facial_data.attention_scores.length)
+                    : null,
+                emotions_detected: currentQuestionState.facial_data.emotions_detected || [],
+                face_presence_duration_seconds: currentQuestionState.facial_data.face_presence_duration_seconds || 0
+            },
+            
+            // Hint Usage Data
+            hints_requested: currentQuestionState.hints_requested || 0,
+            hints_used: currentQuestionState.hints_used || [],
             
             // Timestamps
             interaction_start_timestamp: currentQuestionState.interactionStartTime,
@@ -848,6 +885,12 @@ async function fetchNextNewQuestion() {
         
         // Check if test is completed
         if (data.status === 'completed') {
+            // Mark session as completed
+            if (currentSession) {
+                currentSession.status = 'completed';
+                localStorage.setItem('session', JSON.stringify(currentSession));
+                updateNavigation();  // Re-enable Dashboard and Start Test buttons
+            }
             console.log('[FETCH-NEXT] Test is complete');
             showDashboard();
             return;
@@ -863,7 +906,7 @@ async function fetchNextNewQuestion() {
                 initialOption: null,
                 finalOption: null,
                 optionChangeCount: 0,
-                navigationCount: sessionNavigationCount,
+                navigationCount: 0,  // FIXED: Each question starts with 0 navigation count
                 optionChangeHistory: [],
                 interactionStartTime: Date.now(),
                 questionDisplayTime: Date.now(),
@@ -873,7 +916,17 @@ async function fetchNextNewQuestion() {
                     rapidClicking: false,
                     longHesitation: false,
                     frequentSwitching: false
-                }
+                },
+                facial_data: {
+                    camera_enabled: facialMonitoringEnabled || false,
+                    face_detected_count: 0,
+                    face_lost_count: 0,
+                    attention_scores: [],
+                    emotions_detected: [],
+                    face_presence_duration_seconds: 0
+                },
+                hints_requested: 0,
+                hints_used: []
             };
             
             // Add to session history
@@ -932,7 +985,7 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
             initialOption: null,
             finalOption: null,
             optionChangeCount: 0,
-            navigationCount: sessionNavigationCount,
+            navigationCount: 0,  // FIXED: Each question starts with 0 navigation count
             optionChangeHistory: [],
             interactionStartTime: Date.now(),
             questionDisplayTime: Date.now(),
@@ -942,7 +995,17 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
                 rapidClicking: false,
                 longHesitation: false,
                 frequentSwitching: false
-            }
+            },
+            facial_data: {
+                camera_enabled: facialMonitoringEnabled || false,
+                face_detected_count: 0,
+                face_lost_count: 0,
+                attention_scores: [],
+                emotions_detected: [],
+                face_presence_duration_seconds: 0
+            },
+            hints_requested: 0,
+            hints_used: []
         };
         
         questionStartTime = Date.now();
@@ -969,6 +1032,13 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
         
         // Check if test is completed
         if (data.status === 'completed') {
+            // Mark session as completed
+            if (currentSession) {
+                currentSession.status = 'completed';
+                localStorage.setItem('session', JSON.stringify(currentSession));
+                updateNavigation();  // Re-enable Dashboard and Start Test buttons
+            }
+            
             const content = document.getElementById('content');
             const scorePercent = data.final_score ? Math.round(data.final_score) : 0;
             const performanceLevel = scorePercent >= 80 ? 'Excellent!' : scorePercent >= 60 ? 'Good!' : 'Keep practicing!';
@@ -1029,7 +1099,7 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
                 initialOption: null,
                 finalOption: null,
                 optionChangeCount: 0,
-                navigationCount: sessionNavigationCount,
+                navigationCount: 0,  // FIXED: Each question starts with 0 navigation count
                 optionChangeHistory: [],
                 interactionStartTime: Date.now(),
                 questionDisplayTime: Date.now(),
@@ -1039,7 +1109,17 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
                     rapidClicking: false,
                     longHesitation: false,
                     frequentSwitching: false
-                }
+                },
+                facial_data: {
+                    camera_enabled: facialMonitoringEnabled || false,
+                    face_detected_count: 0,
+                    face_lost_count: 0,
+                    attention_scores: [],
+                    emotions_detected: [],
+                    face_presence_duration_seconds: 0
+                },
+                hints_requested: 0,
+                hints_used: []
             };
             
             // Add to session history
@@ -1272,6 +1352,16 @@ async function getHint(sessionId, questionId) {
         const data = await response.json();
         
         if (data.success) {
+            // CRITICAL: Record hint usage in current question state
+            if (currentQuestionState.questionId === questionId) {
+                currentQuestionState.hints_requested = (currentQuestionState.hints_requested || 0) + 1;
+                currentQuestionState.hints_used.push({
+                    hint_text: data.hint_data.hint,
+                    timestamp: Date.now()
+                });
+                console.log('[HINT] Recorded hint #' + currentQuestionState.hints_requested + ' for Q' + questionId);
+            }
+            
             alert('Hint: ' + data.hint_data.hint);
         } else {
             alert('Error: ' + data.error);
@@ -1745,6 +1835,17 @@ class WebcamFacialCapture {
                     );
                     const confidence = Math.max(...Object.values(expressions));
                     
+                    // CRITICAL: Record facial metrics to current question state
+                    if (currentQuestionState.facial_data) {
+                        currentQuestionState.facial_data.face_detected_count = (currentQuestionState.facial_data.face_detected_count || 0) + 1;
+                        currentQuestionState.facial_data.attention_scores.push(confidence);
+                        currentQuestionState.facial_data.emotions_detected.push({
+                            emotion: emotion,
+                            confidence: confidence,
+                            timestamp: Date.now()
+                        });
+                    }
+                    
                     // Update UI with emotion and confidence
                     const emotionDisplay = document.getElementById('emotion-display');
                     const confidenceDisplay = document.getElementById('emotion-confidence');
@@ -1767,6 +1868,7 @@ class WebcamFacialCapture {
                             body: JSON.stringify({
                                 student_id: currentStudent?.id || 'anonymous',
                                 session_id: sessionId,
+                                question_id: currentQuestionState?.questionId,
                                 emotion: emotion,
                                 confidence: confidence
                             })
@@ -1780,6 +1882,10 @@ class WebcamFacialCapture {
                     }
                 } else {
                     // Face not detected
+                    if (currentQuestionState.facial_data) {
+                        currentQuestionState.facial_data.face_lost_count = (currentQuestionState.facial_data.face_lost_count || 0) + 1;
+                    }
+                    
                     const emotionDisplay = document.getElementById('emotion-display');
                     const confidenceDisplay = document.getElementById('emotion-confidence');
                     const feedbackText = document.getElementById('feedback-text');
