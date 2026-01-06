@@ -59,7 +59,8 @@ class StudentResponse(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
     # Engagement data
-    hints_used = db.Column(db.Integer, default=0)
+    hints_used = db.Column(db.Integer, default=0)  # Legacy: count of hints used
+    hints_used_array = db.Column(db.JSON, default=[])  # Array of hint usage objects with timestamps
     attempts = db.Column(db.Integer, default=1)
     
     # Option selection tracking (Behavioral)
@@ -79,12 +80,15 @@ class StudentResponse(db.Model):
     # Knowledge gaps (Cognitive)
     knowledge_gaps = db.Column(db.JSON, default=[])  # Empty list or list of gap areas
     
-    # Cognitive & Affective Indicators (NEW)
+    # Cognitive & Affective Indicators
     time_spent_per_question = db.Column(db.Integer, default=0)  # Seconds spent on this question
     inactivity_duration_ms = db.Column(db.Integer, default=0)  # Milliseconds of inactivity
     question_index = db.Column(db.Integer, default=0)  # Index of question in session
     hesitation_flags = db.Column(db.JSON, default={})  # {rapidClicking, longHesitation, frequentSwitching}
     navigation_pattern = db.Column(db.String(50), default='sequential')  # sequential, revisit, backtrack
+    
+    # Facial Monitoring Data
+    facial_metrics = db.Column(db.JSON, default={})  # {camera_enabled, face_detected_count, face_lost_count, attention_score, emotions_detected, face_presence_duration_seconds}
     
     def to_dict(self):
         return {
@@ -96,6 +100,7 @@ class StudentResponse(db.Model):
             'response_time_seconds': self.response_time_seconds,
             'timestamp': self.timestamp.isoformat(),
             'hints_used': self.hints_used,
+            'hints_used_array': self.hints_used_array if self.hints_used_array else [],
             'attempts': self.attempts,
             'initial_option': self.initial_option,
             'final_option': self.final_option,
@@ -110,6 +115,7 @@ class StudentResponse(db.Model):
             'inactivity_duration_ms': self.inactivity_duration_ms,
             'question_index': self.question_index,
             'hesitation_flags': self.hesitation_flags if self.hesitation_flags else {},
-            'navigation_pattern': self.navigation_pattern
+            'navigation_pattern': self.navigation_pattern,
+            'facial_metrics': self.facial_metrics if self.facial_metrics else {}
         }
 

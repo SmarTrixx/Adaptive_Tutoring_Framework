@@ -158,7 +158,8 @@ class CBTSystem:
                        interaction_start_timestamp=None, submission_timestamp=None, 
                        submission_iso_timestamp=None,
                        time_spent_per_question=0, inactivity_duration_ms=0,
-                       question_index=0, hesitation_flags=None, navigation_pattern='sequential'):
+                       question_index=0, hesitation_flags=None, navigation_pattern='sequential',
+                       facial_metrics=None, hints_used_array=None):
         """
         Record a student's response to a question with comprehensive cognitive and affective tracking
         """
@@ -201,6 +202,8 @@ class CBTSystem:
             existing_response.question_index = question_index
             existing_response.hesitation_flags = hesitation_flags if hesitation_flags else {}
             existing_response.navigation_pattern = navigation_pattern
+            existing_response.facial_metrics = facial_metrics if facial_metrics else {}
+            existing_response.hints_used_array = hints_used_array if hints_used_array else []
             
             db.session.merge(existing_response)
             
@@ -238,6 +241,9 @@ class CBTSystem:
                 question_index=question_index,
                 hesitation_flags=hesitation_flags if hesitation_flags else {},
                 navigation_pattern=navigation_pattern,
+                # Facial & Hint data
+                facial_metrics=facial_metrics if facial_metrics else {},
+                hints_used_array=hints_used_array if hints_used_array else [],
                 # Knowledge gaps (will be populated by engagement tracker)
                 knowledge_gaps=[]
             )

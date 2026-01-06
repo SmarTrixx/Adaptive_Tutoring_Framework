@@ -128,9 +128,15 @@ def submit_response():
     hesitation_flags = data.get('hesitation_flags', {})
     navigation_pattern = data.get('navigation_pattern', 'sequential')
     
+    # Extract facial monitoring data from frontend
+    facial_metrics = data.get('facial_metrics', {})
+    hints_used_array = data.get('hints_used', [])  # hints_used is the array from frontend
+    
     # DEBUG: Log all tracking data received
     print(f"[TRACKING DATA RECEIVED] initial={initial_option}, final={final_option}, changes={option_change_count}, nav_freq={navigation_frequency}, ts={submission_iso_timestamp}, time_spent={time_spent_per_question}s, inactivity={inactivity_duration_ms}ms", flush=True)
     print(f"[COGNITIVE DATA] hesitation_flags={hesitation_flags}, navigation_pattern={navigation_pattern}, question_index={question_index}", flush=True)
+    print(f"[FACIAL DATA] camera_enabled={facial_metrics.get('camera_enabled')}, face_detected={facial_metrics.get('face_detected_count')}", flush=True)
+    print(f"[HINTS DATA] hints_used_array={hints_used_array}", flush=True)
     
     if not all([session_id, question_id, student_answer]):
         return jsonify({'error': 'Missing required fields'}), 400
@@ -150,7 +156,10 @@ def submit_response():
         inactivity_duration_ms=inactivity_duration_ms,
         question_index=question_index,
         hesitation_flags=hesitation_flags,
-        navigation_pattern=navigation_pattern
+        navigation_pattern=navigation_pattern,
+        # Facial & Hint data
+        facial_metrics=facial_metrics,
+        hints_used_array=hints_used_array
     )
     
     if isinstance(result, tuple):

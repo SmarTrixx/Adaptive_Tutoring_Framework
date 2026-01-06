@@ -378,6 +378,9 @@ async function startSession(subject) {
             console.log('Current session set to:', currentSession);
             localStorage.setItem('session', JSON.stringify(currentSession));
             
+            // CRITICAL FIX: Update navigation to disable Dashboard/Start buttons
+            updateNavigation();
+            
             // CRITICAL FIX: Clear all session state for new test
             sessionQuestionHistory = [];
             currentQuestionIndex = 0;
@@ -1246,10 +1249,14 @@ function startTimeTracking() {
     TEST_STATE.startQuestionTimer(questionId);
     
     // Update display every 100ms from authoritative TEST_STATE
+    // CRITICAL: Re-query element each iteration to handle DOM re-renders
     TEST_STATE.activeTimeInterval = setInterval(() => {
-        // Check if DOM still exists
-        if (!timeCounter.parentElement) {
+        // Re-query element from DOM each time (handles re-renders)
+        const currentTimeCounter = document.getElementById('time-counter');
+        if (!currentTimeCounter) {
+            // Element no longer exists (DOM re-rendered)
             TEST_STATE.clearAllTimers();
+            console.log('[TIMER] time-counter element removed, cleared timers');
             return;
         }
         
@@ -1257,7 +1264,7 @@ function startTimeTracking() {
         const elapsed = TEST_STATE.getTimeElapsedForQuestion(questionId);
         const minutes = Math.floor(elapsed / 60);
         const seconds = elapsed % 60;
-        timeCounter.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        currentTimeCounter.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
         
         console.log('[TIMER] Question', questionId, 'elapsed:', elapsed, 's');
     }, 100);
