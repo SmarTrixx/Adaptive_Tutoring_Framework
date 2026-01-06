@@ -42,6 +42,10 @@ let inactivityTimer = null;
 let lastInteractionTime = null;
 let currentInactivityDuration = 0;
 
+// CRITICAL: Prevent modal hijacking after navigation
+let lastSubmissionQuestionId = null; // Track which question was just submitted
+let navigationIntentActive = false; // Flag when user intentionally navigates (not submission flow)
+
 // ============================================================================
 // AUTHORITATIVE TEST STATE - NEVER RESET BY TIMERS OR RENDERS
 // ============================================================================
@@ -382,6 +386,10 @@ function logout() {
 
 async function submitAnswer(questionId, answer, responseTime) {
     try {
+        // CRITICAL: Mark this submission to prevent modal hijacking after navigation
+        lastSubmissionQuestionId = questionId;
+        navigationIntentActive = false;  // Reset flag - this is a submission
+        
         // Stop inactivity tracking
         if (inactivityTimer) clearInterval(inactivityTimer);
         
@@ -692,6 +700,13 @@ function showFeedbackModal(isCorrect, correctAnswer, explanation, newDifficulty,
     
     const handleContinue = async () => {
         closeModal();
+        
+        // CRITICAL FIX: Only auto-navigate if submission is current action, not if user navigated
+        if (navigationIntentActive) {
+            console.log('[MODAL] User manually navigated away, skipping modal auto-navigation');
+            return;
+        }
+        
         // After submission, proceed based on session state
         // CRITICAL FIX: Use currentSession not session (which is undefined)
         if (!currentSession) {
@@ -710,9 +725,9 @@ function showFeedbackModal(isCorrect, correctAnswer, explanation, newDifficulty,
             console.log('[MODAL] Test complete, showing dashboard');
             showDashboard();
         } else {
-            // More questions to answer - show next question
-            console.log('[MODAL] More questions remain, showing next question');
-            showQuestion();
+            // More questions to answer - load next NEW question (forward progression only)
+            console.log('[MODAL] More questions remain, loading next NEW question');
+            await fetchNextNewQuestion();
         }
     };
     
@@ -806,6 +821,92 @@ function showTestPage() {
             </div>
         </div>
     `;
+}
+
+// CRITICAL FIX: Isolated function for fetching NEXT NEW question (forward progression only)
+// This is separate from showQuestion() which handles revisitation
+// Called ONLY by modal after successful submission
+async function fetchNextNewQuestion() {
+    if (!currentSession || !currentSession.id) {
+        console.error('[FETCH-NEXT] No active session');
+        showTestPage();
+        return;
+    }
+
+    try {
+        console.log('[FETCH-NEXT] Fetching next NEW question for session:', currentSession.id);
+        const response = await fetch(
+            `${API_BASE_URL}/cbt/question/next/${currentSession.id}`
+        );
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('[FETCH-NEXT] Question response:', data);
+        
+        // Check if test is completed
+        if (data.status === 'completed') {
+            console.log('[FETCH-NEXT] Test is complete');
+            showDashboard();
+            return;
+        }
+        
+        if (data.success && data.question) {
+            const question = data.question;
+            
+            // Initialize fresh state for new question
+            currentQuestionState = {
+                questionId: question.question_id,
+                questionIndex: sessionQuestionHistory.length,
+                initialOption: null,
+                finalOption: null,
+                optionChangeCount: 0,
+                navigationCount: sessionNavigationCount,
+                optionChangeHistory: [],
+                interactionStartTime: Date.now(),
+                questionDisplayTime: Date.now(),
+                lastActivityTime: Date.now(),
+                isRevisit: false,
+                hesitationFlags: {
+                    rapidClicking: false,
+                    longHesitation: false,
+                    frequentSwitching: false
+                }
+            };
+            
+            // Add to session history
+            sessionQuestionHistory.push({
+                questionId: question.question_id,
+                questionIndex: currentQuestionState.questionIndex,
+                question: question,
+                completed: false
+            });
+            currentQuestionIndex = sessionQuestionHistory.length - 1;
+            
+            // CRITICAL: Sync TEST_STATE with new question
+            TEST_STATE.setCurrentQuestionIndex(currentQuestionIndex);
+            TEST_STATE.setHighestAnsweredIndex(currentQuestionIndex);
+            
+            // Capture the time when question is rendered
+            questionStartTime = Date.now();
+            console.log('[FETCH-NEXT] Question rendered at:', new Date(questionStartTime).toISOString());
+            console.log('[FETCH-NEXT] Initialized question state:', currentQuestionState);
+            console.log('[FETCH-NEXT] Question index:', currentQuestionIndex, 'History length:', sessionQuestionHistory.length);
+            console.log('[FETCH-NEXT] TEST_STATE synced: currentIndex=' + currentQuestionIndex + ', highestIndex=' + TEST_STATE.highestAnsweredIndex);
+            
+            // Render the question
+            renderQuestionWithNav(question, currentQuestionIndex, false);
+            startInactivityTracking();
+            await fetchAndDisplayEngagementScore();
+        } else {
+            throw new Error(data.error || 'Failed to load question');
+        }
+    } catch (error) {
+        console.error('[FETCH-NEXT] Error fetching question:', error);
+        alert('Failed to load question: ' + error.message);
+    }
 }
 
 async function showQuestion(revisitIndex = null, isRevisit = false) {
@@ -1083,8 +1184,12 @@ function startTimeTracking() {
 }
 
 function navigatePreviousQuestion() {
+    // CRITICAL FIX: Set navigation intent to prevent modal hijacking
+    navigationIntentActive = true;
+    
     // CRITICAL FIX: Use TEST_STATE navigation rules (never override on re-render)
     if (!TEST_STATE.canNavigatePrev()) {
+        navigationIntentActive = false;
         console.log('[NAV-PREV] Blocked - TEST_STATE.canNavigatePrev() = false');
         return;
     }
@@ -1099,11 +1204,16 @@ function navigatePreviousQuestion() {
         navCount: sessionNavigationCount
     });
     showQuestion(TEST_STATE.currentQuestionIndex, true);
+    navigationIntentActive = false;
 }
 
 function navigateNextQuestion() {
+    // CRITICAL FIX: Set navigation intent to prevent modal hijacking
+    navigationIntentActive = true;
+    
     // CRITICAL FIX: Use TEST_STATE navigation rules (never override on re-render/timer)
     if (!TEST_STATE.canNavigateNext()) {
+        navigationIntentActive = false;
         console.log('[NAV-NEXT] Blocked - TEST_STATE.canNavigateNext() = false, isOnCurrentQuestion=' + TEST_STATE.isOnCurrentQuestion());
         return;
     }
@@ -1123,6 +1233,7 @@ function navigateNextQuestion() {
     } else {
         console.log('[NAV-NEXT] At end of history, cannot navigate further');
     }
+    navigationIntentActive = false;
 }
 
 
