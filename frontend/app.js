@@ -251,16 +251,18 @@ function updateNavigation() {
         // Logged in - check if session is active
         const sessionActive = currentSession && currentSession.id && currentSession.status === 'active';
         
+        console.log('[NAV] updateNavigation: sessionActive =', sessionActive, ', session:', currentSession);
+        
         // Disable Dashboard and Start Test if session is active
         const dashboardDisabled = sessionActive ? 'disabled' : '';
         const testPageDisabled = sessionActive ? 'disabled' : '';
-        const dashboardStyle = sessionActive ? 'color: #ccc; opacity: 0.5; cursor: not-allowed;' : 'color: #667eea;';
-        const testPageStyle = sessionActive ? 'color: #ccc; opacity: 0.5; cursor: not-allowed;' : 'color: #667eea;';
+        const dashboardStyle = sessionActive ? 'color: #ccc; opacity: 0.5; cursor: not-allowed; pointer-events: none;' : 'color: #667eea;';
+        const testPageStyle = sessionActive ? 'color: #ccc; opacity: 0.5; cursor: not-allowed; pointer-events: none;' : 'color: #667eea;';
         
         // Show dashboard, start test, and logout
         navLinks.innerHTML = `
-            <a href="#" onclick="${sessionActive ? 'return false;' : 'showDashboard();'}" style="padding: 10px 20px; cursor: pointer; text-decoration: none; ${dashboardStyle} font-weight: 600; border-radius: 6px; transition: all 0.2s;" ${sessionActive ? '' : 'onmouseover="this.style.background=\'#f0f5ff\'" onmouseout="this.style.background=\'transparent\'"'}>Dashboard</a>
-            <a href="#" onclick="${sessionActive ? 'return false;' : 'showTestPage();'}" style="padding: 10px 20px; cursor: pointer; text-decoration: none; ${testPageStyle} font-weight: 600; border-radius: 6px; transition: all 0.2s;" ${sessionActive ? '' : 'onmouseover="this.style.background=\'#f0f5ff\'" onmouseout="this.style.background=\'transparent\'"'}>Start Test</a>
+            <a id="nav-dashboard" href="#" onclick="${sessionActive ? 'event.preventDefault(); return false;' : 'showDashboard(); return false;'}" style="padding: 10px 20px; cursor: ${sessionActive ? 'not-allowed' : 'pointer'}; text-decoration: none; ${dashboardStyle} font-weight: 600; border-radius: 6px; transition: all 0.2s;" ${sessionActive ? '' : 'onmouseover="this.style.background=\'#f0f5ff\'" onmouseout="this.style.background=\'transparent\'"'}>Dashboard</a>
+            <a id="nav-start-test" href="#" onclick="${sessionActive ? 'event.preventDefault(); return false;' : 'showTestPage(); return false;'}" style="padding: 10px 20px; cursor: ${sessionActive ? 'not-allowed' : 'pointer'}; text-decoration: none; ${testPageStyle} font-weight: 600; border-radius: 6px; transition: all 0.2s;" ${sessionActive ? '' : 'onmouseover="this.style.background=\'#f0f5ff\'" onmouseout="this.style.background=\'transparent\'"'}>Start Test</a>
             <a href="#" onclick="logout()" style="padding: 10px 20px; cursor: pointer; text-decoration: none; color: white; font-weight: 600; border-radius: 6px; background: #ff6b6b; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 107, 107, 0.3)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">Logout</a>
         `;
         userInfo.innerHTML = `<span style="color: #333; font-weight: 600;">👤 ${currentStudent.name}</span>`;
@@ -761,8 +763,13 @@ function showFeedbackModal(isCorrect, correctAnswer, explanation, newDifficulty,
         await new Promise(resolve => setTimeout(resolve, 300));
         
         if (testComplete) {
-            // All questions answered - show dashboard
+            // All questions answered - mark session as completed and show dashboard
             console.log('[MODAL] Test complete, showing dashboard');
+            if (currentSession) {
+                currentSession.status = 'completed';
+                localStorage.setItem('session', JSON.stringify(currentSession));
+                updateNavigation();  // Re-enable Dashboard and Start Test buttons
+            }
             showDashboard();
         } else {
             // More questions to answer - load next NEW question (forward progression only)
