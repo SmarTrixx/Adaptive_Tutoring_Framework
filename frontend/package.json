@@ -4,8 +4,8 @@
   "description": "Frontend for Adaptive Intelligent Tutoring Framework",
   "main": "app.js",
   "scripts": {
-    "start": "http-server -p 8000 -o",
-    "serve": "http-server -p 8000"
+    "start": "http-server -p 3000 -o",
+    "serve": "http-server -p 3000"
   },
   "keywords": [
     "tutoring",

@@ -111,25 +111,65 @@ def submit_response():
     student_answer = data.get('student_answer')
     response_time_seconds = data.get('response_time_seconds', 0)
     
+    # Extract behavioral tracking data from frontend
+    initial_option = data.get('initial_option')
+    final_option = data.get('final_option')
+    option_change_count = data.get('option_change_count', 0)
+    option_change_history = data.get('option_change_history', [])
+    navigation_frequency = data.get('navigation_frequency', 0)
+    interaction_start_timestamp = data.get('interaction_start_timestamp')
+    submission_timestamp = data.get('submission_timestamp')
+    submission_iso_timestamp = data.get('submission_iso_timestamp')
+    
+    # Extract cognitive & affective tracking data from frontend
+    time_spent_per_question = data.get('time_spent_per_question', 0)
+    inactivity_duration_ms = data.get('inactivity_duration_ms', 0)
+    question_index = data.get('question_index', 0)
+    hesitation_flags = data.get('hesitation_flags', {})
+    navigation_pattern = data.get('navigation_pattern', 'sequential')
+    
+    # DEBUG: Log all tracking data received
+    print(f"[TRACKING DATA RECEIVED] initial={initial_option}, final={final_option}, changes={option_change_count}, nav_freq={navigation_frequency}, ts={submission_iso_timestamp}, time_spent={time_spent_per_question}s, inactivity={inactivity_duration_ms}ms", flush=True)
+    print(f"[COGNITIVE DATA] hesitation_flags={hesitation_flags}, navigation_pattern={navigation_pattern}, question_index={question_index}", flush=True)
+    
     if not all([session_id, question_id, student_answer]):
         return jsonify({'error': 'Missing required fields'}), 400
     
     result = cbt_system.submit_response(
-        session_id, question_id, student_answer, response_time_seconds
+        session_id, question_id, student_answer, response_time_seconds,
+        initial_option=initial_option,
+        final_option=final_option,
+        option_change_count=option_change_count,
+        option_change_history=option_change_history,
+        navigation_frequency=navigation_frequency,
+        interaction_start_timestamp=interaction_start_timestamp,
+        submission_timestamp=submission_timestamp,
+        submission_iso_timestamp=submission_iso_timestamp,
+        # Cognitive fields
+        time_spent_per_question=time_spent_per_question,
+        inactivity_duration_ms=inactivity_duration_ms,
+        question_index=question_index,
+        hesitation_flags=hesitation_flags,
+        navigation_pattern=navigation_pattern
     )
     
     if isinstance(result, tuple):
         return jsonify(result[0]), result[1]
     
-    return jsonify({
+    response_data = {
         'success': True,
         'is_correct': result.get('is_correct', False),
         'correct_answer': result.get('correct_answer', ''),
         'explanation': result.get('explanation', ''),
         'current_score': result.get('current_score', 0),
         'correct_count': result.get('correct_count', 0),
-        'total_answered': result.get('total_answered', 0)
-    }), 201
+        'total_answered': result.get('total_answered', 0),
+        'current_difficulty': result.get('current_difficulty', 0.5)
+    }
+    
+    print(f"[RESPONSE] Sending difficulty: {response_data['current_difficulty']}, is_correct: {response_data['is_correct']}", flush=True)
+    
+    return jsonify(response_data), 201
 
 @cbt_bp.route('/hint/<session_id>/<question_id>', methods=['GET'])
 def get_hint(session_id, question_id):

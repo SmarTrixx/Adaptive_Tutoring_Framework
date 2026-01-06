@@ -273,6 +273,13 @@ async function startSession(subject) {
             console.log('Current session set to:', currentSession);
             localStorage.setItem('session', JSON.stringify(currentSession));
             
+            // CRITICAL FIX: Clear all session state for new test
+            sessionQuestionHistory = [];
+            currentQuestionIndex = 0;
+            sessionNavigationCount = 0;
+            questionResponses = {};
+            console.log('[SESSION] Reset for new test: history cleared, index=0, navCount=0');
+            
             // Add a small delay to ensure state is ready
             setTimeout(() => showQuestion(), 100);
         } else {
@@ -599,22 +606,26 @@ function showFeedbackModal(isCorrect, correctAnswer, explanation, newDifficulty,
     
     const handleContinue = async () => {
         closeModal();
-        // Proceed based on whether this was a revisit or new question
-        if (currentQuestionState.isRevisit) {
-            // If revisiting, go to the next unanswered question after current index
-            await new Promise(resolve => setTimeout(resolve, 300));
-            if (currentQuestionIndex >= sessionQuestionHistory.length - 1) {
-                // If we were at or past the last answered question, get next
-                showQuestion();
-            } else {
-                // Otherwise, go to the next question in sequence
-                showQuestion(currentQuestionIndex + 1, true);
-            }
-        } else if (session && session.questions_completed >= session.num_questions) {
-            await new Promise(resolve => setTimeout(resolve, 300));
+        // After submission, proceed based on session state
+        // CRITICAL FIX: Use currentSession not session (which is undefined)
+        if (!currentSession) {
+            console.error('[MODAL] No current session, returning to test page');
+            showTestPage();
+            return;
+        }
+        
+        // Check if test is complete (all questions answered)
+        const testComplete = currentSession.questions_completed >= currentSession.num_questions;
+        
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        if (testComplete) {
+            // All questions answered - show dashboard
+            console.log('[MODAL] Test complete, showing dashboard');
             showDashboard();
-        } else if (session) {
-            await new Promise(resolve => setTimeout(resolve, 300));
+        } else {
+            // More questions to answer - show next question
+            console.log('[MODAL] More questions remain, showing next question');
             showQuestion();
         }
     };
@@ -950,56 +961,70 @@ function startTimeTracking() {
 }
 
 function navigatePreviousQuestion() {
+    // CRITICAL FIX: Disable Previous on first question of session
+    if (currentQuestionIndex === 0) {
+        console.log('[NAV-PREV] Blocked - Cannot go previous, at first question of session (index=0)');
+        return;
+    }
+    
     if (currentQuestionIndex > 0) {
         sessionNavigationCount++;
         currentQuestionState.navigationCount++;
-        console.log('[TRACKING] Navigation: Previous question', {index: currentQuestionIndex, navCount: sessionNavigationCount});
+        console.log('[TRACKING] Navigation: Previous question', {
+            from: currentQuestionIndex, 
+            to: currentQuestionIndex - 1,
+            navCount: sessionNavigationCount
+        });
         showQuestion(currentQuestionIndex - 1, true);
     }
 }
 
 function navigateNextQuestion() {
-    // Can only navigate next if:
-    // 1. Not on current active question (currentQuestionIndex < questions_completed)
-    // 2. OR at end and all test complete
+    // CRITICAL FIX: Navigation logic with proper test completion handling
+    // Rules:
+    // 1. DISABLED if on current active question (must answer first)
+    // 2. ENABLED if revisiting (navigating back through history)
+    // 3. When at end of history, advance to current question (don't end test)
+    // 4. Test ONLY ends when user explicitly submits last question OR via modal after submission
     
     const isOnCurrentQuestion = currentQuestionIndex === (currentSession.questions_completed || 0);
     const isLastQuestion = currentQuestionIndex >= currentSession.num_questions - 1;
+    const historyLength = sessionQuestionHistory.length;
+    const atEndOfHistory = currentQuestionIndex >= historyLength - 1;
     
-    console.log('[NAV-NEXT] Check:', {
+    console.log('[NAV-NEXT] Evaluating:', {
         currentQuestionIndex,
         questions_completed: currentSession.questions_completed,
         isOnCurrentQuestion,
         isLastQuestion,
-        history_length: sessionQuestionHistory.length
+        historyLength,
+        atEndOfHistory
     });
     
-    // Cannot proceed from current active question - must answer first
-    if (isOnCurrentQuestion && !isLastQuestion) {
-        console.log('[NAV-NEXT] Cannot proceed - must answer current question first');
+    // CRITICAL: Cannot proceed from current active question - must answer first
+    if (isOnCurrentQuestion) {
+        console.log('[NAV-NEXT] Blocked - Must answer current question first (isOnCurrentQuestion=true, index=' + currentQuestionIndex + ')');
         return;
     }
     
-    // If at last question, end test
-    if (isLastQuestion) {
-        console.log('[TRACKING] Test completion initiated');
-        showDashboard();
-        return;
-    }
-    
-    // If revisiting, can move forward in history
-    if (currentQuestionIndex < sessionQuestionHistory.length - 1) {
+    // If revisiting and can advance in history (haven't reached current question yet)
+    if (currentQuestionIndex < historyLength - 1) {
         sessionNavigationCount++;
         currentQuestionState.navigationCount++;
-        console.log('[TRACKING] Navigation: Next question in history', {
+        console.log('[TRACKING] Navigation: Next in history', {
             from: currentQuestionIndex,
             to: currentQuestionIndex + 1,
             navCount: sessionNavigationCount
         });
         showQuestion(currentQuestionIndex + 1, true);
+    } else if (atEndOfHistory && !isOnCurrentQuestion) {
+        // At end of history but not at current question - advance to current
+        console.log('[NAV-NEXT] At end of history, advancing to current question (not revisit)');
+        sessionNavigationCount++;
+        currentQuestionState.navigationCount++;
+        showQuestion(currentQuestionIndex, false);
     } else {
-        // At end of history but not at question count - shouldn't happen
-        console.warn('[NAV-NEXT] Unexpected state - at end of history but not at question count');
+        console.log('[NAV-NEXT] Cannot navigate - already at end');
     }
 }
 
@@ -1061,16 +1086,15 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
                 ? ((currentSession.questions_completed || 0) / currentSession.num_questions) * 100 
                 : 0;
     
-    // Navigation logic:
-    // - Can go Previous if not first question (questionIndex > 0)
-    // - Can go Next if:
-    //   a) Currently on a revisited question (isRevisit = true), OR
-    //   b) On a previously answered question (questionIndex < questions_completed)
-    // - Cannot go Next if on current active question (questionIndex == questions_completed)
-    const canNavigatePrev = questionIndex > 0;
+    // Navigation logic - CRITICAL STATE VALIDATION:
+    // Previous: DISABLED if questionIndex === 0 (first question of session)
+    // Next: DISABLED if questionIndex === questions_completed (current active question, must answer)
+    // Next: ENABLED if questionIndex < questions_completed (revisiting older question)
+    // Note: isLastQuestion is informational only - does NOT trigger test end via navigation
+    const canNavigatePrev = questionIndex > 0; // Always disabled on first question
     const isOnCurrentQuestion = questionIndex === (currentSession.questions_completed || 0);
     const isRevisiting = currentQuestionState && currentQuestionState.isRevisit;
-    const canNavigateNext = !isOnCurrentQuestion; // Can navigate if not on current active question
+    const canNavigateNext = !isOnCurrentQuestion; // Can navigate only if revisiting
     const isLastQuestion = questionIndex >= currentSession.num_questions - 1;
     
     console.log('[RENDER] Navigation state:', {

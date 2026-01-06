@@ -47,6 +47,34 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What is 5 × 3?',
+                'option_a': '8',
+                'option_b': '10',
+                'option_c': '15',
+                'option_d': '20',
+                'correct_option': 'C',
+                'explanation': 'Multiplication of 5 and 3: 5 × 3 = 15',
+                'hints': [
+                    'Think of 5 groups of 3',
+                    '3 + 3 + 3 + 3 + 3 = 15'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What is 12 ÷ 4?',
+                'option_a': '2',
+                'option_b': '3',
+                'option_c': '4',
+                'option_d': '6',
+                'correct_option': 'B',
+                'explanation': 'Division: 12 ÷ 4 = 3. We are dividing 12 into 4 equal groups.',
+                'hints': [
+                    'Think: 4 times what number equals 12?',
+                    '4 × 3 = 12'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.MEDIUM,
                 'question_text': 'Expand: (x + 2)(x + 3)',
                 'option_a': 'x² + 5x + 6',
@@ -61,6 +89,34 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'Solve: 3x - 5 = 10',
+                'option_a': 'x = 3',
+                'option_b': 'x = 5',
+                'option_c': 'x = 15',
+                'option_d': 'x = 10',
+                'correct_option': 'B',
+                'explanation': '3x - 5 = 10. Add 5 to both sides: 3x = 15. Divide by 3: x = 5',
+                'hints': [
+                    'Isolate the x term first',
+                    'Then divide both sides by 3'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'What is the slope of the line y = 2x + 3?',
+                'option_a': '3',
+                'option_b': '2',
+                'option_c': '-2',
+                'option_d': '1/2',
+                'correct_option': 'B',
+                'explanation': 'In the equation y = mx + b, m is the slope. Here m = 2.',
+                'hints': [
+                    'The slope is the coefficient of x',
+                    'Look at the form y = mx + b'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.HARD,
                 'question_text': 'Solve: 2x² - 5x + 3 = 0',
                 'option_a': 'x = 1 or x = 3/2',
@@ -72,6 +128,20 @@ SAMPLE_QUESTIONS = {
                 'hints': [
                     'Try factoring: (2x - 3)(x - 1) = 0',
                     'Use the quadratic formula: x = (-b ± √(b² - 4ac)) / 2a'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.HARD,
+                'question_text': 'Solve: x² - 7x + 12 = 0',
+                'option_a': 'x = 3 or x = 4',
+                'option_b': 'x = 2 or x = 6',
+                'option_c': 'x = 1 or x = 12',
+                'option_d': 'x = -3 or x = -4',
+                'correct_option': 'A',
+                'explanation': 'Factor: (x - 3)(x - 4) = 0, so x = 3 or x = 4',
+                'hints': [
+                    'Find two numbers that multiply to 12 and add to -7',
+                    'Those numbers are -3 and -4'
                 ]
             }
         ],
@@ -91,6 +161,20 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What is the perimeter of a square with side length 4?',
+                'option_a': '8',
+                'option_b': '12',
+                'option_c': '16',
+                'option_d': '20',
+                'correct_option': 'C',
+                'explanation': 'Perimeter = 4 × side length = 4 × 4 = 16',
+                'hints': [
+                    'Perimeter is the distance around the square',
+                    'A square has 4 equal sides'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.MEDIUM,
                 'question_text': 'In a right triangle, if one leg is 3 and the hypotenuse is 5, what is the other leg?',
                 'option_a': '2',
@@ -105,6 +189,20 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'What is the area of a triangle with base 10 and height 6?',
+                'option_a': '30',
+                'option_b': '60',
+                'option_c': '16',
+                'option_d': '20',
+                'correct_option': 'A',
+                'explanation': 'Area of triangle = ½ × base × height = ½ × 10 × 6 = 30',
+                'hints': [
+                    'The formula is ½ × base × height',
+                    'That is half of base times height'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.HARD,
                 'question_text': 'Find the area of a circle with radius 7',
                 'option_a': '14π',
@@ -116,6 +214,20 @@ SAMPLE_QUESTIONS = {
                 'hints': [
                     'The formula for circle area is πr²',
                     'r = 7, so r² = 49'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.HARD,
+                'question_text': 'In a circle with radius 5, what is the circumference?',
+                'option_a': '5π',
+                'option_b': '10π',
+                'option_c': '25π',
+                'option_d': '15π',
+                'correct_option': 'B',
+                'explanation': 'Circumference = 2πr = 2π(5) = 10π',
+                'hints': [
+                    'The formula is C = 2πr',
+                    'Or C = πd where d is diameter'
                 ]
             }
         ]
@@ -137,6 +249,34 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What is the SI unit of speed or velocity?',
+                'option_a': 'Meter',
+                'option_b': 'Meter per second',
+                'option_c': 'Kilometer',
+                'option_d': 'Kilometer per hour',
+                'correct_option': 'B',
+                'explanation': 'The SI unit of velocity is meter per second (m/s).',
+                'hints': [
+                    'It involves distance per unit time',
+                    'The SI base unit of length is meter'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What does Newton\'s first law state?',
+                'option_a': 'F = ma',
+                'option_b': 'An object in motion stays in motion unless acted upon',
+                'option_c': 'Action and reaction are equal',
+                'option_d': 'Energy cannot be created or destroyed',
+                'correct_option': 'B',
+                'explanation': 'Newton\'s first law of motion: An object at rest or in motion stays that way unless acted upon by an external force.',
+                'hints': [
+                    'This is about inertia',
+                    'It is also called the law of inertia'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.MEDIUM,
                 'question_text': 'What is the formula for kinetic energy?',
                 'option_a': 'KE = mv',
@@ -148,6 +288,34 @@ SAMPLE_QUESTIONS = {
                 'hints': [
                     'Kinetic energy depends on velocity squared',
                     'It is proportional to ½ × mass × velocity²'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'What is the formula for potential energy?',
+                'option_a': 'PE = mv',
+                'option_b': 'PE = ½mv²',
+                'option_c': 'PE = mgh',
+                'option_d': 'PE = ma',
+                'correct_option': 'C',
+                'explanation': 'Gravitational potential energy is PE = mgh, where m is mass, g is gravity, and h is height.',
+                'hints': [
+                    'Potential energy depends on height',
+                    'PE = mass × gravity × height'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.HARD,
+                'question_text': 'If an object has a mass of 5 kg and accelerates at 3 m/s², what is the force?',
+                'option_a': '8 N',
+                'option_b': '12 N',
+                'option_c': '15 N',
+                'option_d': '20 N',
+                'correct_option': 'C',
+                'explanation': 'Using F = ma: F = 5 kg × 3 m/s² = 15 N',
+                'hints': [
+                    'Use the formula F = ma',
+                    'Multiply mass by acceleration'
                 ]
             }
         ],
@@ -167,6 +335,34 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What is the chemical formula for water?',
+                'option_a': 'H₂O',
+                'option_b': 'H₂O₂',
+                'option_c': 'CO₂',
+                'option_d': 'NaCl',
+                'correct_option': 'A',
+                'explanation': 'Water is made of 2 hydrogen atoms and 1 oxygen atom, so H₂O.',
+                'hints': [
+                    'Water has hydrogen and oxygen',
+                    'Think of the most common compound'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What is the chemical symbol for carbon?',
+                'option_a': 'Ca',
+                'option_b': 'Co',
+                'option_c': 'C',
+                'option_d': 'Cr',
+                'correct_option': 'C',
+                'explanation': 'The chemical symbol for carbon is C. It is atomic number 6.',
+                'hints': [
+                    'It is a single letter',
+                    'Carbon is the basis of organic chemistry'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.MEDIUM,
                 'question_text': 'What is the pH of a neutral solution?',
                 'option_a': '0',
@@ -178,6 +374,78 @@ SAMPLE_QUESTIONS = {
                 'hints': [
                     'The pH scale goes from 0 to 14',
                     'Middle of the scale is neutral'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'What does an acid have?',
+                'option_a': 'pH less than 7',
+                'option_b': 'pH greater than 7',
+                'option_c': 'pH equal to 7',
+                'option_d': 'No pH value',
+                'correct_option': 'A',
+                'explanation': 'Acids have a pH less than 7. The lower the pH, the more acidic the solution.',
+                'hints': [
+                    'Acidic solutions are "sour"',
+                    'pH less than 7 is acidic'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.HARD,
+                'question_text': 'What is the molar mass of CO₂?',
+                'option_a': '44 g/mol',
+                'option_b': '48 g/mol',
+                'option_c': '32 g/mol',
+                'option_d': '60 g/mol',
+                'correct_option': 'A',
+                'explanation': 'CO₂: C = 12, O = 16. Molar mass = 12 + 16 + 16 = 44 g/mol',
+                'hints': [
+                    'Add up the atomic masses',
+                    'C = 12, O = 16'
+                ]
+            }
+        ],
+        'Biology': [
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What is the powerhouse of the cell?',
+                'option_a': 'Nucleus',
+                'option_b': 'Mitochondria',
+                'option_c': 'Chloroplast',
+                'option_d': 'Ribosome',
+                'correct_option': 'B',
+                'explanation': 'Mitochondria is called the powerhouse of the cell because it produces ATP energy.',
+                'hints': [
+                    'It produces energy',
+                    'It is involved in respiration'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What is the basic unit of life?',
+                'option_a': 'Atom',
+                'option_b': 'Molecule',
+                'option_c': 'Cell',
+                'option_d': 'Tissue',
+                'correct_option': 'C',
+                'explanation': 'The cell is the basic unit of life. All living organisms are made of cells.',
+                'hints': [
+                    'It is the smallest living unit',
+                    'Cells make up all organisms'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'What is the process by which plants make their food?',
+                'option_a': 'Respiration',
+                'option_b': 'Photosynthesis',
+                'option_c': 'Fermentation',
+                'option_d': 'Digestion',
+                'correct_option': 'B',
+                'explanation': 'Photosynthesis is the process where plants convert light energy into chemical energy (glucose).',
+                'hints': [
+                    'It requires sunlight',
+                    'It happens in the chloroplasts'
                 ]
             }
         ]
@@ -199,6 +467,34 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'Which is the correct plural of "child"?',
+                'option_a': 'Childs',
+                'option_b': 'Childes',
+                'option_c': 'Children',
+                'option_d': 'Childrens',
+                'correct_option': 'C',
+                'explanation': '"Child" is an irregular noun. The plural form is "children".',
+                'hints': [
+                    'This is an irregular plural',
+                    'Think of the word used in sentences'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'Choose the correct pronoun: "My friend and ____ went to the movies."',
+                'option_a': 'me',
+                'option_b': 'I',
+                'option_c': 'myself',
+                'option_d': 'myself',
+                'correct_option': 'B',
+                'explanation': 'Use "I" here because it is the subject of the sentence. "Me" is used as an object.',
+                'hints': [
+                    'Think about whether it is a subject or object',
+                    'Try saying just the pronoun with the verb'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.MEDIUM,
                 'question_text': 'Identify the correct use of its/it\'s',
                 'option_a': 'The cat licked it\'s paws',
@@ -210,6 +506,34 @@ SAMPLE_QUESTIONS = {
                 'hints': [
                     'its = possessive',
                     'it\'s = it is'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'What tense is "The students have completed their assignment"?',
+                'option_a': 'Simple past',
+                'option_b': 'Present perfect',
+                'option_c': 'Past perfect',
+                'option_d': 'Present tense',
+                'correct_option': 'B',
+                'explanation': 'Present perfect is formed with "have/has" + past participle. It shows an action that occurred in the past but is relevant to the present.',
+                'hints': [
+                    'It uses "have" or "has"',
+                    'The action started in the past and continues or just finished'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.HARD,
+                'question_text': 'Choose the correct sentence:',
+                'option_a': 'The team are playing well',
+                'option_b': 'The team is playing well',
+                'option_c': 'Both are correct depending on context',
+                'option_d': 'Neither is correct',
+                'correct_option': 'C',
+                'explanation': 'Both are correct. In American English, "is" (singular) is preferred. In British English, "are" (plural) is also acceptable for collective nouns.',
+                'hints': [
+                    'Collective nouns can be tricky',
+                    'American and British English may differ'
                 ]
             }
         ],
@@ -229,6 +553,34 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'Which word is a synonym for "happy"?',
+                'option_a': 'Sad',
+                'option_b': 'Joyful',
+                'option_c': 'Angry',
+                'option_d': 'Confused',
+                'correct_option': 'B',
+                'explanation': 'Joyful is a synonym for happy. Both words mean experiencing or expressing joy.',
+                'hints': [
+                    'A synonym means similar meaning',
+                    'Think of a positive emotion'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What does "persist" mean?',
+                'option_a': 'To give up',
+                'option_b': 'To continue firmly or obstinately',
+                'option_c': 'To stop',
+                'option_d': 'To question',
+                'correct_option': 'B',
+                'explanation': 'Persist means to continue firmly or obstinately despite difficulty or opposition.',
+                'hints': [
+                    'It is about continuing despite obstacles',
+                    'Think of someone who doesn\'t give up'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.MEDIUM,
                 'question_text': 'Which word best describes "ambiguous"?',
                 'option_a': 'Clear and distinct',
@@ -240,6 +592,64 @@ SAMPLE_QUESTIONS = {
                 'hints': [
                     'Think of something that could mean two things',
                     'It relates to unclear meaning'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'What is an antonym for "bright"?',
+                'option_a': 'Light',
+                'option_b': 'Brilliant',
+                'option_c': 'Dim',
+                'option_d': 'Shiny',
+                'correct_option': 'C',
+                'explanation': 'Dim is an antonym for bright. Bright means giving out much light, while dim means not bright.',
+                'hints': [
+                    'Antonym means opposite',
+                    'Think of the opposite of something glowing'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.HARD,
+                'question_text': 'What does "melancholy" mean?',
+                'option_a': 'Extremely happy',
+                'option_b': 'Very angry',
+                'option_c': 'Pensive sadness; thoughtfully sad',
+                'option_d': 'Confused',
+                'correct_option': 'C',
+                'explanation': 'Melancholy is a pensive sadness, often with some beauty or nostalgia to it.',
+                'hints': [
+                    'It is a form of sadness',
+                    'But it has a contemplative quality'
+                ]
+            }
+        ],
+        'Reading Comprehension': [
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'Based on the statement: "Sarah enjoys reading books in the park." What does Sarah like to do?',
+                'option_a': 'Play sports',
+                'option_b': 'Read books',
+                'option_c': 'Go hiking',
+                'option_d': 'Watch movies',
+                'correct_option': 'B',
+                'explanation': 'The statement directly says that Sarah enjoys reading books, so reading books is what she likes to do.',
+                'hints': [
+                    'Look for what Sarah "enjoys"',
+                    'Reading is mentioned in the sentence'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'Based on: "The old library was closed for renovations, and the community had to use the temporary location for three months." Why did the community use a temporary location?',
+                'option_a': 'The permanent library burned down',
+                'option_b': 'The permanent library was closed for renovations',
+                'option_c': 'The temporary location was better',
+                'option_d': 'The community preferred it',
+                'correct_option': 'B',
+                'explanation': 'The text states the library was closed for renovations, which is why the temporary location was used.',
+                'hints': [
+                    'Look for cause and effect',
+                    'Why would they need a temporary location?'
                 ]
             }
         ]
@@ -261,6 +671,34 @@ SAMPLE_QUESTIONS = {
                 ]
             },
             {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'Who was the first President of the United States?',
+                'option_a': 'Thomas Jefferson',
+                'option_b': 'George Washington',
+                'option_c': 'Benjamin Franklin',
+                'option_d': 'John Adams',
+                'correct_option': 'B',
+                'explanation': 'George Washington was the first President of the United States, serving from 1789 to 1797.',
+                'hints': [
+                    'He is on the dollar bill',
+                    'He was a military general'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What ancient civilization built the pyramids?',
+                'option_a': 'Mesopotamia',
+                'option_b': 'Ancient Egypt',
+                'option_c': 'Ancient Greece',
+                'option_d': 'Ancient Rome',
+                'correct_option': 'B',
+                'explanation': 'Ancient Egypt built the famous pyramids, particularly during the Old Kingdom period.',
+                'hints': [
+                    'It is in Africa',
+                    'Along the Nile River'
+                ]
+            },
+            {
                 'difficulty': QuestionDifficulty.MEDIUM,
                 'question_text': 'In which year did Julius Caesar cross the Rubicon?',
                 'option_a': '49 BC',
@@ -273,11 +711,83 @@ SAMPLE_QUESTIONS = {
                     'It was before he became dictator',
                     'This phrase means passing a point of no return'
                 ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'Which empire built Hadrian\'s Wall?',
+                'option_a': 'Ancient Greece',
+                'option_b': 'Ancient Egypt',
+                'option_c': 'Roman Empire',
+                'option_d': 'Ottoman Empire',
+                'correct_option': 'C',
+                'explanation': 'Hadrian\'s Wall was built by the Roman Empire in Britain around 122 AD under Emperor Hadrian.',
+                'hints': [
+                    'It is in Britain',
+                    'It divides the country north and south'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.HARD,
+                'question_text': 'Who was the first emperor of Rome?',
+                'option_a': 'Julius Caesar',
+                'option_b': 'Augustus',
+                'option_c': 'Nero',
+                'option_d': 'Marcus Aurelius',
+                'correct_option': 'B',
+                'explanation': 'Augustus (originally Octavian) was the first emperor of Rome, ruling from 27 BC to 14 AD.',
+                'hints': [
+                    'He came after Julius Caesar',
+                    'He was a great-nephew of Caesar'
+                ]
+            }
+        ],
+        'Medieval History': [
+            {
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'What was the name of the medieval knight\'s code of conduct?',
+                'option_a': 'Chivalry',
+                'option_b': 'Feudalism',
+                'option_c': 'Knighthood',
+                'option_d': 'Nobility',
+                'correct_option': 'A',
+                'explanation': 'Chivalry was the code of conduct for medieval knights, emphasizing honor, loyalty, and virtuous behavior.',
+                'hints': [
+                    'It is about noble conduct',
+                    'It is associated with knights'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'In what year did the Black Death begin in Europe?',
+                'option_a': '1347',
+                'option_b': '1350',
+                'option_c': '1340',
+                'option_d': '1360',
+                'correct_option': 'A',
+                'explanation': 'The Black Death arrived in Europe in 1347, becoming one of the most devastating pandemics in history.',
+                'hints': [
+                    'It was in the 1300s',
+                    'It killed millions of people'
+                ]
             }
         ],
         'Modern History': [
             {
-                'difficulty': QuestionDifficulty.MEDIUM,
+                'difficulty': QuestionDifficulty.EASY,
+                'question_text': 'In what year did the American Revolution begin?',
+                'option_a': '1773',
+                'option_b': '1774',
+                'option_c': '1775',
+                'option_d': '1776',
+                'correct_option': 'C',
+                'explanation': 'The American Revolution began in 1775 with the Battles of Lexington and Concord.',
+                'hints': [
+                    'It was before the Declaration of Independence',
+                    'Fighting started at Lexington and Concord'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.EASY,
                 'question_text': 'In what year did World War II end?',
                 'option_a': '1944',
                 'option_b': '1945',
@@ -288,6 +798,34 @@ SAMPLE_QUESTIONS = {
                 'hints': [
                     'It was around 6 years after it started in 1939',
                     'Think of VE Day and VJ Day'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.MEDIUM,
+                'question_text': 'In what year did the Berlin Wall fall?',
+                'option_a': '1987',
+                'option_b': '1988',
+                'option_c': '1989',
+                'option_d': '1990',
+                'correct_option': 'C',
+                'explanation': 'The Berlin Wall fell on November 9, 1989, symbolizing the end of the Cold War.',
+                'hints': [
+                    'It was late 1980s',
+                    'It happened after the Cold War began to thaw'
+                ]
+            },
+            {
+                'difficulty': QuestionDifficulty.HARD,
+                'question_text': 'Which country was the first to grant women\'s suffrage at the national level?',
+                'option_a': 'United Kingdom',
+                'option_b': 'New Zealand',
+                'option_c': 'United States',
+                'option_d': 'France',
+                'correct_option': 'B',
+                'explanation': 'New Zealand was the first country to grant women\'s suffrage at the national level in 1893.',
+                'hints': [
+                    'It is not a European country',
+                    'It is in the Southern Hemisphere'
                 ]
             }
         ]

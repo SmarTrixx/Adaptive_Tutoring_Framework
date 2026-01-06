@@ -1064,7 +1064,7 @@ def export_all_student_data(student_id):
                     'engagement_metrics': []
                 }
                 
-                # Add response details
+                # Add response details with complete interaction tracking
                 for response in responses:
                     try:
                         question = Question.query.get(response.question_id)
@@ -1073,7 +1073,25 @@ def export_all_student_data(student_id):
                             'question_text': question.question_text if question else 'N/A',
                             'student_answer': response.student_answer,
                             'is_correct': response.is_correct,
-                            'response_time_seconds': response.response_time_seconds
+                            'response_time_seconds': response.response_time_seconds,
+                            # Behavioral tracking data
+                            'initial_option': response.initial_option,
+                            'final_option': response.final_option,
+                            'option_change_count': response.option_change_count,
+                            'option_change_history': response.option_change_history,
+                            'navigation_frequency': response.navigation_frequency,
+                            'hints_used': response.hints_used,
+                            'interaction_start_timestamp': response.interaction_start_timestamp,
+                            'submission_timestamp': response.submission_timestamp,
+                            'submission_iso_timestamp': response.submission_iso_timestamp,
+                            # Cognitive & Affective tracking data
+                            'time_spent_per_question': response.time_spent_per_question,
+                            'inactivity_duration_ms': response.inactivity_duration_ms,
+                            'question_index': response.question_index,
+                            'hesitation_flags': response.hesitation_flags if response.hesitation_flags else {},
+                            'navigation_pattern': response.navigation_pattern,
+                            'knowledge_gaps': response.knowledge_gaps if response.knowledge_gaps else [],
+                            'timestamp': response.timestamp.isoformat() if response.timestamp else None
                         })
                         
                         # Update summary
@@ -1084,16 +1102,28 @@ def export_all_student_data(student_id):
                         print(f"Error processing response: {e}")
                         continue
                 
-                # Add engagement metrics
+                # Add engagement metrics (all fields)
                 for metric in metrics:
                     try:
                         session_data['engagement_metrics'].append({
                             'timestamp': metric.timestamp.isoformat() if metric.timestamp else None,
-                            'engagement_score': metric.engagement_score,
+                            # Behavioral Indicators
+                            'response_time_seconds': getattr(metric, 'response_time_seconds', None),
+                            'hints_requested': getattr(metric, 'hints_requested', None),
+                            'inactivity_duration': getattr(metric, 'inactivity_duration', None),
+                            'navigation_frequency': getattr(metric, 'navigation_frequency', None),
+                            'completion_rate': getattr(metric, 'completion_rate', None),
+                            # Cognitive Indicators
+                            'accuracy': getattr(metric, 'accuracy', None),
+                            'learning_progress': getattr(metric, 'learning_progress', None),
+                            'knowledge_gaps': getattr(metric, 'knowledge_gaps', None),
+                            # Affective Indicators
+                            'confidence_level': getattr(metric, 'confidence_level', None),
                             'frustration_level': getattr(metric, 'frustration_level', None),
                             'interest_level': getattr(metric, 'interest_level', None),
-                            'confidence_level': getattr(metric, 'confidence_level', None),
-                            'accuracy': getattr(metric, 'accuracy', None)
+                            # Composite
+                            'engagement_score': metric.engagement_score,
+                            'engagement_level': getattr(metric, 'engagement_level', None)
                         })
                         total_engagement += metric.engagement_score
                         engagement_count += 1
@@ -1134,9 +1164,10 @@ def export_all_student_data(student_id):
 
 @analytics_bp.route('/export/csv/<student_id>', methods=['GET'])
 def export_as_csv(student_id):
-    """Export student data as CSV for analysis"""
+    """Export student data as CSV - CUMULATIVE from all completed sessions"""
     import csv
     from io import StringIO
+    import json
     
     try:
         student = Student.query.get(student_id)
@@ -1147,34 +1178,75 @@ def export_as_csv(student_id):
         output = StringIO()
         writer = csv.writer(output)
         
-        # Write header
-        writer.writerow(['Session ID', 'Subject', 'Question', 'Student Answer', 'Correct', 'Time(s)', 'Engagement', 'Frustration', 'Interest', 'Confidence', 'Attention'])
+        # FIXED SCHEMA - CONSISTENT COLUMNS FOR ALL ROWS
+        header = [
+            'Session ID', 'Subject', 'Question', 'Student Answer', 'Correct', 
+            'Response Time(s)', 'Initial Option', 'Final Option', 'Option Changes', 
+            'Navigation Frequency', 'Interaction Timestamp',
+            'Engagement Score', 'Engagement Level', 'Confidence', 'Frustration', 'Interest',
+            'Accuracy', 'Learning Progress', 'Knowledge Gaps', 'Hints Requested', 
+            'Inactivity(s)', 'Completion Rate'
+        ]
+        writer.writerow(header)
         
-        sessions = Session.query.filter_by(student_id=student_id).all()
+        # Query ALL sessions for this student (CUMULATIVE, not just recent)
+        sessions = Session.query.filter_by(student_id=student_id).order_by(Session.session_start.asc()).all()
         
         for session in sessions:
-            responses = StudentResponse.query.filter_by(session_id=session.id).all()
-            metrics = EngagementMetric.query.filter_by(session_id=session.id).all()
+            # Get all responses for this session
+            responses = StudentResponse.query.filter_by(session_id=session.id).order_by(
+                StudentResponse.timestamp.asc()
+            ).all()
             
-            metrics_dict = {m.timestamp: m for m in metrics} if metrics else {}
+            # Get metrics for this session
+            metrics = EngagementMetric.query.filter_by(session_id=session.id).order_by(
+                EngagementMetric.timestamp.asc()
+            ).all()
             
-            for response in responses:
+            # Process each response with matching engagement metric
+            for idx, response in enumerate(responses):
                 question = Question.query.get(response.question_id)
-                metric = list(metrics_dict.values())[0] if metrics_dict else None
                 
-                writer.writerow([
-                    session.id,
-                    session.subject,
-                    question.question_text if question else 'N/A',
-                    response.student_answer,
+                # Match metric to response - use timestamp to find nearest metric
+                metric = None
+                if metrics:
+                    # Find metric closest in time to this response
+                    min_time_diff = float('inf')
+                    for m in metrics:
+                        time_diff = abs((m.timestamp - response.timestamp).total_seconds())
+                        if time_diff < min_time_diff:
+                            min_time_diff = time_diff
+                            metric = m
+                
+                # Build row with FIXED SCHEMA - ALL values present, empty strings for None
+                row = [
+                    response.session_id,
+                    session.subject or '',
+                    (question.question_text if question else 'N/A')[:100],  # Truncate long questions
+                    response.student_answer or '',
                     'Yes' if response.is_correct else 'No',
-                    response.response_time_seconds,
+                    response.response_time_seconds or '',
+                    response.initial_option or '',
+                    response.final_option or '',
+                    response.option_change_count or 0,
+                    response.navigation_frequency or 0,
+                    response.submission_iso_timestamp or '',
+                    # Engagement metrics
                     metric.engagement_score if metric else '',
+                    metric.engagement_level if metric else '',
+                    metric.confidence_level if metric else '',
                     metric.frustration_level if metric else '',
                     metric.interest_level if metric else '',
-                    metric.confidence_level if metric else '',
-                    metric.accuracy if metric else ''
-                ])
+                    metric.accuracy if metric else '',
+                    metric.learning_progress if metric else '',
+                    # Format knowledge gaps as comma-separated string (no JSON)
+                    ', '.join(response.knowledge_gaps) if response.knowledge_gaps else '',
+                    metric.hints_requested if metric else '',
+                    metric.inactivity_duration if metric else '',
+                    metric.completion_rate if metric else ''
+                ]
+                
+                writer.writerow(row)
         
         # Return CSV as JSON response
         csv_content = output.getvalue()
@@ -1188,3 +1260,4 @@ def export_as_csv(student_id):
         import traceback
         traceback.print_exc()
         return jsonify({'error': f'Failed to export CSV: {str(e)}'}), 500
+

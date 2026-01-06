@@ -25,47 +25,34 @@ class EngagementIndicatorTracker:
         """
         # Handle different response_data formats
         if not response_data or not isinstance(response_data, dict):
-            return {
-                'response_time_seconds': 0,
-                'attempts_count': 0,
-                'hints_requested': 0,
-                'navigation_frequency': 0,
-                'completion_rate': 0,
-                'inactivity_duration': 0
-            }
+            response_data = {}
         
-        # Get question_id from response_data
-        question_id = response_data.get('question_id')
-        if not question_id:
-            # Fallback: return empty tracking data
-            return {
-                'response_time_seconds': response_data.get('response_time_seconds', 0),
-                'attempts_count': response_data.get('attempts', 1),
-                'hints_requested': 0,
-                'navigation_frequency': self._calculate_navigation_frequency(session_id),
-                'completion_rate': self._calculate_completion_rate(session_id),
-                'inactivity_duration': self._calculate_inactivity(session_id)
-            }
-        
-        response = StudentResponse.query.filter_by(
-            session_id=session_id,
-            question_id=question_id
+        # Get the LATEST StudentResponse for this session (most recent answer)
+        latest_response = StudentResponse.query.filter_by(
+            session_id=session_id
         ).order_by(StudentResponse.timestamp.desc()).first()
         
-        if not response:
-            return {
-                'response_time_seconds': response_data.get('response_time_seconds', 0),
-                'attempts_count': 1,
-                'hints_requested': 0,
-                'navigation_frequency': 0,
-                'completion_rate': 0,
-                'inactivity_duration': 0
-            }
+        if latest_response:
+            # Get data from the latest response - use explicit None checks
+            response_time_seconds = latest_response.response_time_seconds if latest_response.response_time_seconds is not None else 0
+            if response_time_seconds == 0 and latest_response.response_time_seconds is None:
+                print(f"WARNING: response_time_seconds is None for session {session_id}")
+            
+            attempts_count = latest_response.attempts if latest_response.attempts is not None else 1
+            if attempts_count == 1 and latest_response.attempts is None:
+                print(f"WARNING: attempts is None for session {session_id}")
+            
+            hints_requested = latest_response.hints_used if latest_response.hints_used is not None else 0
+        else:
+            # Fallback to response_data or defaults
+            response_time_seconds = response_data.get('response_time_seconds', 0)
+            attempts_count = response_data.get('attempts', 1)
+            hints_requested = response_data.get('hints_requested', 0)
         
         behavioral_data = {
-            'response_time_seconds': response.response_time_seconds,
-            'attempts_count': response.attempts,
-            'hints_requested': response.hints_used,
+            'response_time_seconds': response_time_seconds,
+            'attempts_count': attempts_count,
+            'hints_requested': hints_requested,
             'navigation_frequency': self._calculate_navigation_frequency(session_id),
             'completion_rate': self._calculate_completion_rate(session_id),
             'inactivity_duration': self._calculate_inactivity(session_id)
@@ -122,22 +109,68 @@ class EngagementIndicatorTracker:
         if affective_feedback is None:
             affective_feedback = {}
         
-        # Infer confidence from accuracy
+        # Dynamically infer affective indicators from actual behavior
         responses = StudentResponse.query.filter_by(session_id=session_id).all()
-        recent_responses = responses[-5:] if responses else []
-        recent_correct = sum(1 for r in recent_responses if r.is_correct)
-        confidence = recent_correct / len(recent_responses) if recent_responses else 0.0
         
-        # Infer frustration from response time and retry patterns
+        # Confidence: based on recent accuracy and decision-making decisiveness
+        confidence = self._infer_confidence(session_id, responses)
+        
+        # Frustration: based on slow responses, option changes, and error streaks
         frustration = self._infer_frustration(session_id, responses)
+        
+        # Interest level: based on engagement patterns
+        interest = self._infer_interest_level(session_id, responses, affective_feedback)
         
         affective_data = {
             'confidence_level': affective_feedback.get('confidence', confidence),
             'frustration_level': affective_feedback.get('frustration', frustration),
-            'interest_level': affective_feedback.get('interest', 0.5)
+            'interest_level': affective_feedback.get('interest', interest)
         }
         
         return affective_data
+    
+    def _infer_interest_level(self, session_id, responses, affective_feedback):
+        """Infer interest level from engagement patterns"""
+        # If explicitly provided, use that
+        if 'interest' in affective_feedback:
+            return affective_feedback['interest']
+        
+        if not responses:
+            return 0.5  # Default neutral
+        
+        # Factors that indicate interest:
+        # 1. Fast response times (engaged, not procrastinating)
+        # 2. Consistent performance (engaged, not bored/careless)
+        # 3. Attempting questions rather than skipping
+        
+        # IMPORTANT: Use actual response times from database
+        # If response_time_seconds is None, something went wrong in logging
+        response_times = [r.response_time_seconds for r in responses if r.response_time_seconds is not None]
+        
+        if not response_times:
+            # No valid response times recorded - default to neutral
+            avg_response_time = 30
+            print(f"[WARNING] No valid response times in {len(responses)} responses")
+        else:
+            avg_response_time = sum(response_times) / len(response_times)
+        
+        # Low response time = interested (fast = engaged)
+        # High response time = less interested or struggling
+        response_time_interest = max(0, 1 - (avg_response_time / 60))  # 0-1 scale
+        
+        # Low variance in performance = interested (consistent engagement)
+        recent = responses[-5:] if len(responses) >= 5 else responses
+        if len(recent) > 1:
+            accuracies = [1.0 if r.is_correct else 0.0 for r in recent]
+            avg_accuracy = sum(accuracies) / len(accuracies)
+            variance = sum((a - avg_accuracy) ** 2 for a in accuracies) / len(accuracies)
+            consistency_interest = max(0, 1 - (variance * 2))  # Low variance = high interest
+        else:
+            consistency_interest = 0.5
+        
+        # Combine factors
+        inferred_interest = (response_time_interest * 0.4) + (consistency_interest * 0.6)
+        return max(0, min(1, inferred_interest))
     
     def calculate_composite_engagement_score(self, behavioral, cognitive, affective):
         """
@@ -230,22 +263,85 @@ class EngagementIndicatorTracker:
         return list(gaps.keys()) if gaps else []
     
     def _infer_frustration(self, session_id, responses):
-        """Infer frustration from response patterns"""
+        """
+        Infer frustration dynamically from recent behavior patterns.
+        Frustration increases with:
+        - Response time deviation (much slower than normal)
+        - Multiple option changes (indecision)
+        - Incorrect streaks (repeated failures)
+        - High inactivity before submission
+        """
+        if not responses:
+            return 0.0
+        
+        # Get the latest response for dynamic computation
+        latest = responses[-1] if responses else None
+        if not latest:
+            return 0.0
+        
+        frustration_factors = []
+        
+        # Factor 1: Response time (very slow = frustration)
+        response_time = latest.response_time_seconds if latest.response_time_seconds else 0
+        if response_time > self.config['response_time_slow']:
+            # Normalize: slow response indicates frustration
+            time_factor = min(1.0, (response_time - self.config['response_time_slow']) / 30.0)
+            frustration_factors.append(time_factor * 0.3)
+        
+        # Factor 2: Option changes (indecision = confusion/frustration)
+        option_changes = latest.option_change_count if latest.option_change_count else 0
+        if option_changes > 2:
+            change_factor = min(1.0, option_changes / 5.0)
+            frustration_factors.append(change_factor * 0.3)
+        
+        # Factor 3: Incorrect streak (recent failures)
+        recent_incorrect = sum(1 for r in responses[-3:] if not r.is_correct)
+        if recent_incorrect >= 2:
+            streak_factor = recent_incorrect / 3.0
+            frustration_factors.append(streak_factor * 0.4)
+        
+        frustration = sum(frustration_factors)
+        return min(1.0, max(0.0, frustration))
+    
+    def _infer_confidence(self, session_id, responses):
+        """
+        Infer confidence from recent performance and option decisiveness.
+        Confidence increases with:
+        - Correct answers
+        - Fast response times (decisive)
+        - Few option changes
+        - High accuracy streak
+        """
         if not responses:
             return 0.5
         
-        # High frustration indicators:
-        # - Slow response times
-        # - Multiple retries
-        # - Frequent hint requests
+        latest = responses[-1] if responses else None
+        if not latest:
+            return 0.5
         
-        slow_responses = sum(1 for r in responses if r.response_time_seconds > self.config['response_time_slow'])
-        high_retries = sum(1 for r in responses if r.attempts > 2)
-        many_hints = sum(1 for r in responses if r.hints_used > 1)
+        confidence_factors = []
         
-        frustration = (slow_responses * 0.3 + high_retries * 0.4 + many_hints * 0.3) / len(responses) if responses else 0.0
-        return min(1.0, frustration)
-    
+        # Factor 1: Recent accuracy (correct answers boost confidence)
+        recent_correct = sum(1 for r in responses[-3:] if r.is_correct)
+        accuracy_factor = recent_correct / 3.0
+        confidence_factors.append(accuracy_factor * 0.4)
+        
+        # Factor 2: Decisiveness (few option changes = confident)
+        option_changes = latest.option_change_count if latest.option_change_count else 0
+        decisiveness_factor = max(0, 1.0 - (option_changes / 5.0))
+        confidence_factors.append(decisiveness_factor * 0.3)
+        
+        # Factor 3: Response time (moderate speed = confident, not rushed or stuck)
+        response_time = latest.response_time_seconds if latest.response_time_seconds else 0
+        if self.config['response_time_fast'] < response_time < self.config['response_time_slow']:
+            time_factor = 1.0
+        else:
+            time_factor = 0.6
+        confidence_factors.append(time_factor * 0.3)
+        
+        confidence = sum(confidence_factors)
+        return min(1.0, max(0.0, confidence))
+
     def _normalize_response_time(self, response_time):
         """Normalize response time to 0-1 scale (too fast or too slow = low engagement)"""
         if response_time < self.config['response_time_fast']:

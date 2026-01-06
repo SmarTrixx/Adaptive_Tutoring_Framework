@@ -1,0 +1,168 @@
+You are an autonomous senior full-stack engineer acting as a fix-and-verify Copilot agent.
+
+Your task is to thoroughly inspect, debug, complete, and correctly wire the entire system (frontend + backend) so that all project objectives are fully met in reality, not claimed.
+
+🔒 STRICT RULES
+
+Do NOT generate summaries, reports, or fix documents.
+
+Do NOT claim anything is fixed unless it is visibly reflected in the frontend and verifiable in exported data.
+
+Do NOT hardcode values (questions, answers, indicators, hints, progress, exports, knowledge gaps, scores, or status).
+
+Every frontend action must be backed by real backend logic and persisted correctly.
+
+If any project objective is unmet, you must implement what is missing until all objectives are satisfied.
+
+🎯 CORE OBJECTIVE
+
+Ensure the system allows real user interaction (not simulation):
+
+Users attempt questions naturally
+
+Navigation, revisit, answer changes, hints, and submission behave correctly
+
+Backend records everything accurately
+
+Exported data (Excel/PDF/CSV/etc.) is perfectly aligned, complete, and correct
+
+🔍 REQUIRED ACTIONS (NO SKIPPING)
+1️⃣ FRONTEND COMPLETENESS & UI LOGIC
+
+Audit the UI and add all missing components required for real interaction, including:
+
+Navigation buttons (Next / Previous)
+
+Revisit controls
+
+Hint request controls
+
+Proper submit handling
+
+Ensure all buttons are wired to backend logic.
+
+Improve UI only if necessary to enable required functionality.
+
+2️⃣ NAVIGATION & PROGRESS BUG (CRITICAL)
+
+Fix the issue where:
+
+Revisiting a question
+
+Changing an answer
+
+Causes progress or question index to increment incorrectly
+
+Ensure:
+
+Changing an answer updates only that question
+
+Progress reflects unique answered questions
+
+No question answers another question unintentionally
+
+3️⃣ SUBMIT & MODAL BEHAVIOR
+
+Fix abnormal behavior where:
+
+Pressing Enter while a submission modal is open
+
+Triggers submit again
+
+Causes question flow corruption
+
+Ensure submit actions are:
+
+Idempotent
+
+Triggered once per intended action
+
+4️⃣ HINT TRACKING (MANDATORY)
+
+Ensure hint requests are recorded:
+
+In backend storage
+
+In exported result data
+
+Verify hint usage is not lost, ignored, or hardcoded
+
+5️⃣ DATA EXPORT MISALIGNMENT (CRITICAL BUG)
+
+Fix the export row corruption of Question 5, where:
+
+Question text spills into wrong columns
+
+Student answers appear in wrong fields
+
+Correct answers shift incorrectly
+
+Ensure strict column mapping:
+
+Question
+
+Student Answer (A/B/C…)
+
+Correct Answer (Yes/No or expected format)
+
+Indicators / knowledge gap / hint usage
+
+Validate export for all questions, not just early ones.
+
+6️⃣ KNOWLEDGE GAP ISSUE (ENGLISH SUBJECT)
+
+Investigate why English Q1–Q4 have empty knowledge gap fields
+
+Ensure:
+
+Knowledge gaps are generated dynamically
+
+Stored correctly
+
+Exported correctly
+
+No placeholder or hardcoded gaps.
+
+7️⃣ REVISIT LOGIC ACCURACY
+
+Fix inaccurate revisit behavior:
+
+Revisiting must not alter progress improperly
+
+Revisiting must not overwrite other answers
+
+Revisiting must maintain original question index
+
+8️⃣ BACKEND VERIFICATION
+
+Verify backend endpoints:
+
+Receive correct payloads
+
+Store correct data
+
+Return correct state to frontend
+
+Confirm all indicators, scores, hints, answers, and gaps are computed dynamically.
+
+🧪 FINAL VALIDATION (MANDATORY)
+
+Before stopping:
+
+Manually trace:
+
+Attempt → revisit → change answer → submit
+
+Hint request → export
+
+Confirm:
+
+Frontend UI visibly reflects fixes
+
+Backend data is accurate
+
+Exported data is aligned and complete
+
+⚠️ If anything is still broken, incomplete, or inconsistent — continue fixing. Do not stop early.
+
+Only stop when the system actually works end-to-end and meets every project objective.

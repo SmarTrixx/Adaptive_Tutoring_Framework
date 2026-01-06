@@ -62,6 +62,30 @@ class StudentResponse(db.Model):
     hints_used = db.Column(db.Integer, default=0)
     attempts = db.Column(db.Integer, default=1)
     
+    # Option selection tracking (Behavioral)
+    initial_option = db.Column(db.String(1), nullable=True)  # First option selected
+    final_option = db.Column(db.String(1), nullable=True)    # Last option before submit
+    option_change_count = db.Column(db.Integer, default=0)   # Number of times user changed option
+    option_change_history = db.Column(db.JSON, default=[])   # List of changes: [{from, to, timestamp}, ...]
+    
+    # Navigation tracking (Behavioral)
+    navigation_frequency = db.Column(db.Integer, default=0)  # Count of navigation events
+    
+    # Timestamps for tracking (Behavioral)
+    interaction_start_timestamp = db.Column(db.Integer, nullable=True)  # milliseconds since epoch
+    submission_timestamp = db.Column(db.Integer, nullable=True)         # milliseconds since epoch
+    submission_iso_timestamp = db.Column(db.String(50), nullable=True)  # ISO format timestamp
+    
+    # Knowledge gaps (Cognitive)
+    knowledge_gaps = db.Column(db.JSON, default=[])  # Empty list or list of gap areas
+    
+    # Cognitive & Affective Indicators (NEW)
+    time_spent_per_question = db.Column(db.Integer, default=0)  # Seconds spent on this question
+    inactivity_duration_ms = db.Column(db.Integer, default=0)  # Milliseconds of inactivity
+    question_index = db.Column(db.Integer, default=0)  # Index of question in session
+    hesitation_flags = db.Column(db.JSON, default={})  # {rapidClicking, longHesitation, frequentSwitching}
+    navigation_pattern = db.Column(db.String(50), default='sequential')  # sequential, revisit, backtrack
+    
     def to_dict(self):
         return {
             'id': self.id,
@@ -72,5 +96,20 @@ class StudentResponse(db.Model):
             'response_time_seconds': self.response_time_seconds,
             'timestamp': self.timestamp.isoformat(),
             'hints_used': self.hints_used,
-            'attempts': self.attempts
+            'attempts': self.attempts,
+            'initial_option': self.initial_option,
+            'final_option': self.final_option,
+            'option_change_count': self.option_change_count,
+            'option_change_history': self.option_change_history,
+            'navigation_frequency': self.navigation_frequency,
+            'interaction_start_timestamp': self.interaction_start_timestamp,
+            'submission_timestamp': self.submission_timestamp,
+            'submission_iso_timestamp': self.submission_iso_timestamp,
+            'knowledge_gaps': self.knowledge_gaps if self.knowledge_gaps else [],
+            'time_spent_per_question': self.time_spent_per_question,
+            'inactivity_duration_ms': self.inactivity_duration_ms,
+            'question_index': self.question_index,
+            'hesitation_flags': self.hesitation_flags if self.hesitation_flags else {},
+            'navigation_pattern': self.navigation_pattern
         }
+

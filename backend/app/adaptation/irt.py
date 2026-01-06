@@ -156,8 +156,12 @@ class IRTModel:
                 }
             
             question_stats[q_id]['total'] += 1
-            question_stats[q_id]['response_times'].append(response.response_time_seconds or 30)
-            question_stats[q_id]['attempts'] += response.attempts or 1
+            # Use actual response time or skip if None (don't mask with hardcoded 30)
+            if response.response_time_seconds is not None and response.response_time_seconds > 0:
+                question_stats[q_id]['response_times'].append(response.response_time_seconds)
+            # Use actual attempts or default to 1 if None
+            attempts = response.attempts if response.attempts is not None else 1
+            question_stats[q_id]['attempts'] += attempts
             
             if response.is_correct:
                 question_stats[q_id]['correct'] += 1

@@ -190,17 +190,20 @@ class RLAdaptiveAgent:
             if not (metric_before and metric_after):
                 continue
             
-            # Discretize states
+            # Discretize states - use explicit None checks for confidence_level
+            confidence_before = metric_before.confidence_level if metric_before.confidence_level is not None else 0.5
+            confidence_after = metric_after.confidence_level if metric_after.confidence_level is not None else 0.5
+            
             state = self.discretize_state(
                 metric_before.engagement_score,
                 metric_before.accuracy,
-                metric_before.confidence_level or 0.5
+                confidence_before
             )
             
             next_state = self.discretize_state(
                 metric_after.engagement_score,
                 metric_after.accuracy,
-                metric_after.confidence_level or 0.5
+                confidence_after
             )
             
             # Convert log to action tuple
@@ -282,10 +285,15 @@ class RLAdaptiveAgent:
     
     def _log_to_action(self, log):
         """Convert AdaptationLog to action tuple"""
-        # Parse action from log
+        # Parse action from log - use explicit None checks
         action_type = log.adaptation_type
-        new_value = log.new_value or 0
-        old_value = log.old_value or 0
+        new_value = log.new_value if log.new_value is not None else 0
+        old_value = log.old_value if log.old_value is not None else 0
+        
+        if new_value == 0 and log.new_value is None:
+            print(f"WARNING: new_value is None in AdaptationLog {log.id}")
+        if old_value == 0 and log.old_value is None:
+            print(f"WARNING: old_value is None in AdaptationLog {log.id}")
         
         # Map to action tuple format
         # This is a simplified mapping; could be more sophisticated

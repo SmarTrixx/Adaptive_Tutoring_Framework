@@ -13,7 +13,6 @@ class EngagementMetric(db.Model):
     
     # Behavioral Indicators
     response_time_seconds = db.Column(db.Float, nullable=True)
-    attempts_count = db.Column(db.Integer, default=0)
     hints_requested = db.Column(db.Integer, default=0)
     inactivity_duration = db.Column(db.Float, default=0.0)  # seconds
     navigation_frequency = db.Column(db.Integer, default=0)  # rapid clicking count
@@ -41,7 +40,6 @@ class EngagementMetric(db.Model):
             'timestamp': self.timestamp.isoformat(),
             'behavioral': {
                 'response_time_seconds': self.response_time_seconds,
-                'attempts_count': self.attempts_count,
                 'hints_requested': self.hints_requested,
                 'inactivity_duration': self.inactivity_duration,
                 'navigation_frequency': self.navigation_frequency,

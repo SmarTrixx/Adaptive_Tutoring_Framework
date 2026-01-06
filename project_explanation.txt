@@ -1,0 +1,335 @@
+Project at hand
+Research Topic: Adaptive Intelligent Tutoring Framework for Engagement
+Driven Preparation in Computer Based Testing System
+Objectives
+i.Design an adaptive intelligent tutoring framework driven by engagement based indicators.
+ii.Integrate behavioural, cognitive, and affective engagement indicators into the framework for
+real time adaptation.
+iii.Implement the framework within a Computer Based Testing preparation system.
+iv.Evaluate the framework’s ability to support sustained engagement and better performance.
+Engagement based indicators
+Engagement based indicators are measurable signs that show how actively and meaningfully a
+learner is involved in a learning task. In most intelligent tutoring and CBT environments, they are
+grouped into behavioural, cognitive, and affective categories. Each category provides different
+evidence about how the student is interacting with the system.
+Below is a structured and academically neutral description.
+1. Behavioural Indicators
+These reflect observable actions during study or testing and are often derived from interaction
+logs.
+Examples include:
+* response time patterns
+* frequency of attempts or retries
+* navigation habits, such as rapid clicking or repeated switching
+* duration of sustained activity on a task
+* completion rates within a session
+* number of hints or guidance requests
+* periods of inactivity
+These indicators help reveal whether the student is actively working, rushing, hesitating, or
+disengaging.
+12. Cognitive Indicators
+These provide insight into the learner’s mental effort or processing level.
+Examples include:
+* accuracy trends across tasks
+* changes in performance as difficulty increases
+* evidence of guessing behaviour
+* consistency or inconsistency in item-level responses
+* time allocation that reflects depth of thinking
+* working memory load inferred from task performance
+* patterns suggesting mastery or confusion
+These indicators are usually inferred rather than directly measured, since they relate to how the
+student thinks rather than what they physically do.
+3. Affective Indicators
+These capture emotional states that shape engagement. They are often derived through computer
+vision, keyboard/mouse interaction patterns, or physiological signals when available.
+Examples include:
+* facial cues indicating confusion, frustration, or concentration
+* gaze stability or frequent shifts in attention
+* signs of boredom or loss of interest
+* emotional valence detected through facial expression analysis
+* stress patterns inferred through behaviour or sensor data
+Affective indicators are useful for understanding when the learner needs encouragement,
+reduced difficulty, or a shift in instructional approach.
+4. Multimodal Indicators
+Many systems combine the three categories to form a richer picture.
+Examples include:
+* merging facial expressions with response time to infer frustration
+* combining accuracy trends with gaze behaviour to detect cognitive overload
+* using navigation patterns alongside emotional cues to interpret attention levels
+Multimodal indicators provide more reliable insight than any single source.
+Summary
+Engagement based indicators help the system understand whether the learner is attentive,
+struggling, motivated, confused, or disengaging. Once captured, these indicators guide adaptive
+decisions such as adjusting difficulty, offering feedback, prompting a break, or delivering targeted
+support.
+21. Mapping Indicators to System Components
+a. Behavioural Indicators → Interaction Logging Module
+This module records item responses, timing patterns, navigation habits, and inactivity periods.
+Its role is to provide continuous traces that reveal how actively the learner is working.
+b. Cognitive Indicators → Performance Analysis Engine
+This component processes accuracy trends, mastery progression, error patterns, and effort levels.
+It translates performance data into estimates of the learner’s cognitive load and understanding.
+c. Affective Indicators → Computer Vision and Affective Detection Unit
+This unit applies facial analysis and gaze tracking to infer emotional states such as frustration or
+confusion.
+It provides real time feedback on the learner’s emotional condition.
+d. Multimodal Indicators → Engagement Fusion Layer
+This layer merges behavioural, cognitive, and affective data.
+Its output is a unified engagement score or classification that improves reliability and reduces
+uncertainty.
+e. Adaptive Decision Layer → Reinforcement Learning Agent
+The RL agent receives the fused engagement state and selects instructional actions such as
+adjusting difficulty, providing hints, or prompting focus.
+2. Mapping Indicators to Research Questions
+Below is a direct alignment that strengthens the conceptual clarity of your study.
+Research Question 1
+How can behavioural, cognitive, and affective indicators be captured and represented within a
+CBT preparation environment?
+Indicators involved: All three categories, each linked to their respective system modules.
+Research Question 2
+How effectively can multimodal engagement indicators support real time interpretation of
+learner engagement?
+Indicators involved: Combined multimodal indicators processed in the Engagement Fusion
+Layer.
+Research Question 3
+How can reinforcement learning use engagement based indicators to guide adaptive
+instructional decisions?
+Indicators involved: Fused indicators sent as the RL agent’s state variables.
+3Research Question 4
+What is the influence of the adaptive system on learner engagement and performance during
+CBT preparation?
+Indicators involved: Behavioural and cognitive outcomes after intervention.
+3. Mapping Indicators to Data Collection Methods
+a. Behavioural Indicators
+Method: System log extraction
+• timestamps
+• clickstream data
+• navigation histories
+• item level performance logs
+b. Cognitive Indicators
+Method: Performance analytics
+• accuracy scores
+• difficulty progression
+• mastery estimates
+• error type profiling
+c. Affective Indicators
+Method: Computer vision and interaction cues
+• webcam based facial expression analysis
+• gaze tracking
+• changes in posture or head movement
+• reduced interaction speed as an inferred emotional signal
+d. Multimodal Indicators
+Method: Data fusion pipeline
+• combines log data, performance metrics, and affective cues
+• produces a final engagement classification or score
+These methods ensure that the system collects the required data in a structured and fine grained
+manner.
+4. Mapping Indicators to Reinforcement Learning State Representations
+In your adaptive tutoring framework, the RL agent needs a compact but expressive representation
+of the learner’s engagement state.
+4Proposed RL State Variables
+Behavioural Components
+• response time deviation from expected range
+• number of hints requested
+• inactivity duration
+• task switching frequency
+Cognitive Components
+• current accuracy level
+• slope of performance improvement or decline
+• inferred cognitive load
+• mastery index for current topic
+Affective Components
+• probability of frustration
+• probability of confusion
+• probability of boredom
+• gaze stability score
+Why this matters
+A well constructed RL state allows the agent to:
+• detect whether the learner is progressing or struggling
+• recognise emotional shifts that require supportive intervention
+• select the most suitable instructional action from the available options
+The decision results in actions such as:
+• increasing or reducing difficulty
+• delivering a hint or explanation
+• providing a motivational prompt
+• suggesting a short break
+• switching to a different question type
+5SYSTEM ARCHITECTURE
+System Architecture Diagram
+Explanation of the System Architecture
+The architecture outlines how an adaptive, AI driven tutoring system continuously observes,
+interprets, and responds to learner engagement. It follows a layered progression that moves from
+raw interaction to structured adaptation. Each layer performs a distinct role, yet the entire system
+functions as an integrated whole.
+1. Student Interaction with the CBT Environment
+Every process begins with the learner’s ordinary engagement with the CBT platform. During
+practice or test preparation, the student attempts questions, navigates through the interface,
+reflects on feedback, and deals with the natural fluctuations in motivation and understanding. This
+6interaction is the central point around which the entire architecture operates. The system does not
+impose behaviour; instead, it observes whatever the learner naturally displays during the learning
+session. The reliability of the system therefore depends on capturing these interactions as
+faithfully as possible.
+2. Data Capture Layer
+The architecture separates the learner’s observable signals into three distinct categories. This
+separation ensures clarity in the type of information collected and allows different analytical
+techniques to be applied.
+a. Behavioural Capture
+Interaction logs represent the most direct trail of learner activity. They show where effort is being
+placed, how quickly tasks are being approached, and whether the learner is focused or shifting
+attention irregularly. For example, a sudden rise in guessing behaviour or long pauses between
+clicks may indicate emerging disengagement. These logs allow the system to recognise such
+patterns without requiring learner self-reports.
+b. Cognitive Capture
+Performance data reflects how well the learner is processing information. As students attempt
+questions of varying difficulty, their accuracy, time allocation, and error patterns begin to reveal
+their understanding of the content. Cognitive indicators provide a window into whether the learner
+is progressing steadily, struggling with specific concepts, or entering a state of cognitive overload.
+c. Affective Capture
+Affective signals introduce an additional dimension that is frequently missing in conventional
+CBT systems. Facial expressions, gaze direction, and head movements can reveal emotional states
+that influence learning effort. Signs such as confusion, frustration, or declining interest are
+especially important in high stakes settings like JAMB preparation. By capturing these signals,
+the system begins to approximate how a human tutor might perceive a student’s emotional state
+during study.
+3. Processing Layer
+Once the raw data is collected, each category undergoes a form of structured interpretation.
+a. Behavioural Processing Layer
+This layer organises the interaction logs into meaningful behavioural profiles. Instead of
+recording isolated actions, the processing layer identifies trends and patterns. For instance, a
+learner who consistently spends too little time on difficult questions might be rushing, while one
+who requests multiple hints may be seeking additional support.
+7b. Cognitive Analysis Engine
+The cognitive engine interprets performance trajectories. It evaluates whether the learner is
+improving, plateauing, or declining as they progress. It also identifies the types of errors being
+made, which may indicate misconceptions rather than simple mistakes. This interpretation helps
+determine when the system should introduce additional scaffolding or adjust question difficulty.
+c. Affective Analysis Unit
+This unit applies affective modelling techniques to the visual data. It estimates the learner’s
+emotional state using facial cues or gaze stability. Although interpretations are probabilistic, when
+combined with behavioural and cognitive indicators they provide a clearer understanding of the
+learner’s engagement.
+4. Engagement Fusion Layer
+This layer plays a pivotal role by bringing together the outputs from all three processing units.
+Instead of treating behavioural, cognitive, and affective cues separately, the fusion layer integrates
+them into a unified engagement state.
+The purpose of this fusion is to:
+• reduce noise produced by relying on a single data source
+• improve reliability through corroboration across modalities
+• provide a coherent representation of real-time engagement
+A student who appears to be performing well but shows clear signs of emotional fatigue, for
+example, may still benefit from adaptive intervention.
+5. Reinforcement Learning Agent
+At this stage, the system moves from observation to decision making. The reinforcement learning
+agent receives the fused engagement state and evaluates the possible instructional actions
+available. Its objective is to choose the action that will most likely improve engagement and
+support learning progression.
+The RL agent gradually learns from previous decisions. Over time it refines its strategy,
+developing a policy that aligns interventions with patterns that have historically improved learner
+engagement and performance.
+6. Adaptive Instructional Decision Module
+This module converts the RL agent’s selected action into an instructional response. The system
+may, for instance:
+• increase or reduce question difficulty
+• break a complex problem into structured steps
+8• provide a targeted hint
+• prompt the learner to regain focus
+• introduce a brief pause to reduce cognitive strain
+This stage ensures that instructional support is timely and sensitive to the learner’s immediate
+state.
+7. Updated CBT Learning Environment
+After the chosen adaptation is applied, the learning interface updates accordingly. The learner
+experiences a changed environment—one that reflects the system’s interpretation of their
+engagement. This environment may appear only subtly different, but these small adjustments
+accumulate to shape a more personalised learning trajectory.
+8. Feedback Loop to Student
+The architecture ends where it began: with the learner. Each adaptation alters the learner’s
+behaviour, performance, and emotional state in some way. These new signals are again captured,
+processed, fused, and fed into the RL agent.
+This recurring cycle gives the system its adaptive character. The system is not static; it continually
+evolves in response to the learner’s ongoing engagement.
+Overall Significance
+The architecture demonstrates how modern AI techniques allow a digital system to approximate
+the insight of a human tutor by observing multiple layers of engagement. It provides a structured
+pathway for capturing detailed learning signals, interpreting them, and transforming them into
+adaptive support that evolves over time.
+9Conceptual Framework Diagram
+Explanation of the Conceptual Framework
+The conceptual framework illustrates the theoretical and operational relationships among the key
+variables involved in developing an adaptive intelligent tutoring system for CBT preparation. It
+shows how engagement signals flow from the learner, how they are interpreted by the system,
+and how instructional adaptation influences learning outcomes.
+The diagram is organised into four major elements:
+(1) the learner, (2) engagement based indicators, (3) the adaptive intelligent tutoring system,
+and (4) instructional adaptation leading to outcomes.
+Each element is connected by directional arrows to show the logical progression from observation
+to adaptation and eventual learning improvement.
+1. Learner
+The framework begins with the learner, who is the central participant in the CBT preparation
+environment. The learner brings cognitive abilities, prior knowledge, affective tendencies, and
+behavioural habits into the study session. These natural attributes influence how the learner
+interacts with the system.
+The framework positions the learner at the top because all observable indicators originate from
+this point. Without learner interaction, no adaptive mechanism can be triggered.
+102. Engagement Based Indicators
+The learner's interactions generate measurable signals known as engagement based indicators.
+These indicators are grouped into three categories:
+a. Behavioural Indicators
+These reflect observable actions such as response time, task persistence, navigation patterns, and
+interaction frequency. They reveal how actively the learner is participating.
+b. Cognitive Indicators
+These relate to performance outcomes, accuracy levels, difficulty progression, and error patterns.
+They indicate how well the learner is processing and understanding the material.
+c. Affective Indicators
+These include emotional cues such as facial expressions, gaze stability, frustration levels, or signs
+of fatigue. They help identify shifts in emotional engagement.
+The framework treats these indicators as mediating variables that link learner activity to the
+adaptive capacity of the system. In other words, without engagement cues, the system cannot
+determine when or how to intervene.
+3. Adaptive Intelligent Tutoring System
+This is the core component of the framework. It represents the computational processes that
+interpret the engagement indicators and transform them into actionable instructional decisions.
+The system performs four essential functions:
+a. Capture
+It receives behavioural, cognitive, and affective signals from the learner.
+b. Interpretation
+It processes and analyses these signals to determine the learner’s engagement state.
+c. Integration
+It fuses the different categories of indicators into a more reliable representation of the learner’s
+condition.
+d. Adaptation
+It selects and delivers appropriate feedback or instructional support.
+This system acts as the mechanism through which engagement signals influence the learning
+environment.
+114. Instructional Adaptation
+Instructional adaptation refers to the specific changes the system makes in response to the
+learner’s engagement state. Examples include:
+• adjusting the difficulty of questions
+• offering hints or scaffolding
+• providing motivational or corrective feedback
+• encouraging the learner to refocus
+• changing the mode of presentation
+• pacing the learner’s activity
+The conceptual framework positions instructional adaptation as the immediate output of the
+intelligent tutoring system. It is the visible way the system responds to the learner’s engagement.
+5. Learning Outcomes
+At the bottom of the framework are the expected learning outcomes. These outcomes represent
+the improvement the system aims to achieve through continuous adaptation. Key outcomes may
+include:
+• enhanced engagement
+• greater persistence
+• improved accuracy and mastery
+• reduced frustration
+• better overall performance in CBT preparation
+Learning outcomes close the cycle by showing the ultimate effect of the intelligent tutoring
+system on the learner.
+How the Framework Operates as a Whole
+The conceptual framework demonstrates a linear but cyclical logic:
+Learner → Engagement Indicators → Intelligent Tutoring System → Instructional
+Adaptation → Learning Outcomes
+• The learner produces engagement signals.
+• The system uses these signals to interpret the learner’s needs.
+• Adaptation is delivered based on that interpretation.
+• The learner responds to the adaptation, producing new engagement signals.
+• The cycle repeats throughout the learning session.
+This continuous loop is fundamental to adaptive learning systems and illustrates how technology
+can approximate the responsive behaviour of a human tutor.
+12
