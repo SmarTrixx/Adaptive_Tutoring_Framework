@@ -42,6 +42,86 @@ let inactivityTimer = null;
 let lastInteractionTime = null;
 let currentInactivityDuration = 0;
 
+// ============================================================================
+// AUTHORITATIVE TEST STATE - NEVER RESET BY TIMERS OR RENDERS
+// ============================================================================
+
+const TEST_STATE = {
+    // Immutable during question display
+    currentQuestionIndex: 0,        // Current question position in history
+    highestAnsweredIndex: -1,        // Highest question that has been answered
+    sessionId: null,                 // Current session
+    
+    // Per-question engagement and time (persists across re-renders)
+    timeStartPerQuestion: {},        // { questionId: Date.now() }
+    engagementPerQuestion: {},       // { questionId: score }
+    
+    // Timers (one active at a time)
+    activeTimeInterval: null,        // Currently running time timer
+    activeInactivityInterval: null,  // Currently running inactivity timer
+    
+    // Navigation rules (never overridden by render)
+    canNavigateNext() {
+        // Can only navigate forward if we've answered more questions than current position
+        return this.currentQuestionIndex < this.highestAnsweredIndex;
+    },
+    
+    canNavigatePrev() {
+        return this.currentQuestionIndex > 0;
+    },
+    
+    isOnCurrentQuestion() {
+        return this.currentQuestionIndex === this.highestAnsweredIndex;
+    },
+    
+    // Update authoritative state (called from backend responses only)
+    setCurrentQuestionIndex(index) {
+        this.currentQuestionIndex = index;
+        console.log('[TEST_STATE] Set currentQuestionIndex =', index);
+    },
+    
+    setHighestAnsweredIndex(index) {
+        if (index > this.highestAnsweredIndex) {
+            this.highestAnsweredIndex = index;
+            console.log('[TEST_STATE] Set highestAnsweredIndex =', index);
+        }
+    },
+    
+    // Store engagement (never resets)
+    setEngagementForQuestion(questionId, score) {
+        this.engagementPerQuestion[questionId] = score;
+        console.log('[TEST_STATE] Set engagement for Q' + questionId + ' =', score);
+    },
+    
+    getEngagementForQuestion(questionId) {
+        return this.engagementPerQuestion[questionId] || 0;
+    },
+    
+    // Timer management
+    clearAllTimers() {
+        if (this.activeTimeInterval) {
+            clearInterval(this.activeTimeInterval);
+            this.activeTimeInterval = null;
+        }
+        if (this.activeInactivityInterval) {
+            clearInterval(this.activeInactivityInterval);
+            this.activeInactivityInterval = null;
+        }
+    },
+    
+    startQuestionTimer(questionId) {
+        this.clearAllTimers();
+        this.timeStartPerQuestion[questionId] = Date.now();
+        console.log('[TEST_STATE] Started timer for Q' + questionId);
+    },
+    
+    getTimeElapsedForQuestion(questionId) {
+        const startTime = this.timeStartPerQuestion[questionId];
+        if (!startTime) return 0;
+        return Math.floor((Date.now() - startTime) / 1000);
+    }
+};
+
 // Safe initialization function
 function safeInitialize() {
     console.log('[APP] safeInitialize() called');
@@ -417,13 +497,19 @@ async function submitAnswer(questionId, answer, responseTime) {
 
 async function trackEngagement(responseData) {
     try {
-        // Display engagement score immediately from backend response
+        // CRITICAL FIX: Store engagement in TEST_STATE (persists across re-renders)
         if (responseData.engagement_score !== undefined) {
+            const score = responseData.engagement_score || 0;
+            const questionId = currentQuestionState.questionId;
+            
+            // Store in authoritative TEST_STATE
+            TEST_STATE.setEngagementForQuestion(questionId, score);
+            
+            // Also update DOM immediately
             const engagementScore = document.getElementById('engagement-score');
             if (engagementScore) {
-                const score = responseData.engagement_score || 0;
                 engagementScore.textContent = (score * 100).toFixed(0) + '%';
-                console.log('[ENGAGEMENT] Updated from response:', score);
+                console.log('[ENGAGEMENT] Stored in TEST_STATE for Q' + questionId + ':', score);
             }
         }
         
@@ -735,7 +821,10 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
         const historyItem = sessionQuestionHistory[revisitIndex];
         const question = historyItem.question;
         
+        // Sync TEST_STATE with revisit
+        TEST_STATE.setCurrentQuestionIndex(revisitIndex);
         currentQuestionIndex = revisitIndex;
+        
         currentQuestionState = {
             questionId: question.question_id,
             questionIndex: revisitIndex,
@@ -757,6 +846,7 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
         
         questionStartTime = Date.now();
         console.log('[TRACKING] Revisiting question:', {index: revisitIndex, questionId: question.question_id});
+        console.log('[TEST_STATE] Synced to revisit index:', revisitIndex);
         
         renderQuestionWithNav(question, revisitIndex, true);
         startInactivityTracking();
@@ -860,11 +950,16 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
             });
             currentQuestionIndex = sessionQuestionHistory.length - 1;
             
+            // CRITICAL: Sync TEST_STATE with new question
+            TEST_STATE.setCurrentQuestionIndex(currentQuestionIndex);
+            TEST_STATE.setHighestAnsweredIndex(currentQuestionIndex);  // Track progress
+            
             // Capture the time when question is rendered
             questionStartTime = Date.now();
             console.log('Question rendered at:', new Date(questionStartTime).toISOString());
             console.log('[TRACKING] Initialized question state:', currentQuestionState);
             console.log('[TRACKING] Question index:', currentQuestionIndex, 'History length:', sessionQuestionHistory.length);
+            console.log('[TEST_STATE] Synced to new question index:', currentQuestionIndex, 'highestAnsweredIndex:', TEST_STATE.highestAnsweredIndex);
             
             // Use renderQuestionWithNav to display with navigation buttons
             console.log('[FLOW] About to call renderQuestionWithNav');
@@ -929,8 +1024,13 @@ function startInactivityTracking() {
     lastInteractionTime = Date.now();
     currentInactivityDuration = 0;
     
+    // CRITICAL FIX: Clear existing inactivity timer before creating new one
+    if (inactivityTimer) {
+        clearInterval(inactivityTimer);
+        inactivityTimer = null;
+    }
+    
     // Check inactivity every 500ms
-    if (inactivityTimer) clearInterval(inactivityTimer);
     inactivityTimer = setInterval(() => {
         const elapsed = Date.now() - lastInteractionTime;
         currentInactivityDuration = elapsed;
@@ -940,91 +1040,88 @@ function startInactivityTracking() {
             currentQuestionState.hesitationFlags.longHesitation = true;
         }
     }, 500);
+    
+    console.log('[INACTIVITY] Tracking started for Q' + currentQuestionState.questionId);
 }
 
 function startTimeTracking() {
     const timeCounter = document.getElementById('time-counter');
-    if (!timeCounter) return;
+    if (!timeCounter) {
+        console.warn('[TIMER] time-counter element not found');
+        return;
+    }
     
-    const startTime = Date.now();
-    const timerInterval = setInterval(() => {
+    // CRITICAL FIX: Clear any existing timer before creating new one
+    TEST_STATE.clearAllTimers();
+    
+    // Get current question ID from currentQuestionState
+    const questionId = currentQuestionState.questionId;
+    if (!questionId) {
+        console.error('[TIMER] No question ID set');
+        return;
+    }
+    
+    // Start the timer in TEST_STATE
+    TEST_STATE.startQuestionTimer(questionId);
+    
+    // Update display every 100ms from authoritative TEST_STATE
+    TEST_STATE.activeTimeInterval = setInterval(() => {
+        // Check if DOM still exists
         if (!timeCounter.parentElement) {
-            clearInterval(timerInterval);
+            TEST_STATE.clearAllTimers();
             return;
         }
         
-        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        // Get elapsed time from TEST_STATE (never resets)
+        const elapsed = TEST_STATE.getTimeElapsedForQuestion(questionId);
         const minutes = Math.floor(elapsed / 60);
         const seconds = elapsed % 60;
         timeCounter.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        console.log('[TIMER] Question', questionId, 'elapsed:', elapsed, 's');
     }, 100);
 }
 
 function navigatePreviousQuestion() {
-    // CRITICAL FIX: Disable Previous on first question of session
-    if (currentQuestionIndex === 0) {
-        console.log('[NAV-PREV] Blocked - Cannot go previous, at first question of session (index=0)');
+    // CRITICAL FIX: Use TEST_STATE navigation rules (never override on re-render)
+    if (!TEST_STATE.canNavigatePrev()) {
+        console.log('[NAV-PREV] Blocked - TEST_STATE.canNavigatePrev() = false');
         return;
     }
     
-    if (currentQuestionIndex > 0) {
-        sessionNavigationCount++;
-        currentQuestionState.navigationCount++;
-        console.log('[TRACKING] Navigation: Previous question', {
-            from: currentQuestionIndex, 
-            to: currentQuestionIndex - 1,
-            navCount: sessionNavigationCount
-        });
-        showQuestion(currentQuestionIndex - 1, true);
-    }
+    // Navigate to previous question
+    TEST_STATE.setCurrentQuestionIndex(TEST_STATE.currentQuestionIndex - 1);
+    sessionNavigationCount++;
+    currentQuestionState.navigationCount++;
+    console.log('[TRACKING] Navigation: Previous question via TEST_STATE', {
+        from: TEST_STATE.currentQuestionIndex + 1, 
+        to: TEST_STATE.currentQuestionIndex,
+        navCount: sessionNavigationCount
+    });
+    showQuestion(TEST_STATE.currentQuestionIndex, true);
 }
 
 function navigateNextQuestion() {
-    // CRITICAL FIX: Navigation logic with proper test completion handling
-    // Rules:
-    // 1. DISABLED if on current active question (must answer first)
-    // 2. ENABLED if revisiting (navigating back through history)
-    // 3. When at end of history, advance to current question (don't end test)
-    // 4. Test ONLY ends when user explicitly submits last question OR via modal after submission
-    
-    const isOnCurrentQuestion = currentQuestionIndex === (currentSession.questions_completed || 0);
-    const isLastQuestion = currentQuestionIndex >= currentSession.num_questions - 1;
-    const historyLength = sessionQuestionHistory.length;
-    const atEndOfHistory = currentQuestionIndex >= historyLength - 1;
-    
-    console.log('[NAV-NEXT] Evaluating:', {
-        currentQuestionIndex,
-        questions_completed: currentSession.questions_completed,
-        isOnCurrentQuestion,
-        isLastQuestion,
-        historyLength,
-        atEndOfHistory
-    });
-    
-    // CRITICAL: Cannot proceed from current active question - must answer first
-    if (isOnCurrentQuestion) {
-        console.log('[NAV-NEXT] Blocked - Must answer current question first (isOnCurrentQuestion=true, index=' + currentQuestionIndex + ')');
+    // CRITICAL FIX: Use TEST_STATE navigation rules (never override on re-render/timer)
+    if (!TEST_STATE.canNavigateNext()) {
+        console.log('[NAV-NEXT] Blocked - TEST_STATE.canNavigateNext() = false, isOnCurrentQuestion=' + TEST_STATE.isOnCurrentQuestion());
         return;
     }
     
-    // If revisiting and can advance in history (haven't reached current question yet)
-    if (currentQuestionIndex < historyLength - 1) {
+    // Navigate to next question in history
+    const nextIndex = TEST_STATE.currentQuestionIndex + 1;
+    if (nextIndex < sessionQuestionHistory.length) {
+        TEST_STATE.setCurrentQuestionIndex(nextIndex);
         sessionNavigationCount++;
         currentQuestionState.navigationCount++;
-        console.log('[TRACKING] Navigation: Next in history', {
-            from: currentQuestionIndex,
-            to: currentQuestionIndex + 1,
+        console.log('[TRACKING] Navigation: Next question via TEST_STATE', {
+            from: TEST_STATE.currentQuestionIndex - 1,
+            to: nextIndex,
             navCount: sessionNavigationCount
         });
-        showQuestion(currentQuestionIndex + 1, true);
-    } else if (atEndOfHistory && !isOnCurrentQuestion) {
-        // At end of history but not at current question - advance to current
-        console.log('[NAV-NEXT] At end of history, advancing to current question (not revisit)');
-        sessionNavigationCount++;
-        currentQuestionState.navigationCount++;
-        showQuestion(currentQuestionIndex, false);
+        showQuestion(nextIndex, true);
     } else {
-        console.log('[NAV-NEXT] Cannot navigate - already at end');
+        console.log('[NAV-NEXT] At end of history, cannot navigate further');
     }
 }
 
@@ -1086,25 +1183,22 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
                 ? ((currentSession.questions_completed || 0) / currentSession.num_questions) * 100 
                 : 0;
     
-    // Navigation logic - CRITICAL STATE VALIDATION:
-    // Previous: DISABLED if questionIndex === 0 (first question of session)
-    // Next: DISABLED if questionIndex === questions_completed (current active question, must answer)
-    // Next: ENABLED if questionIndex < questions_completed (revisiting older question)
-    // Note: isLastQuestion is informational only - does NOT trigger test end via navigation
-    const canNavigatePrev = questionIndex > 0; // Always disabled on first question
-    const isOnCurrentQuestion = questionIndex === (currentSession.questions_completed || 0);
+    // CRITICAL FIX: Use TEST_STATE methods for navigation eligibility
+    // These survive re-renders and timer ticks
+    const canNavigatePrev = TEST_STATE.canNavigatePrev();
+    const canNavigateNext = TEST_STATE.canNavigateNext();
+    const isOnCurrentQuestion = TEST_STATE.isOnCurrentQuestion();
     const isRevisiting = currentQuestionState && currentQuestionState.isRevisit;
-    const canNavigateNext = !isOnCurrentQuestion; // Can navigate only if revisiting
     const isLastQuestion = questionIndex >= currentSession.num_questions - 1;
     
-    console.log('[RENDER] Navigation state:', {
+    console.log('[RENDER] Navigation state from TEST_STATE:', {
         canNavigatePrev, 
         canNavigateNext, 
         isLastQuestion,
         isOnCurrentQuestion,
         isRevisiting,
-        questionIndex,
-        questions_completed: currentSession.questions_completed
+        currentQuestionIndex: TEST_STATE.currentQuestionIndex,
+        highestAnsweredIndex: TEST_STATE.highestAnsweredIndex
     });
     
     content.innerHTML = `
@@ -1120,27 +1214,7 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
                 <div style="background: #e8eaf6; height: 8px; border-radius: 10px; overflow: hidden;">
                     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); height: 100%; width: ${progressPercent}%; transition: width 0.3s;"></div>
                 </div>
-            </div>
-            
-            <!-- Stats Grid with Time & Attempts -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 30px;">
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
-                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">CORRECT</div>
-                    <div style="font-size: 28px; font-weight: bold;">${currentSession.correct_answers || 0}</div>
-                </div>
-                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
-                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">DIFFICULTY</div>
-                    <div style="font-size: 28px; font-weight: bold;">${(currentSession.current_difficulty * 100).toFixed(0)}%</div>
-                </div>
-                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
-                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">ENGAGEMENT</div>
-                    <div style="font-size: 28px; font-weight: bold;" id="engagement-score">--</div>
-                </div>
-                <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
-                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">TIME</div>
-                    <div style="font-size: 20px; font-weight: bold;" id="time-counter">0:00</div>
-                </div>
-            </div>
+            </div>`
             
             <!-- Question Card -->
             <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); margin-bottom: 30px;">
@@ -1236,6 +1310,18 @@ function renderQuestionWithNav(question, questionIndex, isRevisit) {
     
     // Start timer display
     startTimeTracking();
+    
+    // CRITICAL FIX: Restore engagement score from TEST_STATE (never reset on re-render)
+    const engagementScoreElement = document.getElementById('engagement-score');
+    if (engagementScoreElement) {
+        const savedEngagement = TEST_STATE.getEngagementForQuestion(question.question_id);
+        if (savedEngagement > 0) {
+            engagementScoreElement.textContent = (savedEngagement * 100).toFixed(0) + '%';
+            console.log('[RENDER] Restored engagement for Q' + question.question_id + ':', savedEngagement);
+        } else {
+            engagementScoreElement.textContent = '--';
+        }
+    }
 }
 
 // Data Export Functions for Research
