@@ -780,7 +780,24 @@ function showFeedbackModal(isCorrect, correctAnswer, explanation, newDifficulty,
         }
     };
     
+    // Declare autoCloseTimeout before handleContinue so it can be cleared
+    let autoCloseTimeout = null;
+    let continueHandlerExecuted = false;
+    
     const handleContinue = async () => {
+        // CRITICAL: Prevent double execution
+        if (continueHandlerExecuted) {
+            console.log('[MODAL] handleContinue already executed, skipping duplicate call');
+            return;
+        }
+        continueHandlerExecuted = true;
+        
+        // CRITICAL: Clear the auto-close timeout to prevent double triggers
+        if (autoCloseTimeout) {
+            clearTimeout(autoCloseTimeout);
+            console.log('[MODAL] Cleared auto-close timeout');
+        }
+        
         closeModal();
         
         // CRITICAL FIX: Only auto-navigate if submission is current action, not if user navigated
@@ -833,7 +850,11 @@ function showFeedbackModal(isCorrect, correctAnswer, explanation, newDifficulty,
     }
     
     // Auto-close after 12 seconds if user hasn't dismissed (extended from 3s)
-    const autoCloseTimeout = setTimeout(handleContinue, 12000);
+    // CRITICAL: Store in variable that can be cleared to prevent double execution
+    autoCloseTimeout = setTimeout(() => {
+        console.log('[MODAL] Auto-closing feedback modal after 12s (no user interaction)');
+        handleContinue();
+    }, 12000);
 }
 
 // UI Display Functions
