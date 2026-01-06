@@ -1,6 +1,9 @@
 from app.models.session import Session, StudentResponse
 from app.models.question import Question
 from app.models.student import Student
+from app.models.engagement import EngagementMetric
+from app.engagement.tracker import EngagementIndicatorTracker
+from app.adaptation.engine import AdaptiveEngine
 from app import db
 from datetime import datetime
 
@@ -11,7 +14,7 @@ class CBTSystem:
     """
     
     def __init__(self):
-        pass
+        self.adaptive_engine = AdaptiveEngine()
     
     def start_session(self, student_id, subject, num_questions=10):
         """
@@ -47,9 +50,11 @@ class CBTSystem:
     
     def get_next_question(self, session_id, current_difficulty=None):
         """
-        Get the next question for the student
-        Uses adaptive difficulty if provided
+        Get the next question for the student.
+        Uses difficulty mapping to select from appropriate question pool.
         """
+        from app.adaptation.difficulty_mapper import DifficultyMapper
+        
         session = Session.query.get(session_id)
         if not session:
             return {'error': 'Session not found'}, 404
@@ -89,17 +94,29 @@ class CBTSystem:
         ).with_entities(StudentResponse.question_id).all()
         answered_ids = [q[0] for q in answered_questions]
         
-        # Find unanswered questions near the target difficulty
-        difficulty_range = 0.15  # ±15% of target difficulty
+        # Use difficulty mapper to determine question pool
+        min_difficulty, max_difficulty, difficulty_label = DifficultyMapper.get_difficulty_range(difficulty)
+        
+        # Get unanswered questions from the appropriate difficulty range
         questions = Question.query.filter(
             Question.subject == session.subject,
-            Question.difficulty >= (difficulty - difficulty_range),
-            Question.difficulty <= (difficulty + difficulty_range),
+            Question.difficulty >= min_difficulty,
+            Question.difficulty <= max_difficulty,
             ~Question.id.in_(answered_ids) if answered_ids else True
         ).all()
         
         if not questions:
-            # Fallback: get any unanswered question
+            # Fallback: use tighter band around current difficulty
+            min_band, max_band, _ = DifficultyMapper.get_difficulty_band(difficulty)
+            questions = Question.query.filter(
+                Question.subject == session.subject,
+                Question.difficulty >= min_band,
+                Question.difficulty <= max_band,
+                ~Question.id.in_(answered_ids) if answered_ids else True
+            ).all()
+        
+        if not questions:
+            # Final fallback: get any unanswered question
             questions = Question.query.filter(
                 Question.subject == session.subject,
                 ~Question.id.in_(answered_ids) if answered_ids else True
@@ -135,9 +152,15 @@ class CBTSystem:
             'hints_available': len(question.hints)
         }
     
-    def submit_response(self, session_id, question_id, student_answer, response_time_seconds):
+    def submit_response(self, session_id, question_id, student_answer, response_time_seconds,
+                       initial_option=None, final_option=None, option_change_count=0, 
+                       option_change_history=None, navigation_frequency=0,
+                       interaction_start_timestamp=None, submission_timestamp=None, 
+                       submission_iso_timestamp=None,
+                       time_spent_per_question=0, inactivity_duration_ms=0,
+                       question_index=0, hesitation_flags=None, navigation_pattern='sequential'):
         """
-        Record a student's response to a question
+        Record a student's response to a question with comprehensive cognitive and affective tracking
         """
         session = Session.query.get(session_id)
         if not session:
@@ -150,22 +173,81 @@ class CBTSystem:
         # Check if answer is correct
         is_correct = student_answer.upper() == question.correct_option
         
-        # Create response record
-        response = StudentResponse(
+        # CHECK FOR EXISTING RESPONSE - UPDATE IF EXISTS, CREATE IF NEW
+        existing_response = StudentResponse.query.filter_by(
             session_id=session_id,
-            question_id=question_id,
-            student_answer=student_answer,
-            is_correct=is_correct,
-            response_time_seconds=response_time_seconds,
-            attempts=1
-        )
+            question_id=question_id
+        ).first()
         
-        db.session.add(response)
-        
-        # Update session stats
-        # Don't modify total_questions - it was set at session start
-        if is_correct:
-            session.correct_answers += 1
+        if existing_response:
+            # UPDATE EXISTING RESPONSE (revisit/change answer scenario)
+            # Track if correctness changed for session stats
+            was_correct_before = existing_response.is_correct
+            
+            # Update all fields
+            existing_response.student_answer = student_answer
+            existing_response.is_correct = is_correct
+            existing_response.response_time_seconds = response_time_seconds
+            existing_response.initial_option = initial_option
+            existing_response.final_option = final_option
+            existing_response.option_change_count = option_change_count
+            existing_response.option_change_history = option_change_history if option_change_history else []
+            existing_response.navigation_frequency = navigation_frequency
+            existing_response.interaction_start_timestamp = interaction_start_timestamp
+            existing_response.submission_timestamp = submission_timestamp
+            existing_response.submission_iso_timestamp = submission_iso_timestamp
+            existing_response.time_spent_per_question = time_spent_per_question
+            existing_response.inactivity_duration_ms = inactivity_duration_ms
+            existing_response.question_index = question_index
+            existing_response.hesitation_flags = hesitation_flags if hesitation_flags else {}
+            existing_response.navigation_pattern = navigation_pattern
+            
+            db.session.merge(existing_response)
+            
+            # Update session stats only if correctness changed
+            if was_correct_before and not is_correct:
+                # Was correct, now wrong - decrease correct count
+                session.correct_answers -= 1
+            elif not was_correct_before and is_correct:
+                # Was wrong, now correct - increase correct count
+                session.correct_answers += 1
+            # If no change (both correct or both wrong), session.correct_answers stays same
+        else:
+            # CREATE NEW RESPONSE (first attempt)
+            response = StudentResponse(
+                session_id=session_id,
+                question_id=question_id,
+                student_answer=student_answer,
+                is_correct=is_correct,
+                response_time_seconds=response_time_seconds,
+                # Behavioral: Option Changes
+                initial_option=initial_option,
+                final_option=final_option,
+                option_change_count=option_change_count,
+                option_change_history=option_change_history if option_change_history else [],
+                # Behavioral: Navigation
+                navigation_frequency=navigation_frequency,
+                # Timestamps
+                interaction_start_timestamp=interaction_start_timestamp,
+                submission_timestamp=submission_timestamp,
+                submission_iso_timestamp=submission_iso_timestamp,
+                # Cognitive: Time & Activity
+                time_spent_per_question=time_spent_per_question,
+                inactivity_duration_ms=inactivity_duration_ms,
+                # Cognitive: Context
+                question_index=question_index,
+                hesitation_flags=hesitation_flags if hesitation_flags else {},
+                navigation_pattern=navigation_pattern,
+                # Knowledge gaps (will be populated by engagement tracker)
+                knowledge_gaps=[]
+            )
+            
+            db.session.add(response)
+            existing_response = response
+            
+            # Update session stats (only for new responses)
+            if is_correct:
+                session.correct_answers += 1
         
         # Calculate current score
         if session.total_questions > 0:
@@ -173,33 +255,122 @@ class CBTSystem:
         
         db.session.commit()
         
-        # Adapt difficulty based on correctness
-        # Simple adaptation: increase difficulty on correct answers, decrease on wrong
-        total_answered = len(StudentResponse.query.filter_by(session_id=session_id).all())
-        if total_answered >= 2:  # Adapt after at least 2 answers
-            accuracy = session.correct_answers / total_answered
+        # === CREATE ENGAGEMENT METRICS ===
+        # Track behavioral, cognitive, and affective indicators
+        engagement_score = 0.5  # Default
+        engagement_level = 'medium'  # Default
+        
+        try:
+            tracker = EngagementIndicatorTracker()
+            
+            # Track indicators
+            behavioral = tracker.track_behavioral_indicators(
+                session_id,
+                {
+                    'question_id': question_id,
+                    'response_time_seconds': response_time_seconds
+                }
+            )
+            cognitive = tracker.track_cognitive_indicators(session_id)
+            affective = tracker.track_affective_indicators(session_id)
+            
+            # Calculate engagement score
+            engagement_score = tracker.calculate_composite_engagement_score(behavioral, cognitive, affective)
+            engagement_level = tracker.determine_engagement_level(engagement_score)
+            
+            # Update response record with knowledge gaps identified
+            knowledge_gaps = cognitive.get('knowledge_gaps', [])
+            existing_response.knowledge_gaps = knowledge_gaps
+            db.session.commit()
+            
+            # Create and save metric
+            metric = EngagementMetric(
+                student_id=session.student_id,
+                session_id=session_id,
+                response_time_seconds=behavioral.get('response_time_seconds'),
+                hints_requested=behavioral.get('hints_requested', 0),
+                inactivity_duration=behavioral.get('inactivity_duration', 0),
+                navigation_frequency=behavioral.get('navigation_frequency', 0),
+                completion_rate=behavioral.get('completion_rate', 0),
+                accuracy=cognitive.get('accuracy', 0),
+                learning_progress=cognitive.get('learning_progress', 0),
+                knowledge_gaps=knowledge_gaps,
+                confidence_level=affective.get('confidence_level'),
+                frustration_level=affective.get('frustration_level'),
+                interest_level=affective.get('interest_level'),
+                engagement_score=engagement_score,
+                engagement_level=engagement_level
+            )
+            
+            db.session.add(metric)
+            db.session.commit()
+        except Exception as e:
+            print(f"[ENGAGEMENT TRACKING ERROR] {str(e)}")
+            import traceback
+            traceback.print_exc()
+        
+        # === ADAPTIVE ENGINE - HANDLE DIFFICULTY ADAPTATION ===
+        # IMPORTANT: Only adapt every 3 answers, looking at last 3 performance
+        # This matches the original behavior which worked well
+        try:
+            all_responses = StudentResponse.query.filter_by(session_id=session_id).order_by(
+                StudentResponse.timestamp.asc()
+            ).all()
+            
+            total_answered = len(all_responses)
             current_difficulty = session.current_difficulty
             
-            # Increase difficulty if accuracy is high (>= 80%)
-            if accuracy >= 0.8:
-                new_difficulty = min(0.9, current_difficulty + 0.1)  # Increase by 0.1, max 0.9
-                session.current_difficulty = new_difficulty
-                db.session.commit()
-            # Decrease difficulty if accuracy is low (< 40%)
-            elif accuracy < 0.4:
-                new_difficulty = max(0.1, current_difficulty - 0.1)  # Decrease by 0.1, min 0.1
-                session.current_difficulty = new_difficulty
-                db.session.commit()
-        
+            # Only adapt when we have at least 3 answers AND on multiples of 3
+            if total_answered >= 3 and total_answered % 3 == 0:
+                # Get the last 3 responses
+                last_3 = all_responses[-3:]
+                correct_in_last_3 = sum(1 for r in last_3 if r.is_correct)
+                
+                # Use the engine ONLY for this decision, with recent accuracy
+                recent_accuracy = correct_in_last_3 / 3.0
+                
+                # Create a temporary metric with recent accuracy for the engine
+                temp_metric = type('TempMetric', (), {
+                    'accuracy': recent_accuracy,
+                    'engagement_score': metric.engagement_score if metric else 0.5
+                })()
+                
+                result = self.adaptive_engine.adapt_difficulty(
+                    session.student_id,
+                    session_id,
+                    temp_metric
+                )
+                
+                if result['adapted']:
+                    session = Session.query.get(session_id)  # Re-fetch to get updated value
+                    print(f"\n[ADAPT Q{total_answered}] Last 3: {correct_in_last_3}/3 ({recent_accuracy:.0%}) | {result['reason']} | {result['old_difficulty']:.2f} → {result['new_difficulty']:.2f}\n", flush=True)
+                else:
+                    print(f"\n[ADAPT Q{total_answered}] Last 3: {correct_in_last_3}/3 ({recent_accuracy:.0%}) | {result['reason']}\n", flush=True)
+                
+        except Exception as e:
+            import traceback
+            print(f"[ADAPT ERROR] {str(e)}")
+            traceback.print_exc()
+
+        # Calculate unique answered questions (for progress)
+        unique_answered = len(StudentResponse.query.filter_by(session_id=session_id).distinct(
+            StudentResponse.question_id
+        ).all())
+
         return {
-            'response_id': response.id,
+            'response_id': existing_response.id,
             'is_correct': is_correct,
             'correct_answer': question.correct_option,
             'explanation': question.explanation,
             'current_score': session.score_percentage,
             'correct_count': session.correct_answers,
-            'total_answered': len(StudentResponse.query.filter_by(session_id=session_id).all())
+            'unique_answered': unique_answered,  # Count of unique questions answered
+            'total_questions': session.total_questions,
+            'current_difficulty': session.current_difficulty,  # Include updated difficulty!
+            'engagement_score': engagement_score if 'engagement_score' in locals() else 0.5,
+            'engagement_level': engagement_level if 'engagement_level' in locals() else 'medium'
         }
+
     
     def get_hint(self, session_id, question_id, hint_index=0):
         """

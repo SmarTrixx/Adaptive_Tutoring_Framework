@@ -1,15 +1,88 @@
 // Main Application JavaScript
 
+console.log('[APP] app.js loaded at', new Date().toISOString());
+console.log('[APP] document.readyState:', document.readyState);
+console.log('[APP] document.getElementById("root"):', document.getElementById('root'));
+
 const API_BASE_URL = 'http://localhost:5000/api';
 
 // Student and Session Management
 let currentStudent = null;
 let currentSession = null;
 
+// Response Time Tracking
+let questionStartTime = null;
+
+// Per-Question Interaction Tracking
+let currentQuestionState = {
+    questionId: null,
+    questionIndex: 0,
+    initialOption: null,
+    finalOption: null,
+    optionChangeCount: 0,
+    navigationCount: 0,
+    optionChangeHistory: [],
+    interactionStartTime: null,
+    questionDisplayTime: null,
+    lastActivityTime: null,
+    isRevisit: false,
+    hesitationFlags: {
+        rapidClicking: false,
+        longHesitation: false,
+        frequentSwitching: false
+    }
+};
+
+// Session-level Navigation & History Tracking
+let sessionNavigationCount = 0;
+let sessionQuestionHistory = []; // Track all questions in session with responses
+let currentQuestionIndex = 0; // Track position in current session
+let questionResponses = {}; // Map of question_id -> {response, attempts, timestamps}
+let inactivityTimer = null;
+let lastInteractionTime = null;
+let currentInactivityDuration = 0;
+
+// Safe initialization function
+function safeInitialize() {
+    console.log('[APP] safeInitialize() called');
+    const root = document.getElementById('root');
+    if (!root) {
+        console.error('[APP] ERROR: root element not found!');
+        return;
+    }
+    try {
+        console.log('[APP] Calling setupUI...');
+        setupUI();
+        console.log('[APP] setupUI() completed successfully');
+    } catch (error) {
+        console.error('[APP] Error in setupUI():', error, error.stack);
+        // Show error on page
+        root.innerHTML = '<div style="color: red; padding: 20px; font-family: monospace; white-space: pre-wrap;">' +
+            'ERROR: ' + error.message + '\n\n' + error.stack + '</div>';
+    }
+}
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
-    setupUI();
+    console.log('[APP] DOMContentLoaded fired');
+    safeInitialize();
 });
+
+// Fallback: if document is already loaded, initialize immediately
+if (document.readyState === 'loading') {
+    console.log('[APP] Document is still loading, waiting for DOMContentLoaded');
+} else {
+    console.log('[APP] Document already loaded, initializing immediately');
+    safeInitialize();
+}
+
+// Triple safety: try after a tiny delay
+setTimeout(() => {
+    if (!document.getElementById('content')?.innerHTML) {
+        console.log('[APP] Content still empty after DOMContentLoaded, retrying...');
+        safeInitialize();
+    }
+}, 100);
 
 function setupUI() {
     const root = document.getElementById('root');
@@ -222,51 +295,110 @@ function logout() {
 
 async function submitAnswer(questionId, answer, responseTime) {
     try {
-        console.log('Submitting answer:', { questionId, answer, responseTime });
+        // Stop inactivity tracking
+        if (inactivityTimer) clearInterval(inactivityTimer);
+        
+        // Calculate time spent on this question
+        const timeSpent = currentQuestionState.questionDisplayTime ? 
+            Math.round((Date.now() - currentQuestionState.questionDisplayTime) / 1000) : 
+            responseTime;
+        
+        // Build complete submission payload with all tracked behavioral and cognitive data
+        const submissionPayload = {
+            session_id: currentSession.id,
+            question_id: questionId,
+            student_answer: answer,
+            response_time_seconds: responseTime,
+            
+            // Behavioral: Option Changes
+            initial_option: currentQuestionState.initialOption,
+            final_option: currentQuestionState.finalOption,
+            option_change_count: currentQuestionState.optionChangeCount,
+            option_change_history: currentQuestionState.optionChangeHistory,
+            
+            // Behavioral: Navigation
+            navigation_frequency: currentQuestionState.navigationCount,
+            question_index: currentQuestionState.questionIndex,
+            
+            // Cognitive: Time & Activity
+            time_spent_per_question: timeSpent,
+            inactivity_duration_ms: currentInactivityDuration,
+            
+            // Cognitive: Behavioral Patterns
+            hesitation_flags: currentQuestionState.hesitationFlags,
+            navigation_pattern: 'sequential', // Can be revisit, skip, backtrack
+            
+            // Timestamps
+            interaction_start_timestamp: currentQuestionState.interactionStartTime,
+            submission_timestamp: Date.now(),
+            submission_iso_timestamp: new Date().toISOString()
+        };
+        
+        console.log('[SUBMISSION] Complete interaction payload:', submissionPayload);
         
         const response = await fetch(`${API_BASE_URL}/cbt/response/submit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                session_id: currentSession.id,
-                question_id: questionId,
-                student_answer: answer,
-                response_time_seconds: responseTime
-            })
+            body: JSON.stringify(submissionPayload)
         });
         
         const data = await response.json();
-        console.log('Submit response:', data);
+        console.log('[SUBMISSION] Response:', data);
         
         if (data.success) {
+            // Track this response
+            questionResponses[questionId] = {
+                correct: data.is_correct,
+                response: answer,
+                timestamp: Date.now()
+            };
+            
             // Update session with response data
             if (data.session) {
                 currentSession = data.session;
                 localStorage.setItem('session', JSON.stringify(currentSession));
             } else {
-                // Update local session counters
-                currentSession.questions_completed = (currentSession.questions_completed || 0) + 1;
+                // Use unique_answered from backend for progress tracking
+                // This ensures progress only counts unique answered questions, not revisits
+                if (data.unique_answered !== undefined) {
+                    currentSession.questions_completed = data.unique_answered;
+                } else {
+                    // Fallback for backward compatibility
+                    currentSession.questions_completed = (currentSession.questions_completed || 0) + 1;
+                }
                 if (data.is_correct) {
                     currentSession.correct_answers = (currentSession.correct_answers || 0) + 1;
                 }
+                if (data.current_difficulty !== undefined && data.current_difficulty !== null) {
+                    currentSession.current_difficulty = data.current_difficulty;
+                    localStorage.setItem('session', JSON.stringify(currentSession));
+                }
             }
             
-            // Show feedback
+            // Show detailed feedback with adaptation info
             const correctAnswer = data.correct_answer || 'Unknown';
-            alert(data.is_correct ? '✓ Correct!' : '✗ Incorrect! Answer: ' + correctAnswer);
+            const explanation = data.explanation || '';
+            const oldDifficulty = currentSession.current_difficulty || 0.5;
+            const newDifficulty = data.current_difficulty || oldDifficulty;
+            const difficultyDelta = (newDifficulty - oldDifficulty).toFixed(2);
+            const difficultyChange = difficultyDelta > 0 ? '📈 Increased' : difficultyDelta < 0 ? '📉 Decreased' : '→ No change';
             
-            // Track engagement
+            // Show detailed feedback with adaptation info and engagement
+            showFeedbackModal(
+                data.is_correct,
+                correctAnswer,
+                explanation,
+                newDifficulty,
+                difficultyChange,
+                difficultyDelta,
+                data,
+                currentSession
+            );
+            
+            // Track engagement - pass backend engagement score
             await trackEngagement(data);
-            
-            // Check if session is complete
-            if (currentSession.questions_completed >= currentSession.num_questions) {
-                alert('Test completed!\nCorrect: ' + currentSession.correct_answers + '/' + currentSession.num_questions);
-                showDashboard();
-            } else {
-                showQuestion();
-            }
         } else {
             alert('Error: ' + data.error);
         }
@@ -278,6 +410,17 @@ async function submitAnswer(questionId, answer, responseTime) {
 
 async function trackEngagement(responseData) {
     try {
+        // Display engagement score immediately from backend response
+        if (responseData.engagement_score !== undefined) {
+            const engagementScore = document.getElementById('engagement-score');
+            if (engagementScore) {
+                const score = responseData.engagement_score || 0;
+                engagementScore.textContent = (score * 100).toFixed(0) + '%';
+                console.log('[ENGAGEMENT] Updated from response:', score);
+            }
+        }
+        
+        // Also send tracking data for analytics
         await fetch(`${API_BASE_URL}/engagement/track`, {
             method: 'POST',
             headers: {
@@ -292,6 +435,206 @@ async function trackEngagement(responseData) {
     } catch (error) {
         console.error('Error tracking engagement:', error);
     }
+}
+
+async function fetchAndDisplayEngagementScore() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/engagement/get/${currentSession.id}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.engagement_metrics) {
+                const engagementScore = document.getElementById('engagement-score');
+                if (engagementScore) {
+                    const score = data.engagement_metrics.overall_engagement_score || 0;
+                    engagementScore.textContent = (score * 100).toFixed(0) + '%';
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching engagement score:', error);
+    }
+}
+
+function showFeedbackModal(isCorrect, correctAnswer, explanation, newDifficulty, difficultyChange, difficultyDelta, fullData, session) {
+    // Create modal overlay - CAPTURE ALL KEYBOARD EVENTS
+    const modal = document.createElement('div');
+    const modalId = 'feedbackModal_' + Date.now();
+    modal.id = modalId;
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        animation: fadeIn 0.2s ease-in;
+    `;
+    
+    // Set focus to modal to capture keyboard events
+    modal.tabIndex = 0;
+    
+    // Prevent all keyboard events from bubbling to background
+    modal.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        // Only allow Enter, Escape, and Space to close/continue
+        if (e.key === 'Enter' || e.key === 'Escape' || e.key === ' ') {
+            handleContinue();
+        }
+    }, true);
+    
+    modal.addEventListener('keyup', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+    }, true);
+    
+    modal.addEventListener('keypress', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+    }, true);
+    
+    const statusColor = isCorrect ? '#48bb78' : '#f56565';
+    const statusBg = isCorrect ? '#f0fff4' : '#fff5f5';
+    const statusEmoji = isCorrect ? '✓' : '✗';
+    
+    const diffColor = difficultyDelta > 0 ? '#ed8936' : difficultyDelta < 0 ? '#4299e1' : '#718096';
+    
+    modal.innerHTML = `
+        <div style="background: white; border-radius: 16px; padding: 40px; max-width: 600px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.3s ease; position: relative;">
+            <button id="closeModalBtn" style="position: absolute; top: 16px; right: 16px; background: #e0e0e0; border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;" onmouseover="this.style.background='#d0d0d0'" onmouseout="this.style.background='#e0e0e0';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="display: inline-block; background: ${statusBg}; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <span style="font-size: 40px; color: ${statusColor};">${statusEmoji}</span>
+                </div>
+                <h2 style="margin: 0 0 10px 0; color: ${statusColor}; font-size: 28px;">${isCorrect ? 'Correct!' : 'Incorrect'}</h2>
+                <p style="color: #999; margin: 0; font-size: 16px;">${isCorrect ? 'Great work!' : 'Keep practicing!'}</p>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                <div style="color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px;">Answer</div>
+                <div style="color: #333; font-size: 16px; font-weight: 500; margin-bottom: 15px;">
+                    ${isCorrect ? '✓ Your answer was correct' : '✗ Correct answer: <strong>' + correctAnswer + '</strong>'}
+                </div>
+                ${explanation ? `
+                    <div style="color: #666; font-size: 14px; line-height: 1.6; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+                        <strong>Explanation:</strong><br>${explanation}
+                    </div>
+                ` : ''}
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px; text-transform: uppercase;">Difficulty</div>
+                    <div style="font-size: 24px; font-weight: bold;">${(newDifficulty * 100).toFixed(0)}%</div>
+                    <div style="font-size: 12px; opacity: 0.85; margin-top: 6px;">
+                        <span style="color: ${diffColor};">${difficultyChange}</span>
+                        <span style="opacity: 0.7;"> ${difficultyDelta >= 0 ? '+' : ''}${(difficultyDelta * 100).toFixed(0)}%</span>
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 16px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px; text-transform: uppercase;">Score</div>
+                    <div style="font-size: 24px; font-weight: bold;">${(fullData.current_score || 0).toFixed(0)}%</div>
+                    <div style="font-size: 12px; opacity: 0.85; margin-top: 6px;">
+                        ${(fullData.correct_count || 0)} of ${(fullData.total_answered || 0)} correct
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #fffff0; border-left: 4px solid #f6ad55; padding: 16px; border-radius: 6px; margin-bottom: 25px;">
+                <div style="color: #975a16; font-size: 13px; font-weight: 600; margin-bottom: 6px;">💡 Adaptive Feedback</div>
+                <div style="color: #744210; font-size: 14px;">
+                    ${isCorrect ? 'Your performance is strong! Difficulty increased slightly to challenge you further.' : 'Difficulty will adjust to help you learn more effectively.'}
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button id="continueBtn_${modalId}" style="padding: 12px 30px; font-size: 14px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.4)'" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">Continue to Next Question →</button>
+            </div>
+        </div>
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Set focus to modal to capture all keyboard events
+    modal.focus();
+    
+    // Disable pointer events on background content while modal is open
+    const content = document.getElementById('content');
+    const originalPointerEvents = content.style.pointerEvents;
+    content.style.pointerEvents = 'none';
+    
+    // Handle close button
+    const closeBtn = document.getElementById('closeModalBtn');
+    const continueBtn = document.getElementById('continueBtn_' + modalId);
+    
+    const closeModal = () => {
+        if (modal && modal.parentNode) {
+            modal.remove();
+            // Restore pointer events to background
+            content.style.pointerEvents = originalPointerEvents;
+        }
+    };
+    
+    const handleContinue = async () => {
+        closeModal();
+        // Proceed based on whether this was a revisit or new question
+        if (currentQuestionState.isRevisit) {
+            // If revisiting, go to the next unanswered question after current index
+            await new Promise(resolve => setTimeout(resolve, 300));
+            if (currentQuestionIndex >= sessionQuestionHistory.length - 1) {
+                // If we were at or past the last answered question, get next
+                showQuestion();
+            } else {
+                // Otherwise, go to the next question in sequence
+                showQuestion(currentQuestionIndex + 1, true);
+            }
+        } else if (session && session.questions_completed >= session.num_questions) {
+            await new Promise(resolve => setTimeout(resolve, 300));
+            showDashboard();
+        } else if (session) {
+            await new Promise(resolve => setTimeout(resolve, 300));
+            showQuestion();
+        }
+    };
+    
+    if (closeBtn) {
+        closeBtn.onclick = (e) => {
+            e.stopPropagation();
+            handleContinue();
+        };
+    }
+    
+    if (continueBtn) {
+        continueBtn.onclick = (e) => {
+            e.stopPropagation();
+            handleContinue();
+        };
+    }
+    
+    // Auto-close after 12 seconds if user hasn't dismissed (extended from 3s)
+    const autoCloseTimeout = setTimeout(handleContinue, 12000);
 }
 
 // UI Display Functions
@@ -368,11 +711,44 @@ function showTestPage() {
     `;
 }
 
-async function showQuestion() {
+async function showQuestion(revisitIndex = null, isRevisit = false) {
     if (!currentSession || !currentSession.id) {
         console.error('No active session. Session:', currentSession);
         alert('No active session. Please start a test first.');
         showTestPage();
+        return;
+    }
+
+    // If revisiting a question, use the question from history
+    if (isRevisit && revisitIndex !== null && sessionQuestionHistory[revisitIndex]) {
+        const historyItem = sessionQuestionHistory[revisitIndex];
+        const question = historyItem.question;
+        
+        currentQuestionIndex = revisitIndex;
+        currentQuestionState = {
+            questionId: question.question_id,
+            questionIndex: revisitIndex,
+            initialOption: null,
+            finalOption: null,
+            optionChangeCount: 0,
+            navigationCount: sessionNavigationCount,
+            optionChangeHistory: [],
+            interactionStartTime: Date.now(),
+            questionDisplayTime: Date.now(),
+            lastActivityTime: Date.now(),
+            isRevisit: true,
+            hesitationFlags: {
+                rapidClicking: false,
+                longHesitation: false,
+                frequentSwitching: false
+            }
+        };
+        
+        questionStartTime = Date.now();
+        console.log('[TRACKING] Revisiting question:', {index: revisitIndex, questionId: question.question_id});
+        
+        renderQuestionWithNav(question, revisitIndex, true);
+        startInactivityTracking();
         return;
     }
 
@@ -444,94 +820,48 @@ async function showQuestion() {
                 return;
             }
             
-            const content = document.getElementById('content');
+            // Initialize per-question state tracking
+            currentQuestionState = {
+                questionId: question.question_id,
+                questionIndex: currentSession.questions_completed || 0,
+                initialOption: null,
+                finalOption: null,
+                optionChangeCount: 0,
+                navigationCount: sessionNavigationCount,
+                optionChangeHistory: [],
+                interactionStartTime: Date.now(),
+                questionDisplayTime: Date.now(),
+                lastActivityTime: Date.now(),
+                isRevisit: false,
+                hesitationFlags: {
+                    rapidClicking: false,
+                    longHesitation: false,
+                    frequentSwitching: false
+                }
+            };
             
-            const progressPercent = currentSession.num_questions > 0 
-                ? ((currentSession.questions_completed || 0) / currentSession.num_questions) * 100 
-                : 0;
+            // Add to session history
+            sessionQuestionHistory.push({
+                questionId: question.question_id,
+                questionIndex: currentQuestionState.questionIndex,
+                question: question,
+                completed: false
+            });
+            currentQuestionIndex = sessionQuestionHistory.length - 1;
             
-            content.innerHTML = `
-                <div style="max-width: 800px; margin: 0 auto; padding: 30px 20px;">
-                    <div style="margin-bottom: 30px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span style="font-size: 14px; color: #999;">Progress</span>
-                            <span style="font-size: 14px; color: #667eea; font-weight: 600;">
-                                ${(currentSession.questions_completed || 0) + 1} of ${currentSession.num_questions}
-                            </span>
-                        </div>
-                        <div style="background: #e8eaf6; height: 8px; border-radius: 10px; overflow: hidden;">
-                            <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); height: 100%; width: ${progressPercent}%; transition: width 0.3s;"></div>
-                        </div>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 30px;">
-                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
-                            <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">CORRECT</div>
-                            <div style="font-size: 28px; font-weight: bold;">${currentSession.correct_answers || 0}</div>
-                        </div>
-                        <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
-                            <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">DIFFICULTY</div>
-                            <div style="font-size: 28px; font-weight: bold;">${(question.difficulty * 100).toFixed(0)}%</div>
-                        </div>
-                        <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
-                            <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">SUBJECT</div>
-                            <div style="font-size: 28px; font-weight: bold;">${currentSession.subject}</div>
-                        </div>
-                    </div>
-                    
-                    <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); margin-bottom: 35px;">
-                        <h3 style="margin: 0 0 30px 0; font-size: 22px; line-height: 1.7; color: #222; font-weight: 600;">${question.question_text}</h3>
-                        
-                        <div id="options" style="margin-bottom: 25px;"></div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 15px;">
-                        <button onclick="submitSelectedAnswer('${question.question_id}', 30)" style="flex: 1; padding: 16px; font-size: 16px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; transition: all 0.2s; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.4)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 8px rgba(102, 126, 234, 0.2)';">✓ Submit Answer</button>
-                        ${question.hints_available > 0 ? 
-                            `<button onclick="getHint('${currentSession.id}', '${question.question_id}')" style="flex: 1; padding: 16px; font-size: 16px; font-weight: 600; cursor: pointer; background: white; border: 2px solid #e0e0e0; border-radius: 8px; transition: all 0.2s; color: #555; font-weight: 600;" onmouseover="this.style.borderColor='#667eea'; this.style.color='#667eea'; this.style.background='#f0f5ff';" onmouseout="this.style.borderColor='#e0e0e0'; this.style.color='#555'; this.style.background='white';">💡 Get Hint (${question.hints_available})</button>` 
-                            : ''}
-                    </div>
-                </div>
-            `;
+            // Capture the time when question is rendered
+            questionStartTime = Date.now();
+            console.log('Question rendered at:', new Date(questionStartTime).toISOString());
+            console.log('[TRACKING] Initialized question state:', currentQuestionState);
+            console.log('[TRACKING] Question index:', currentQuestionIndex, 'History length:', sessionQuestionHistory.length);
             
-            // Render options
-            const optionsDiv = document.getElementById('options');
-            for (const [key, value] of Object.entries(question.options)) {
-                const button = document.createElement('button');
-                button.className = 'option-button';
-                button.dataset.value = key;
-                button.type = 'button';
-                button.textContent = `${key}. ${value}`;
-                button.style.cssText = `
-                    display: block;
-                    width: 100%;
-                    padding: 18px;
-                    margin-bottom: 12px;
-                    border: 2px solid #e0e0e0;
-                    background: white;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-size: 16px;
-                    text-align: left;
-                    transition: all 0.2s;
-                    font-weight: 500;
-                    color: #333;
-                `;
-                button.onmouseover = () => {
-                    if (!button.classList.contains('selected')) {
-                        button.style.borderColor = '#667eea';
-                        button.style.background = '#f0f5ff';
-                    }
-                };
-                button.onmouseout = () => {
-                    if (!button.classList.contains('selected')) {
-                        button.style.borderColor = '#e0e0e0';
-                        button.style.background = 'white';
-                    }
-                };
-                button.onclick = () => selectOption(button, key);
-                optionsDiv.appendChild(button);
-            }
+            // Use renderQuestionWithNav to display with navigation buttons
+            console.log('[FLOW] About to call renderQuestionWithNav');
+            renderQuestionWithNav(question, currentQuestionIndex, false);
+            console.log('[FLOW] renderQuestionWithNav completed');
+            startInactivityTracking();
+            // Fetch and display engagement score
+            await fetchAndDisplayEngagementScore();
         } else {
             throw new Error(data.error || 'Failed to load question');
         }
@@ -542,6 +872,29 @@ async function showQuestion() {
 }
 
 function selectOption(element, value) {
+    // Track option selection for this question
+    if (!currentQuestionState.initialOption) {
+        currentQuestionState.initialOption = value;
+        console.log('[TRACKING] Initial option selected:', value);
+    } else if (currentQuestionState.finalOption !== value && value !== currentQuestionState.initialOption) {
+        currentQuestionState.optionChangeCount++;
+        currentQuestionState.optionChangeHistory.push({
+            from: currentQuestionState.finalOption || currentQuestionState.initialOption,
+            to: value,
+            timestamp: Date.now()
+        });
+        
+        // Detect frequent switching pattern
+        if (currentQuestionState.optionChangeCount >= 2) {
+            currentQuestionState.hesitationFlags.frequentSwitching = true;
+        }
+        
+        console.log('[TRACKING] Option changed to:', value, 'Total changes:', currentQuestionState.optionChangeCount);
+    }
+    
+    currentQuestionState.finalOption = value;
+    recordInteractionActivity();
+    
     document.querySelectorAll('.option-button').forEach(opt => {
         opt.classList.remove('selected');
         opt.style.borderColor = '#e0e0e0';
@@ -556,7 +909,102 @@ function selectOption(element, value) {
     element.dataset.selected = value;
 }
 
-function submitSelectedAnswer(questionId, responseTime) {
+function recordInteractionActivity() {
+    lastInteractionTime = Date.now();
+    currentInactivityDuration = 0;
+}
+
+function startInactivityTracking() {
+    lastInteractionTime = Date.now();
+    currentInactivityDuration = 0;
+    
+    // Check inactivity every 500ms
+    if (inactivityTimer) clearInterval(inactivityTimer);
+    inactivityTimer = setInterval(() => {
+        const elapsed = Date.now() - lastInteractionTime;
+        currentInactivityDuration = elapsed;
+        
+        // Flag if > 10 seconds of inactivity
+        if (elapsed > 10000) {
+            currentQuestionState.hesitationFlags.longHesitation = true;
+        }
+    }, 500);
+}
+
+function startTimeTracking() {
+    const timeCounter = document.getElementById('time-counter');
+    if (!timeCounter) return;
+    
+    const startTime = Date.now();
+    const timerInterval = setInterval(() => {
+        if (!timeCounter.parentElement) {
+            clearInterval(timerInterval);
+            return;
+        }
+        
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        timeCounter.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }, 100);
+}
+
+function navigatePreviousQuestion() {
+    if (currentQuestionIndex > 0) {
+        sessionNavigationCount++;
+        currentQuestionState.navigationCount++;
+        console.log('[TRACKING] Navigation: Previous question', {index: currentQuestionIndex, navCount: sessionNavigationCount});
+        showQuestion(currentQuestionIndex - 1, true);
+    }
+}
+
+function navigateNextQuestion() {
+    // Can only navigate next if:
+    // 1. Not on current active question (currentQuestionIndex < questions_completed)
+    // 2. OR at end and all test complete
+    
+    const isOnCurrentQuestion = currentQuestionIndex === (currentSession.questions_completed || 0);
+    const isLastQuestion = currentQuestionIndex >= currentSession.num_questions - 1;
+    
+    console.log('[NAV-NEXT] Check:', {
+        currentQuestionIndex,
+        questions_completed: currentSession.questions_completed,
+        isOnCurrentQuestion,
+        isLastQuestion,
+        history_length: sessionQuestionHistory.length
+    });
+    
+    // Cannot proceed from current active question - must answer first
+    if (isOnCurrentQuestion && !isLastQuestion) {
+        console.log('[NAV-NEXT] Cannot proceed - must answer current question first');
+        return;
+    }
+    
+    // If at last question, end test
+    if (isLastQuestion) {
+        console.log('[TRACKING] Test completion initiated');
+        showDashboard();
+        return;
+    }
+    
+    // If revisiting, can move forward in history
+    if (currentQuestionIndex < sessionQuestionHistory.length - 1) {
+        sessionNavigationCount++;
+        currentQuestionState.navigationCount++;
+        console.log('[TRACKING] Navigation: Next question in history', {
+            from: currentQuestionIndex,
+            to: currentQuestionIndex + 1,
+            navCount: sessionNavigationCount
+        });
+        showQuestion(currentQuestionIndex + 1, true);
+    } else {
+        // At end of history but not at question count - shouldn't happen
+        console.warn('[NAV-NEXT] Unexpected state - at end of history but not at question count');
+    }
+}
+
+
+function submitSelectedAnswer(questionId) {
     const selectedOption = document.querySelector('.option-button.selected');
     const selectedAnswer = selectedOption ? selectedOption.dataset.value : null;
 
@@ -565,11 +1013,26 @@ function submitSelectedAnswer(questionId, responseTime) {
         return;
     }
 
+    // Calculate real response time from when question was rendered
+    let responseTime = 30;
+    if (questionStartTime) {
+        const elapsedMs = Date.now() - questionStartTime;
+        responseTime = Math.max(1, Math.round(elapsedMs / 1000));
+        console.log(`Response time calculated: ${elapsedMs}ms = ${responseTime}s`);
+    } else {
+        console.warn('questionStartTime not set, using default 30s');
+    }
+
+    console.log('[TRACKING] Final question state before submission:', currentQuestionState);
+    console.log('[TRACKING] Inactivity duration:', currentInactivityDuration, 'ms');
+    console.log('[TRACKING] Hesitation flags:', currentQuestionState.hesitationFlags);
+
     submitAnswer(questionId, selectedAnswer, responseTime);
 }
 
 async function getHint(sessionId, questionId) {
     try {
+        recordInteractionActivity();
         const response = await fetch(
             `${API_BASE_URL}/cbt/hint/${sessionId}/${questionId}`
         );
@@ -584,6 +1047,171 @@ async function getHint(sessionId, questionId) {
         console.error('Error getting hint:', error);
         alert('Failed to get hint');
     }
+}
+
+// ============================================================================
+// ENHANCED QUESTION DISPLAY WITH NAVIGATION & TRACKING
+// ============================================================================
+
+function renderQuestionWithNav(question, questionIndex, isRevisit) {
+    console.log('[RENDER] renderQuestionWithNav called with:', {questionIndex, isRevisit, questionId: question.question_id});
+    
+    const content = document.getElementById('content');
+    const progressPercent = currentSession && currentSession.num_questions 
+                ? ((currentSession.questions_completed || 0) / currentSession.num_questions) * 100 
+                : 0;
+    
+    // Navigation logic:
+    // - Can go Previous if not first question (questionIndex > 0)
+    // - Can go Next if:
+    //   a) Currently on a revisited question (isRevisit = true), OR
+    //   b) On a previously answered question (questionIndex < questions_completed)
+    // - Cannot go Next if on current active question (questionIndex == questions_completed)
+    const canNavigatePrev = questionIndex > 0;
+    const isOnCurrentQuestion = questionIndex === (currentSession.questions_completed || 0);
+    const isRevisiting = currentQuestionState && currentQuestionState.isRevisit;
+    const canNavigateNext = !isOnCurrentQuestion; // Can navigate if not on current active question
+    const isLastQuestion = questionIndex >= currentSession.num_questions - 1;
+    
+    console.log('[RENDER] Navigation state:', {
+        canNavigatePrev, 
+        canNavigateNext, 
+        isLastQuestion,
+        isOnCurrentQuestion,
+        isRevisiting,
+        questionIndex,
+        questions_completed: currentSession.questions_completed
+    });
+    
+    content.innerHTML = `
+        <div style="max-width: 900px; margin: 0 auto; padding: 30px 20px;">
+            <!-- Progress Bar -->
+            <div style="margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 14px; color: #999;">Progress</span>
+                    <span style="font-size: 14px; color: #667eea; font-weight: 600;">
+                        ${(currentSession.questions_completed || 0)} of ${currentSession.num_questions}
+                    </span>
+                </div>
+                <div style="background: #e8eaf6; height: 8px; border-radius: 10px; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); height: 100%; width: ${progressPercent}%; transition: width 0.3s;"></div>
+                </div>
+            </div>
+            
+            <!-- Stats Grid with Time & Attempts -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 30px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">CORRECT</div>
+                    <div style="font-size: 28px; font-weight: bold;">${currentSession.correct_answers || 0}</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">DIFFICULTY</div>
+                    <div style="font-size: 28px; font-weight: bold;">${(currentSession.current_difficulty * 100).toFixed(0)}%</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">ENGAGEMENT</div>
+                    <div style="font-size: 28px; font-weight: bold;" id="engagement-score">--</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 16px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 11px; opacity: 0.9; margin-bottom: 6px;">TIME</div>
+                    <div style="font-size: 20px; font-weight: bold;" id="time-counter">0:00</div>
+                </div>
+            </div>
+            
+            <!-- Question Card -->
+            <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                    <h3 style="margin: 0; font-size: 22px; line-height: 1.7; color: #222; font-weight: 600; flex: 1;">
+                        ${question.question_text}
+                    </h3>
+                    ${isRevisit ? '<span style="background: #fff3cd; color: #856404; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; margin-left: 15px;">REVISIT</span>' : ''}
+                </div>
+                <div id="options" style="margin: 30px 0 25px 0;"></div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                <button onclick="submitSelectedAnswer('${question.question_id}')" 
+                        style="flex: 1; min-width: 180px; padding: 16px; font-size: 16px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; transition: all 0.2s; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);" 
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.4)'" 
+                        onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 8px rgba(102, 126, 234, 0.2)';">
+                    ✓ Submit Answer
+                </button>
+                ${question.hints_available > 0 ? 
+                    `<button onclick="getHint('${currentSession.id}', '${question.question_id}')" 
+                             style="flex: 1; min-width: 140px; padding: 16px; font-size: 16px; font-weight: 600; cursor: pointer; background: white; border: 2px solid #e0e0e0; border-radius: 8px; transition: all 0.2s; color: #555;" 
+                             onmouseover="this.style.borderColor='#667eea'; this.style.color='#667eea'; this.style.background='#f0f5ff';" 
+                             onmouseout="this.style.borderColor='#e0e0e0'; this.style.color='#555'; this.style.background='white';">
+                        💡 Hint (${question.hints_available})
+                    </button>` 
+                    : ''}
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div style="display: flex; gap: 12px; justify-content: space-between;">
+                <button onclick="navigatePreviousQuestion()" 
+                        ${!canNavigatePrev ? 'disabled' : ''}
+                        style="flex: 1; padding: 14px; font-size: 14px; font-weight: 600; cursor: ${canNavigatePrev ? 'pointer' : 'not-allowed'}; background: ${canNavigatePrev ? 'white' : '#f0f0f0'}; color: ${canNavigatePrev ? '#667eea' : '#ccc'}; border: 2px solid ${canNavigatePrev ? '#667eea' : '#e0e0e0'}; border-radius: 8px; transition: all 0.2s; opacity: ${canNavigatePrev ? '1' : '0.6'};" 
+                        ${canNavigatePrev ? "onmouseover=\"this.style.background='#f0f5ff'\" onmouseout=\"this.style.background='white'\"" : ''}>
+                    ← Previous
+                </button>
+                <button onclick="navigateNextQuestion()" 
+                        ${!canNavigateNext ? 'disabled' : ''}
+                        style="flex: 1; padding: 14px; font-size: 14px; font-weight: 600; cursor: ${canNavigateNext ? 'pointer' : 'not-allowed'}; background: ${canNavigateNext ? 'white' : '#f0f0f0'}; color: ${canNavigateNext ? '#667eea' : '#ccc'}; border: 2px solid ${canNavigateNext ? '#667eea' : '#e0e0e0'}; border-radius: 8px; transition: all 0.2s; opacity: ${canNavigateNext ? '1' : '0.6'};" 
+                        ${canNavigateNext ? "onmouseover=\"this.style.background='#f0f5ff'\" onmouseout=\"this.style.background='white'\"" : ''}>
+                    Next →
+                </button>
+            </div>
+        </div>
+    `;
+    
+    console.log('[RENDER] HTML set to content element');
+    console.log('[RENDER] Navigation buttons HTML included in innerHTML');
+    
+    // Render options
+    const optionsDiv = document.getElementById('options');
+    for (const [key, value] of Object.entries(question.options)) {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.dataset.value = key;
+        button.type = 'button';
+        button.textContent = `${key}. ${value}`;
+        button.style.cssText = `
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: left;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #333;
+        `;
+        button.onmouseover = () => {
+            if (!button.classList.contains('selected')) {
+                button.style.borderColor = '#667eea';
+                button.style.background = '#f0f5ff';
+            }
+        };
+        button.onmouseout = () => {
+            if (!button.classList.contains('selected')) {
+                button.style.borderColor = '#e0e0e0';
+                button.style.background = 'white';
+            }
+        };
+        button.onclick = () => {
+            selectOption(button, key);
+            recordInteractionActivity();
+        };
+        optionsDiv.appendChild(button);
+    }
+    
+    // Start timer display
+    startTimeTracking();
 }
 
 // Data Export Functions for Research

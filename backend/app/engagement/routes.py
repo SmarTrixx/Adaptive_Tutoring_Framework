@@ -122,7 +122,9 @@ def get_engagement_statistics(session_id):
         # Calculate statistics
         avg_engagement = sum(m.engagement_score for m in metrics) / len(metrics)
         avg_accuracy = sum(m.accuracy for m in metrics) / len(metrics)
-        avg_response_time = sum(m.response_time_seconds or 0 for m in metrics) / len(metrics)
+        # Only use actual response times, don't mask missing data with 0
+        actual_times = [m.response_time_seconds for m in metrics if m.response_time_seconds is not None and m.response_time_seconds > 0]
+        avg_response_time = sum(actual_times) / len(actual_times) if actual_times else 0
         
         high_engagement = sum(1 for m in metrics if m.engagement_level == 'high')
         low_engagement = sum(1 for m in metrics if m.engagement_level == 'low')
@@ -145,3 +147,43 @@ def get_engagement_statistics(session_id):
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@engagement_bp.route('/get/<session_id>', methods=['GET'])
+def get_engagement_score(session_id):
+    """Get the latest engagement metrics for a session"""
+    try:
+        metrics = EngagementMetric.query.filter_by(
+            session_id=session_id
+        ).order_by(EngagementMetric.timestamp.desc()).first()
+        
+        if not metrics:
+            # No metrics yet - return default/placeholder
+            return jsonify({
+                'success': True,
+                'session_id': session_id,
+                'engagement_metrics': {
+                    'overall_engagement_score': 0.5,
+                    'engagement_level': 'medium',
+                    'accuracy': 0.0,
+                    'completion_rate': 0.0
+                }
+            }), 200
+        
+        return jsonify({
+            'success': True,
+            'session_id': session_id,
+            'engagement_metrics': {
+                'overall_engagement_score': metrics.engagement_score,
+                'engagement_level': metrics.engagement_level,
+                'accuracy': metrics.accuracy,
+                'completion_rate': metrics.completion_rate,
+                'response_time_seconds': metrics.response_time_seconds,
+                'hints_requested': metrics.hints_requested,
+                'inactivity_duration': metrics.inactivity_duration,
+                'navigation_frequency': metrics.navigation_frequency
+            }
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
