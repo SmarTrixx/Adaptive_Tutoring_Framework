@@ -223,12 +223,52 @@ function setupUI() {
         }
     }
     
+    // Load question history if session is active
+    if (currentSession && currentSession.id && currentSession.status === 'active') {
+        const history = localStorage.getItem(`questionHistory_${currentSession.id}`);
+        if (history) {
+            try {
+                sessionQuestionHistory = JSON.parse(history);
+                console.log('Loaded question history from storage:', sessionQuestionHistory.length, 'questions');
+                
+                // Restore current question index
+                const indexStr = localStorage.getItem(`questionIndex_${currentSession.id}`);
+                if (indexStr) {
+                    currentQuestionIndex = parseInt(indexStr);
+                    console.log('Restored question index:', currentQuestionIndex);
+                }
+                
+                // Restore TEST_STATE
+                TEST_STATE.setCurrentQuestionIndex(currentQuestionIndex);
+                TEST_STATE.setHighestAnsweredIndex(currentQuestionIndex);
+            } catch (e) {
+                console.error('Error restoring question history:', e);
+                sessionQuestionHistory = [];
+                currentQuestionIndex = 0;
+            }
+        }
+    }
+    
     updateNavigation();
     
-    // Show appropriate page based on login status
+    // Show appropriate page based on login status and session
     if (currentStudent && currentStudent.id) {
-        console.log('User logged in, showing test page');
-        showTestPage();
+        // Check if there's an active test session
+        if (currentSession && currentSession.id && currentSession.status === 'active') {
+            console.log('User logged in with active session, resuming test');
+            // Show the current question if we have history
+            if (sessionQuestionHistory && sessionQuestionHistory.length > 0) {
+                console.log('Resuming question at index:', currentQuestionIndex);
+                renderQuestionWithNav(sessionQuestionHistory[currentQuestionIndex].question, currentQuestionIndex, false);
+                startInactivityTracking();
+            } else {
+                console.log('Active session but no question history, fetching next question');
+                fetchNextQuestion();
+            }
+        } else {
+            console.log('User logged in, showing test page for subject selection');
+            showTestPage();
+        }
     } else {
         console.log('User not logged in, showing login page');
         showLoginPage();
@@ -948,6 +988,13 @@ async function fetchNextNewQuestion() {
             });
             currentQuestionIndex = sessionQuestionHistory.length - 1;
             
+            // PERSIST: Save question history to localStorage
+            if (currentSession && currentSession.id) {
+                localStorage.setItem(`questionHistory_${currentSession.id}`, JSON.stringify(sessionQuestionHistory));
+                localStorage.setItem(`questionIndex_${currentSession.id}`, currentQuestionIndex.toString());
+                console.log('[PERSIST] Saved question history and index to localStorage');
+            }
+            
             // CRITICAL: Sync TEST_STATE with new question
             TEST_STATE.setCurrentQuestionIndex(currentQuestionIndex);
             TEST_STATE.setHighestAnsweredIndex(currentQuestionIndex);
@@ -1186,6 +1233,13 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
                 completed: false
             });
             currentQuestionIndex = sessionQuestionHistory.length - 1;
+            
+            // PERSIST: Save question history to localStorage
+            if (currentSession && currentSession.id) {
+                localStorage.setItem(`questionHistory_${currentSession.id}`, JSON.stringify(sessionQuestionHistory));
+                localStorage.setItem(`questionIndex_${currentSession.id}`, currentQuestionIndex.toString());
+                console.log('[PERSIST] Saved question history and index to localStorage');
+            }
             
             // CRITICAL: Sync TEST_STATE with new question
             TEST_STATE.setCurrentQuestionIndex(currentQuestionIndex);

@@ -98,6 +98,8 @@ class CBTSystem:
         # Use difficulty mapper to determine question pool
         min_difficulty, max_difficulty, difficulty_label = DifficultyMapper.get_difficulty_range(difficulty)
         
+        print(f'[DEBUG] get_next_question: session_difficulty={difficulty}, label={difficulty_label}, range=[{min_difficulty}, {max_difficulty}]')
+        
         # Get unanswered questions from the appropriate difficulty range
         questions = Question.query.filter(
             Question.subject == session.subject,
@@ -122,6 +124,11 @@ class CBTSystem:
                 Question.subject == session.subject,
                 ~Question.id.in_(answered_ids) if answered_ids else True
             ).all()
+        
+        print(f'[DEBUG] Found {len(questions)} questions for difficulty {difficulty_label}')
+        if questions:
+            q = questions[0]
+            print(f'[DEBUG] Sample question: id={q.id}, difficulty={q.difficulty}, text={q.question_text[:50]}...')
         
         if not questions:
             # No more questions available - end session
