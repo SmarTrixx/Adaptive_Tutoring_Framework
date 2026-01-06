@@ -185,6 +185,20 @@ class CBTSystem:
             # Track if correctness changed for session stats
             was_correct_before = existing_response.is_correct
             
+            # CRITICAL FIX: Accumulate hints instead of replacing them
+            # Preserve previous hints and add new ones from revisit
+            previous_hints = existing_response.hints_used_array if existing_response.hints_used_array else []
+            new_hints = hints_used_array if hints_used_array else []
+            
+            # Merge hints: keep existing ones, add any new ones not already present
+            # (by comparing timestamps to avoid duplicates)
+            existing_timestamps = {h.get('timestamp') for h in previous_hints if isinstance(h, dict) and h.get('timestamp')}
+            accumulated_hints = list(previous_hints)  # Start with all previous hints
+            
+            for new_hint in new_hints:
+                if isinstance(new_hint, dict) and new_hint.get('timestamp') not in existing_timestamps:
+                    accumulated_hints.append(new_hint)
+            
             # Update all fields
             existing_response.student_answer = student_answer
             existing_response.is_correct = is_correct
@@ -203,9 +217,11 @@ class CBTSystem:
             existing_response.hesitation_flags = hesitation_flags if hesitation_flags else {}
             existing_response.navigation_pattern = navigation_pattern
             existing_response.facial_metrics = facial_metrics if facial_metrics else {}
-            existing_response.hints_used_array = hints_used_array if hints_used_array else []
+            existing_response.hints_used_array = accumulated_hints  # Use accumulated hints
             
             db.session.merge(existing_response)
+            
+            print(f"[HINTS] Updated response - accumulated hints: {len(accumulated_hints)} total (previous: {len(previous_hints)}, new: {len(new_hints)})", flush=True)
             
             # Update session stats only if correctness changed
             if was_correct_before and not is_correct:

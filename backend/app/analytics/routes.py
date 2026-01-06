@@ -1080,7 +1080,8 @@ def export_all_student_data(student_id):
                             'option_change_count': response.option_change_count,
                             'option_change_history': response.option_change_history,
                             'navigation_frequency': response.navigation_frequency,
-                            'hints_used': response.hints_used,
+                            'hints_requested': len(response.hints_used_array) if response.hints_used_array else 0,
+                            'hints_used_array': response.hints_used_array if response.hints_used_array else [],
                             'interaction_start_timestamp': response.interaction_start_timestamp,
                             'submission_timestamp': response.submission_timestamp,
                             'submission_iso_timestamp': response.submission_iso_timestamp,
@@ -1091,6 +1092,15 @@ def export_all_student_data(student_id):
                             'hesitation_flags': response.hesitation_flags if response.hesitation_flags else {},
                             'navigation_pattern': response.navigation_pattern,
                             'knowledge_gaps': response.knowledge_gaps if response.knowledge_gaps else [],
+                            # Facial monitoring data (non-biometric academic metrics)
+                            'facial_metrics': response.facial_metrics if response.facial_metrics else {
+                                'camera_enabled': False,
+                                'face_detected_count': 0,
+                                'face_lost_count': 0,
+                                'attention_score': None,
+                                'emotions_detected': [],
+                                'face_presence_duration_seconds': 0
+                            },
                             'timestamp': response.timestamp.isoformat() if response.timestamp else None
                         })
                         
@@ -1185,7 +1195,7 @@ def export_as_csv(student_id):
             'Navigation Frequency', 'Interaction Timestamp',
             'Engagement Score', 'Engagement Level', 'Confidence', 'Frustration', 'Interest',
             'Accuracy', 'Learning Progress', 'Knowledge Gaps', 'Hints Requested', 
-            'Inactivity(s)', 'Completion Rate'
+            'Inactivity(s)', 'Completion Rate', 'Camera Enabled', 'Face Detected Count', 'Attention Score'
         ]
         writer.writerow(header)
         
@@ -1218,6 +1228,15 @@ def export_as_csv(student_id):
                             min_time_diff = time_diff
                             metric = m
                 
+                # Calculate hints_requested from hints_used_array (not legacy hints_used field)
+                hints_requested = len(response.hints_used_array) if response.hints_used_array else 0
+                
+                # Extract facial metrics with safe defaults
+                facial_metrics = response.facial_metrics if response.facial_metrics else {}
+                camera_enabled = facial_metrics.get('camera_enabled', False)
+                face_detected_count = facial_metrics.get('face_detected_count', 0)
+                attention_score = facial_metrics.get('attention_score')
+                
                 # Build row with FIXED SCHEMA - ALL values present, empty strings for None
                 row = [
                     response.session_id,
@@ -1241,9 +1260,13 @@ def export_as_csv(student_id):
                     metric.learning_progress if metric else '',
                     # Format knowledge gaps as comma-separated string (no JSON)
                     ', '.join(response.knowledge_gaps) if response.knowledge_gaps else '',
-                    metric.hints_requested if metric else '',
+                    hints_requested,
                     metric.inactivity_duration if metric else '',
-                    metric.completion_rate if metric else ''
+                    metric.completion_rate if metric else '',
+                    # Facial metrics (non-biometric academic data)
+                    'Yes' if camera_enabled else 'No',
+                    face_detected_count,
+                    attention_score if attention_score is not None else ''
                 ]
                 
                 writer.writerow(row)

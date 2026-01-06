@@ -1018,6 +1018,27 @@ async function showQuestion(revisitIndex = null, isRevisit = false) {
             hints_used: []
         };
         
+        // Load previous hints from backend for this question
+        try {
+            const hintResponse = await fetch(
+                `${API_BASE_URL}/cbt/response/${currentSession.id}/${question.question_id}`
+            );
+            if (hintResponse.ok) {
+                const hintData = await hintResponse.json();
+                if (hintData.success && hintData.response) {
+                    currentQuestionState.hints_used = hintData.response.hints_used_array || [];
+                    currentQuestionState.hints_requested = hintData.response.hints_used || 0;
+                    console.log('[REVISIT] Loaded previous hints:', {
+                        hints_used: currentQuestionState.hints_requested,
+                        hint_array_length: currentQuestionState.hints_used.length
+                    });
+                }
+            }
+        } catch (error) {
+            console.log('[REVISIT] Could not load previous hints:', error.message);
+            // Continue without loading previous hints - start fresh
+        }
+        
         questionStartTime = Date.now();
         console.log('[TRACKING] Revisiting question:', {index: revisitIndex, questionId: question.question_id});
         console.log('[TEST_STATE] Synced to revisit index:', revisitIndex);

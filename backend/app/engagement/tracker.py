@@ -222,19 +222,17 @@ class EngagementIndicatorTracker:
     
     # Helper methods
     def _calculate_navigation_frequency(self, session_id):
-        """Count rapid page/question switches"""
-        responses = StudentResponse.query.filter_by(session_id=session_id).all()
-        if len(responses) < 2:
-            return 0
+        """Get navigation frequency from the latest response"""
+        # Use the actual navigation_frequency from the latest response
+        # This counts Prev/Next button clicks, not rapid switches
+        latest_response = StudentResponse.query.filter_by(
+            session_id=session_id
+        ).order_by(StudentResponse.timestamp.desc()).first()
         
-        # Count switches within 2 seconds
-        rapid_switches = 0
-        for i in range(1, len(responses)):
-            time_diff = (responses[i].timestamp - responses[i-1].timestamp).total_seconds()
-            if time_diff < 2:
-                rapid_switches += 1
+        if latest_response and latest_response.navigation_frequency is not None:
+            return latest_response.navigation_frequency
         
-        return rapid_switches
+        return 0
     
     def _calculate_completion_rate(self, session_id):
         """Calculate percentage of questions answered"""

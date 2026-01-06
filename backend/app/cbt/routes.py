@@ -220,3 +220,29 @@ def get_session_summary(session_id):
         'success': True,
         'summary': result
     }), 200
+
+@cbt_bp.route('/response/<session_id>/<question_id>', methods=['GET'])
+def get_previous_response(session_id, question_id):
+    """Get previous response data for a question (for revisit hint loading)"""
+    try:
+        from app.models.session import StudentResponse
+        response = StudentResponse.query.filter_by(
+            session_id=session_id,
+            question_id=question_id
+        ).first()
+        
+        if not response:
+            return jsonify({'success': False, 'error': 'No previous response found'}), 404
+        
+        return jsonify({
+            'success': True,
+            'response': {
+                'hints_used': len(response.hints_used_array) if response.hints_used_array else 0,
+                'hints_used_array': response.hints_used_array if response.hints_used_array else [],
+                'student_answer': response.student_answer,
+                'is_correct': response.is_correct
+            }
+        }), 200
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
