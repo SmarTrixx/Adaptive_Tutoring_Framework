@@ -6,6 +6,7 @@ from app.engagement.tracker import EngagementIndicatorTracker
 from app.adaptation.engine import AdaptiveEngine
 from app import db
 from datetime import datetime
+import random
 
 class CBTSystem:
     """
@@ -136,8 +137,9 @@ class CBTSystem:
                 'total_questions': session.total_questions
             }
         
-        # Return first available question (can implement smarter selection later)
-        question = questions[0]
+        # Return a random question from the available pool
+        # This ensures different questions are selected even with same difficulty
+        question = random.choice(questions)
         
         return {
             'question_id': question.id,
