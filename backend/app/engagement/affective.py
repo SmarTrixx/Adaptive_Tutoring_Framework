@@ -16,7 +16,15 @@ from app import db
 import json
 
 class AffectiveIndicatorAnalyzer:
-    """Analyzes affective (emotional) engagement indicators"""
+    """
+    Analyzes affective (emotional) engagement indicators
+    
+    Supports two data sources:
+    1. Facial emotion recognition (optional, when available)
+    2. Behavioral inference (always available)
+    
+    Falls back gracefully to behavioral inference if facial data unavailable.
+    """
     
     # Emotion to engagement mapping
     EMOTION_ENGAGEMENT_MAP = {

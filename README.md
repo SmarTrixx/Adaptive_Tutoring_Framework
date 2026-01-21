@@ -2,6 +2,21 @@
 
 A computer-based testing (CBT) system that adapts learning difficulty and content in real-time based on continuous engagement and performance monitoring.
 
+## Documentation Status (January 10, 2026)
+
+**✅ Refactored:** All documentation has been audited and corrected to accurately reflect implemented features only.
+
+**Key Changes:**
+- Removed misleading claims about facial emotion recognition (infrastructure only, not active)
+- Removed misleading claims about reinforcement learning in core system (disabled in favor of rule-based)
+- Added clear separation between ✅ **implemented** and 🔜 **future/optional** features
+- Created `CLEAN_WORKSPACE_GUIDE.md` for minimal project structure
+- Archived truly unused modules (policy.py, performance_window.py) to `archive_unused_modules/`
+
+**For Full Details:** See `ACADEMIC_SYSTEM_OVERVIEW2.md`, `MODULE_USAGE_ANALYSIS.md`, and `CLEAN_WORKSPACE_GUIDE.md`
+
+---
+
 ## System Overview
 
 The Adaptive Intelligent Tutoring Framework implements an intelligent testing environment that:

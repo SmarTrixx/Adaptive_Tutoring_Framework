@@ -99,36 +99,99 @@ class EngagementIndicatorTracker:
         
         return cognitive_data
     
-    def track_affective_indicators(self, session_id, affective_feedback=None):
+    def track_affective_indicators(self, session_id, affective_feedback=None, facial_data=None):
         """
-        Track affective indicators:
+        Track affective indicators with optional facial emotion enhancement:
         - Confidence level
         - Frustration level
         - Interest level
         - Motivation
         
-        These can be self-reported or inferred from behavior
+        Data sources (in priority order):
+        1. Facial emotion recognition (if available and enabled)
+        2. Behavioral inference (always available)
+        3. User self-report (if provided)
+        
+        Falls back gracefully: If facial data unavailable → uses behavioral inference only
+        
+        Args:
+            session_id: Student session ID
+            affective_feedback: Optional dict with user self-reported values
+                {'confidence': 0.8, 'frustration': 0.2, 'interest': 0.9}
+            facial_data: Optional dict with facial emotion detection data
+                {'emotion_detected': 'happy', 'emotion_confidence': 0.85, ...}
+        
+        Returns:
+            Dict with affective_data including source information
         """
         if affective_feedback is None:
             affective_feedback = {}
         
-        # Dynamically infer affective indicators from actual behavior
+        # Get responses for behavioral inference
         responses = StudentResponse.query.filter_by(session_id=session_id).all()
         
-        # Confidence: based on recent accuracy and decision-making decisiveness
-        confidence = self._infer_confidence(session_id, responses)
+        # STEP 1: Infer affective indicators from behavior (always available)
+        confidence_behavioral = self._infer_confidence(session_id, responses)
+        frustration_behavioral = self._infer_frustration(session_id, responses)
+        interest_behavioral = self._infer_interest_level(session_id, responses, affective_feedback)
         
-        # Frustration: based on slow responses, option changes, and error streaks
-        frustration = self._infer_frustration(session_id, responses)
-        
-        # Interest level: based on engagement patterns
-        interest = self._infer_interest_level(session_id, responses, affective_feedback)
-        
+        # STEP 2: Get facial emotion enhancement (optional)
         affective_data = {
-            'confidence_level': affective_feedback.get('confidence', confidence),
-            'frustration_level': affective_feedback.get('frustration', frustration),
-            'interest_level': affective_feedback.get('interest', interest)
+            'confidence_level': affective_feedback.get('confidence', confidence_behavioral),
+            'frustration_level': affective_feedback.get('frustration', frustration_behavioral),
+            'interest_level': affective_feedback.get('interest', interest_behavioral),
+            'affective_source': 'behavioral_inference',
+            'facial_emotion_available': False,
+            'facial_emotion_used': False
         }
+        
+        # Try to enhance with facial emotion data if available
+        if facial_data:
+            try:
+                from app.adaptation.facial_signal_integration import FacialDataValidator
+                
+                is_valid, cleaned_facial_data, validation_reason = FacialDataValidator.validate(facial_data)
+                
+                if is_valid:
+                    affective_values = FacialDataValidator.get_affective_values_from_emotion(
+                        cleaned_facial_data['emotion_detected']
+                    )
+                    
+                    if affective_values:
+                        # Blend facial emotion with behavioral inference
+                        # Facial emotion gets 50% weight, behavior gets 50%
+                        facial_weight = Config.FACIAL_EMOTION_AFFECTIVE_BLEND if hasattr(Config, 'FACIAL_EMOTION_AFFECTIVE_BLEND') else 0.5
+                        behavior_weight = 1.0 - facial_weight
+                        
+                        affective_data['confidence_level'] = (
+                            affective_values['confidence_level'] * facial_weight +
+                            confidence_behavioral * behavior_weight
+                        )
+                        affective_data['frustration_level'] = (
+                            affective_values['frustration_level'] * facial_weight +
+                            frustration_behavioral * behavior_weight
+                        )
+                        affective_data['interest_level'] = (
+                            affective_values['interest_level'] * facial_weight +
+                            interest_behavioral * behavior_weight
+                        )
+                        
+                        affective_data['affective_source'] = 'facial_emotion_blended_with_behavioral'
+                        affective_data['facial_emotion_available'] = True
+                        affective_data['facial_emotion_used'] = True
+                        affective_data['facial_emotion_detected'] = cleaned_facial_data['emotion_detected']
+                        affective_data['facial_emotion_confidence'] = cleaned_facial_data['emotion_confidence']
+                else:
+                    # Facial data invalid but behavioral inference still works
+                    affective_data['facial_emotion_available'] = True
+                    affective_data['facial_emotion_validation_error'] = validation_reason
+            
+            except ImportError:
+                # Facial integration module not available
+                affective_data['facial_integration_error'] = 'FacialSignalIntegration module not available'
+            except Exception as e:
+                # Other errors - log but continue with behavioral inference
+                affective_data['facial_integration_error'] = str(e)
         
         return affective_data
     

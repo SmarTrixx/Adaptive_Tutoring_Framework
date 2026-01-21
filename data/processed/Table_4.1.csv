@@ -1,0 +1,5 @@
+Characteristic,Adaptive (n=10),Non-Adaptive (n=10)
+Number of participants,10,10
+Profile distribution,Mixed archetypes,Mixed archetypes
+Mean accuracy (baseline),0.50,0.61
+Engagement recovery capability,High (adaptive support),None (fixed difficulty)

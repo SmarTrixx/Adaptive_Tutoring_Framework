@@ -1,0 +1,129 @@
+=== MODULE USAGE ANALYSIS ===
+Date: January 10, 2026
+
+CORE/ACTIVE MODULES (Required for system operation):
+============================================================
+
+Backend Models:
+  ✅ app/models/session.py - Session, StudentResponse (data storage, REQUIRED)
+  ✅ app/models/student.py - Student (user data, REQUIRED)
+  ✅ app/models/question.py - Question (test content, REQUIRED)
+  ✅ app/models/engagement.py - EngagementMetric (engagement data, REQUIRED)
+  ✅ app/models/adaptation.py - AdaptationLog (logging, REQUIRED)
+
+Backend CBT System:
+  ✅ app/cbt/system.py - CBTSystem (core testing logic, REQUIRED)
+  ✅ app/cbt/routes.py - CBT endpoints (API, REQUIRED)
+
+Backend Engagement Tracking (Active):
+  ✅ app/engagement/tracker.py - EngagementIndicatorTracker (active in engagement routes, REQUIRED)
+  ✅ app/engagement/routes.py - Engagement endpoints (API, REQUIRED)
+
+Backend Adaptation (Rule-Based):
+  ✅ app/adaptation/engine.py - AdaptiveEngine (main adaptation logic, REQUIRED)
+  ✅ app/adaptation/facial_signal_integration.py - FacialSignalProcessor (infrastructure, safe to keep, disabled by default)
+  ✅ app/adaptation/routes.py - Adaptation endpoints (API, REQUIRED)
+
+Backend Analytics:
+  ✅ app/analytics/evaluator.py - ResearchEvaluator (analysis tools, USED in analytics routes)
+  ✅ app/analytics/routes.py - Analytics endpoints (API, REQUIRED)
+
+Core Infrastructure:
+  ✅ app/__init__.py - Flask app factory (REQUIRED)
+
+OPTIONAL/DISABLED MODULES (Won't affect core system if disabled):
+============================================================
+
+Facial Integration (DISABLED - ENABLED = False):
+  🔜 app/adaptation/facial_signal_integration.py - FacialSignalProcessor
+     - Status: DISABLED BY DEFAULT
+     - Used in: engine.py (but only if enabled)
+     - Impact if removed: facial modifier in engine.py would fail (protected with try/except)
+     - Recommendation: KEEP - minimal overhead when disabled
+
+Optional Advanced Engagement Features:
+  🔜 app/engagement/mastery.py - MasteryTracker
+     - Status: IMPORTED in analytics routes, NOT used in core test flow
+     - Used in: analytics/routes.py only
+     - Impact if removed: Analytics endpoints would fail (but test system works fine)
+     - Recommendation: ARCHIVE if minimizing analytics features
+
+  🔜 app/engagement/affective.py - AffectiveIndicatorAnalyzer
+     - Status: IMPORTED in analytics routes, NOT used in core test flow
+     - Used in: analytics/routes.py only
+     - Impact if removed: Analytics endpoints would fail
+     - Recommendation: ARCHIVE if minimizing analytics features
+
+  🔜 app/engagement/spaced_repetition.py - SpacedRepetitionScheduler, LearningCurveAnalyzer
+     - Status: IMPORTED in analytics routes, NOT used in core test flow
+     - Used in: analytics/routes.py only
+     - Impact if removed: Analytics endpoints would fail
+     - Recommendation: ARCHIVE if minimizing analytics features
+
+RL Agent (DISABLED - Never called in core flow):
+  🔜 app/adaptation/rl_agent.py - RLAdaptiveAgent
+     - Status: DISABLED - NOT called during normal operation
+     - Used in: analytics/routes.py only (for analysis/reporting)
+     - Impact if removed: Analytics endpoints would fail, but test system unchanged
+     - Recommendation: ARCHIVE
+
+  🔜 app/adaptation/rl_policy_optimizer.py - RLPolicyOptimizer
+     - Status: DISABLED - NOT called during normal operation
+     - Used in: analytics/routes.py only
+     - Impact if removed: Analytics endpoints would fail, but test system unchanged
+     - Recommendation: ARCHIVE
+
+LIKELY UNUSED MODULES (No references found):
+============================================================
+
+  ❓ app/adaptation/difficulty_mapper.py - DifficultyMapper
+     - Status: UNKNOWN - Check if used
+     - Recommendation: AUDIT
+
+  ❓ app/adaptation/irt.py - IRTModel, CATAlgorithm
+     - Status: IMPORTED in analytics but check if actually called
+     - Used in: analytics/routes.py imports (need to verify actual usage)
+     - Recommendation: AUDIT
+
+  ❓ app/adaptation/performance_window.py - WindowPerformanceTracker
+     - Status: IMPORTED in adaptation/policy.py but policy.py is not used
+     - Used in: policy.py (which is itself unused)
+     - Impact if removed: No impact (policy.py is unused)
+     - Recommendation: ARCHIVE
+
+  ❓ app/adaptation/policy.py - AdaptivePolicyEngine, AdaptiveDecision
+     - Status: UNUSED - NOT called anywhere in the system
+     - Used in: NOWHERE
+     - Impact if removed: No impact on system function
+     - Recommendation: ARCHIVE
+
+  ❓ app/engagement/fusion.py - FusedEngagementState, EngagementState
+     - Status: IMPORTED in policy.py (unused) but check other usage
+     - Used in: policy.py (which is unused)
+     - Impact if removed: May need to check
+     - Recommendation: AUDIT
+
+  ❓ app/engagement/indicators.py - EngagementIndicators
+     - Status: IMPORTED in policy.py (unused) and other places
+     - Recommendation: AUDIT
+
+  ❓ app/engagement/facial_expression_api.py - FacialExpressionIntegrator
+     - Status: IMPORTED in analytics/routes.py, check if actually used
+     - Used in: analytics/routes.py (line 876)
+     - Recommendation: KEEP if keeping analytics routes
+
+  ❓ app/logging/engagement_logger.py - EngagementLogger (if exists)
+     - Status: Check if used
+     - Recommendation: AUDIT
+
+FRONTEND MODULES (JavaScript):
+  ✅ frontend/app.js - Main application (REQUIRED, ~2200 lines, fully active)
+  ✅ frontend/index.html - HTML template (REQUIRED)
+  ✅ frontend/styles.css - Styling (REQUIRED)
+
+FRONTEND OPTIONAL:
+  🔜 facial_monitoring_ui - HTML elements for facial monitoring (visible but non-functional)
+     - Status: UI ONLY - no backend functionality
+     - Impact if removed: Cleaner UI
+     - Recommendation: Can be removed if not needed for demos
+

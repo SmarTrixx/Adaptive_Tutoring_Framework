@@ -1,0 +1,321 @@
+@startuml Adaptive Intelligent Tutoring Framework - Comprehensive Diagrams
+
+'==================================================================================
+' DIAGRAM 1: ACTIVITY DIAGRAM - Student Test Session Flow
+'==================================================================================
+
+@startuml Activity_Session
+title Activity Diagram: Complete Student Test Session
+
+start
+:Student Logs In;
+:Select Subject;
+:Backend Creates Session;
+:Initialize Frontend State;
+
+repeat
+  :Fetch Question from Backend;
+  :Display Question with 4 Options;
+  :Start Response Timer;
+  
+  repeat
+    :Student Reads Question;
+    :Student Selects/Changes Option;
+    :Track Option Changes;
+    :Record Navigation Events;
+  repeat while (Thinking?) is (Yes)
+  
+  :Student Clicks Submit;
+  :Transmit Response Data;
+  
+  :Backend Receives Response;
+  :Determine Correctness;
+  :Calculate Behavioral Indicators;
+  :Calculate Cognitive Indicators;
+  :Infer Affective Indicators;
+  
+  :Compute Composite Engagement;
+  :Apply Difficulty Adaptation;
+  :Apply Facial Signal (if enabled);
+  :Log All Metrics;
+  
+  :Return Feedback to Frontend;
+  :Display Feedback Modal;
+  :Show Answer & Explanation;
+  
+repeat while (Session Complete?) is (No)
+
+:Calculate Final Statistics;
+:Enable Data Export;
+stop
+
+@enduml
+
+'==================================================================================
+' DIAGRAM 2: SEQUENCE DIAGRAM - Response Processing
+'==================================================================================
+
+@startuml Sequence_ResponseProcessing
+title Sequence Diagram: Single Response Processing Pipeline
+
+participant Frontend as FE
+participant API as API
+participant Tracker as Tracker
+participant Adapter as Adapter
+participant DB as DB
+
+FE->>API: 1. POST /api/response/submit\n{answer, time, changes, hints}
+API->>DB: Save StudentResponse
+DB-->>API: Saved
+
+API->>Tracker: 2. Track Engagement
+
+Tracker->>Tracker: Behavioral\n- response_time\n- hints_requested\n- navigation_count
+Tracker->>Tracker: Cognitive\n- accuracy\n- learning_progress\n- knowledge_gaps
+Tracker->>Tracker: Affective\n- confidence\n- frustration\n- interest
+
+Tracker->>Tracker: Normalize & Composite\nengagement_score = \n(0.35×behav) + (0.40×cog) + (0.25×aff)
+
+Tracker-->>API: EngagementMetric
+
+API->>Adapter: 3. Adapt Difficulty
+
+Adapter->>Adapter: Apply Accuracy Stepping\nIF accuracy ≥ 0.99 THEN +0.10\nELSE IF ≥ 0.80 THEN +0.10\nETC...
+
+Adapter->>Adapter: Apply Engagement Modulation
+
+Adapter->>Adapter: Apply Facial Signal\n(if enabled & valid)
+
+Adapter->>DB: Log Decision
+Adapter-->>API: Result
+
+API->>DB: Update difficulty\nSave engagement_metric
+DB-->>API: OK
+
+API-->>FE: JSON Response\n{correct, engagement_score, new_difficulty}
+
+@enduml
+
+'==================================================================================
+' DIAGRAM 3: UML CLASS DIAGRAM - System Architecture
+'==================================================================================
+
+@startuml UML_Classes
+title UML Class Diagram: Core Components
+
+package Models {
+  class Student
+  class Session
+  class Question
+  class StudentResponse
+  class EngagementMetric
+  class AdaptationLog
+
+  Student "1" --> "*" Session
+  Session "1" --> "*" StudentResponse
+  Session "1" --> "*" EngagementMetric
+  Session "1" --> "*" AdaptationLog
+}
+
+package EngagementSystem {
+  class EngagementIndicatorTracker {
+    +track_behavioral_indicators()
+    +track_cognitive_indicators()
+    +track_affective_indicators()
+    +calculate_composite_engagement_score()
+  }
+
+  class EngagementFusionEngine {
+    -BEHAVIORAL_WEIGHT = 0.40
+    -COGNITIVE_WEIGHT = 0.40
+    -AFFECTIVE_WEIGHT = 0.20
+    +fuse(indicators)
+  }
+}
+
+package AdaptationSystem {
+  class AdaptiveEngine {
+    +adapt_difficulty()
+    +adapt_pacing()
+    +adapt_hint_frequency()
+  }
+
+  class FacialSignalProcessor {
+    -ENABLED: bool
+    +validate(facial_data)
+    +extract_engagement_signal()
+    +modify_difficulty_adjustment()
+  }
+
+  class DifficultyMapper {
+    +map_difficulty_to_questions()
+  }
+}
+
+EngagementIndicatorTracker --> EngagementMetric
+AdaptiveEngine --> AdaptationLog
+AdaptiveEngine --> FacialSignalProcessor
+
+@enduml
+
+'==================================================================================
+' DIAGRAM 4: OVERALL SYSTEM FLOWCHART
+'==================================================================================
+
+@startuml Flowchart_Overall
+title Overall System Flowchart: Complete Architecture
+
+start
+
+:Student Login\nSelect Subject;
+:Create Session\ninitial_difficulty = 0.5;
+
+repeat
+
+  :GET /api/question/next;
+  :Query Questions\nbyDifficulty_band;
+  :Display Question;
+  :Student Responds;
+  :Submit Response;
+
+  :== ENGAGEMENT CALCULATION ==;
+  :Behavioral Tracking\nresponse_time, hints, navigation;
+  :Cognitive Tracking\naccuracy, learning_progress;
+  :Affective Inference\nconfidence, frustration, interest;
+  :Normalize All Scores\n[0.0-1.0];
+  
+  :Composite = \n(0.35×B) + (0.40×C) + (0.25×A);
+  :Classify Level\nLow/Medium/High;
+
+  :== ADAPTATION ==;
+  :Accuracy-Driven Stepping\nRule-based step calculation;
+  :Engagement Modulation\nAdjust confidence in decision;
+  :Facial Signal (Optional)\nGraceful fallback;
+  :Bounds Check\nClamp [0.0, 1.0];
+
+  :Log & Update\nDatabase;
+  :Return Feedback;
+  :Display Modal\n12s Auto-close;
+
+repeat while (Questions Remaining?)
+
+:Calculate Statistics;
+:Enable Export (CSV/JSON);
+stop
+
+@enduml
+
+'==================================================================================
+' DIAGRAM 5: DIFFICULTY ADAPTATION FLOWCHART (Detailed)
+'==================================================================================
+
+@startuml Flowchart_Adaptation
+title Difficulty Adaptation Logic
+
+start
+
+:Get Accuracy Score;
+
+if (Accuracy ≥ 0.99?) then (Yes)
+  :step = +0.10;
+elseif (Accuracy ≥ 0.80?) then (Yes)
+  :step = +0.10;
+elseif (Accuracy ≥ 0.67?) then (Yes)
+  :step = +0.01;
+elseif (Accuracy > 0.33?) then (Yes)
+  :step = 0.00;
+elseif (Accuracy > 0.01?) then (Yes)
+  :step = -0.10;
+else (No)
+  :step = -0.10;
+endif
+
+:Check Engagement Level;
+
+if (engagement < 0.3?) then (Yes: Very Low)
+  if (step = 0?) then (Yes)
+    :step = -0.05;
+  endif
+elseif (engagement > 0.7?) then (Yes: High)
+  :Keep step as-is;
+endif
+
+:Check Facial Data;
+
+if (Facial enabled AND valid?) then (Yes)
+  :facial_delta = signal × 0.05;
+  :step = step + facial_delta;
+endif
+
+:new_difficulty = \nclamp(current + step, 0.0, 1.0);
+
+if (Changed?) then (Yes)
+  :Log Decision;
+else
+  :No Change;
+endif
+
+stop
+
+@enduml
+
+'==================================================================================
+' DIAGRAM 6: CONCEPTUAL FRAMEWORK
+'==================================================================================
+
+@startuml Framework_Conceptual
+title Conceptual Framework: Multi-Dimensional Engagement Model
+
+card "BEHAVIORAL\n(35%)" {
+  [Response Time]
+  [Option Changes]
+  [Navigation Freq]
+  [Hint Usage]
+  [Inactivity]
+  [Completion Rate]
+}
+
+card "COGNITIVE\n(40%)" {
+  [Accuracy]
+  [Learning Progress]
+  [Knowledge Gaps]
+  [Consistency]
+}
+
+card "AFFECTIVE\n(25%)" {
+  [Confidence]
+  [Frustration]
+  [Interest]
+}
+
+[BEHAVIORAL\n(35%)] --> [Engagement Fusion]
+[COGNITIVE\n(40%)] --> [Engagement Fusion]
+[AFFECTIVE\n(25%)] --> [Engagement Fusion]
+
+[Engagement Fusion] --> [ENGAGEMENT SCORE\n0.0-1.0]
+
+[ENGAGEMENT SCORE\n0.0-1.0] --> [Classification]
+
+[Classification] -->|> 0.7| [HIGH: Increase Challenge]
+[Classification] -->|0.3-0.7| [MEDIUM: Normal Adapt]
+[Classification] -->|< 0.3| [LOW: Support Needed]
+
+[HIGH: Increase Challenge] --> [Accuracy-Driven Stepping]
+[MEDIUM: Normal Adapt] --> [Accuracy-Driven Stepping]
+[LOW: Support Needed] --> [Accuracy-Driven Stepping]
+
+[Accuracy-Driven Stepping] --> [Engagement Modulation]
+[Engagement Modulation] --> [Facial Signal (Optional)]
+[Facial Signal (Optional)] --> [NEW DIFFICULTY]
+
+[NEW DIFFICULTY] --> [0.0-0.35: Easy]
+[NEW DIFFICULTY] --> [0.35-0.65: Medium]
+[NEW DIFFICULTY] --> [0.65-1.0: Hard]
+
+[0.0-0.35: Easy] --> [Next Question]
+[0.35-0.65: Medium] --> [Next Question]
+[0.65-1.0: Hard] --> [Next Question]
+
+@enduml
+
+@enduml

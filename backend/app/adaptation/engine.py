@@ -3,6 +3,10 @@ from app.models.session import Session
 from app.models.adaptation import AdaptationLog
 from app import db
 from config import Config
+from app.adaptation.facial_signal_integration import get_facial_modifier
+import logging
+
+logger = logging.getLogger(__name__)
 
 class AdaptiveEngine:
     """
@@ -13,6 +17,7 @@ class AdaptiveEngine:
     def __init__(self):
         self.config = Config.ADAPTATION_CONFIG
         self.engagement_config = Config.ENGAGEMENT_THRESHOLDS
+        self.facial_modifier = get_facial_modifier()  # Optional facial signal integration
     
     def adapt_difficulty(self, student_id, session_id, engagement_metric):
         """
@@ -109,6 +114,36 @@ class AdaptiveEngine:
             trigger_metric = 'marginal_accuracy_low_engagement'
             reason = f"Marginal accuracy ({accuracy:.0%}) + low engagement ({engagement_score:.0%}), -0.05 step"
         
+        # OPTIONAL: Apply facial signal as soft modifier (if available and enabled)
+        facial_metadata = None
+        facial_reason = None
+        difficulty_delta = new_difficulty - current_difficulty
+        
+        # Try to get facial data from the response (if available)
+        try:
+            facial_data = getattr(engagement_metric, 'facial_data', None) or {}
+            if facial_data:
+                facial_delta, facial_reason = self.facial_modifier.modify_difficulty_adjustment(
+                    difficulty_delta,
+                    # Get facial engagement signal if available
+                    facial_data.get('engagement_signal'),  
+                    engagement_score
+                )
+                # Apply facial modification only if it's available and enabled
+                if self.facial_modifier.is_enabled():
+                    new_difficulty = current_difficulty + facial_delta
+                    new_difficulty = max(
+                        self.config['min_difficulty'],
+                        min(self.config['max_difficulty'], new_difficulty)
+                    )
+                    reason += f" [Facial adjustment: {facial_reason}]"
+                    logger.info(f"[FACIAL] Difficulty modified: {facial_reason}")
+            
+            facial_metadata = self.facial_modifier.get_integration_metadata(facial_data)
+        except Exception as e:
+            logger.warning(f"[FACIAL] Failed to apply facial signal: {e}")
+            facial_metadata = {'facial_integration_error': str(e)}
+        
         # Apply the adaptation
         if new_difficulty != current_difficulty:
             session.current_difficulty = new_difficulty
@@ -133,13 +168,15 @@ class AdaptiveEngine:
                 'old_difficulty': current_difficulty,
                 'new_difficulty': new_difficulty,
                 'reason': reason,
-                'step_size': new_difficulty - current_difficulty
+                'step_size': new_difficulty - current_difficulty,
+                'facial_integration': facial_metadata
             }
         
         return {
             'adapted': False,
             'current_difficulty': current_difficulty,
-            'reason': reason or 'No adaptation needed'
+            'reason': reason or 'No adaptation needed',
+            'facial_integration': facial_metadata
         }
     
     def adapt_pacing(self, student_id, session_id, engagement_metric):

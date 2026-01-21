@@ -1,0 +1,2579 @@
+{
+  "export_date": "2026-01-10T13:37:21.316850",
+  "sessions": [
+    {
+      "correct_answers": 7,
+      "engagement_metrics": [
+        {
+          "accuracy": 1,
+          "completion_rate": 0.1,
+          "confidence_level": 0.4933333333333333,
+          "engagement_level": "high",
+          "engagement_score": 0.7884809180000001,
+          "frustration_level": 0.3,
+          "hints_requested": 1,
+          "inactivity_duration": 0.02726,
+          "interest_level": 0.3,
+          "knowledge_gaps": [],
+          "learning_progress": 1,
+          "navigation_frequency": 0,
+          "response_time_seconds": 73,
+          "timestamp": "2026-01-10T13:24:55.670658"
+        },
+        {
+          "accuracy": 1,
+          "completion_rate": 0.2,
+          "confidence_level": 0.8066666666666666,
+          "engagement_level": "high",
+          "engagement_score": 0.8392302530000001,
+          "frustration_level": 0,
+          "hints_requested": 1,
+          "inactivity_duration": 0.02821,
+          "interest_level": 0.71,
+          "knowledge_gaps": [],
+          "learning_progress": 1,
+          "navigation_frequency": 0,
+          "response_time_seconds": 14,
+          "timestamp": "2026-01-10T13:25:16.009186"
+        },
+        {
+          "accuracy": 1,
+          "completion_rate": 0.3,
+          "confidence_level": 1,
+          "engagement_level": "high",
+          "engagement_score": 0.8672273039,
+          "frustration_level": 0,
+          "hints_requested": 0,
+          "inactivity_duration": 0.032423,
+          "interest_level": 0.768888888888889,
+          "knowledge_gaps": [],
+          "learning_progress": 1,
+          "navigation_frequency": 0,
+          "response_time_seconds": 17,
+          "timestamp": "2026-01-10T13:25:36.569968"
+        },
+        {
+          "accuracy": 0.75,
+          "completion_rate": 0.4,
+          "confidence_level": 0.7466666666666666,
+          "engagement_level": "high",
+          "engagement_score": 0.7304726055000001,
+          "frustration_level": 0.3,
+          "hints_requested": 0,
+          "inactivity_duration": 0.039135,
+          "interest_level": 0.38333333333333336,
+          "knowledge_gaps": [
+            "Grammar"
+          ],
+          "learning_progress": 0.75,
+          "navigation_frequency": 0,
+          "response_time_seconds": 131,
+          "timestamp": "2026-01-10T13:28:00.611680"
+        },
+        {
+          "accuracy": 0.75,
+          "completion_rate": 0.4,
+          "confidence_level": 0.7466666666666666,
+          "engagement_level": "medium",
+          "engagement_score": 0.687774933,
+          "frustration_level": 0,
+          "hints_requested": 0,
+          "inactivity_duration": 48.53581,
+          "interest_level": 0.595,
+          "knowledge_gaps": [
+            "Grammar"
+          ],
+          "learning_progress": 0.75,
+          "navigation_frequency": 1,
+          "response_time_seconds": 4,
+          "timestamp": "2026-01-10T13:28:49.102665"
+        },
+        {
+          "accuracy": 0.6,
+          "completion_rate": 0.5,
+          "confidence_level": 0.7333333333333333,
+          "engagement_level": "high",
+          "engagement_score": 0.7212322977000001,
+          "frustration_level": 0.26666666666666666,
+          "hints_requested": 0,
+          "inactivity_duration": 0.025289,
+          "interest_level": 0.5466666666666666,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "learning_progress": 0.6,
+          "navigation_frequency": 0,
+          "response_time_seconds": 16,
+          "timestamp": "2026-01-10T13:29:09.334674"
+        },
+        {
+          "accuracy": 0.6666666666666666,
+          "completion_rate": 0.6,
+          "confidence_level": 0.5533333333333333,
+          "engagement_level": "medium",
+          "engagement_score": 0.6768178381333334,
+          "frustration_level": 0.5666666666666667,
+          "hints_requested": 1,
+          "inactivity_duration": 0.022136,
+          "interest_level": 0.4886666666666666,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "learning_progress": 0.6,
+          "navigation_frequency": 0,
+          "response_time_seconds": 77,
+          "timestamp": "2026-01-10T13:30:39.181326"
+        },
+        {
+          "accuracy": 0.7142857142857143,
+          "completion_rate": 0.7,
+          "confidence_level": 0.8666666666666667,
+          "engagement_level": "high",
+          "engagement_score": 0.7580896862571429,
+          "frustration_level": 0,
+          "hints_requested": 0,
+          "inactivity_duration": 0.024938,
+          "interest_level": 0.5139047619047619,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "learning_progress": 0.6,
+          "navigation_frequency": 0,
+          "response_time_seconds": 7,
+          "timestamp": "2026-01-10T13:30:48.990138"
+        },
+        {
+          "accuracy": 0.75,
+          "completion_rate": 0.8,
+          "confidence_level": 1,
+          "engagement_level": "high",
+          "engagement_score": 0.7722281299,
+          "frustration_level": 0,
+          "hints_requested": 0,
+          "inactivity_duration": 0.031243,
+          "interest_level": 0.5286666666666666,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "learning_progress": 0.6,
+          "navigation_frequency": 0,
+          "response_time_seconds": 12,
+          "timestamp": "2026-01-10T13:31:05.435072"
+        },
+        {
+          "accuracy": 0.7777777777777778,
+          "completion_rate": 0.9,
+          "confidence_level": 1,
+          "engagement_level": "high",
+          "engagement_score": 0.8247884118555556,
+          "frustration_level": 0,
+          "hints_requested": 0,
+          "inactivity_duration": 0.024491,
+          "interest_level": 0.6383703703703704,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "learning_progress": 0.8,
+          "navigation_frequency": 0,
+          "response_time_seconds": 9,
+          "timestamp": "2026-01-10T13:31:16.643751"
+        }
+      ],
+      "responses": [
+        {
+          "facial_metrics": {
+            "attention_score": 0.8418089232893071,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.6124690771102905,
+                "emotion": "neutral",
+                "timestamp": 1768051426431
+              },
+              {
+                "confidence": 0.60809725522995,
+                "emotion": "neutral",
+                "timestamp": 1768051426634
+              },
+              {
+                "confidence": 0.9978742599487305,
+                "emotion": "neutral",
+                "timestamp": 1768051427167
+              },
+              {
+                "confidence": 0.9985435009002686,
+                "emotion": "neutral",
+                "timestamp": 1768051431193
+              },
+              {
+                "confidence": 0.7730610966682434,
+                "emotion": "angry",
+                "timestamp": 1768051433640
+              },
+              {
+                "confidence": 0.9169052243232727,
+                "emotion": "neutral",
+                "timestamp": 1768051435140
+              },
+              {
+                "confidence": 0.989910364151001,
+                "emotion": "neutral",
+                "timestamp": 1768051436083
+              },
+              {
+                "confidence": 0.9988653659820557,
+                "emotion": "neutral",
+                "timestamp": 1768051436673
+              },
+              {
+                "confidence": 0.999441921710968,
+                "emotion": "neutral",
+                "timestamp": 1768051437157
+              },
+              {
+                "confidence": 0.9892235994338989,
+                "emotion": "neutral",
+                "timestamp": 1768051437646
+              },
+              {
+                "confidence": 0.9973568916320801,
+                "emotion": "neutral",
+                "timestamp": 1768051438164
+              },
+              {
+                "confidence": 0.9990730285644531,
+                "emotion": "neutral",
+                "timestamp": 1768051438648
+              },
+              {
+                "confidence": 0.9041547775268555,
+                "emotion": "neutral",
+                "timestamp": 1768051439229
+              },
+              {
+                "confidence": 0.9949203133583069,
+                "emotion": "neutral",
+                "timestamp": 1768051442710
+              },
+              {
+                "confidence": 0.8881147503852844,
+                "emotion": "neutral",
+                "timestamp": 1768051443134
+              },
+              {
+                "confidence": 0.99600750207901,
+                "emotion": "neutral",
+                "timestamp": 1768051443718
+              },
+              {
+                "confidence": 0.9895594120025635,
+                "emotion": "neutral",
+                "timestamp": 1768051444091
+              },
+              {
+                "confidence": 0.7339311242103577,
+                "emotion": "neutral",
+                "timestamp": 1768051444694
+              },
+              {
+                "confidence": 0.9790219664573669,
+                "emotion": "neutral",
+                "timestamp": 1768051445622
+              },
+              {
+                "confidence": 0.9757238626480103,
+                "emotion": "neutral",
+                "timestamp": 1768051446232
+              },
+              {
+                "confidence": 0.8532318472862244,
+                "emotion": "neutral",
+                "timestamp": 1768051446659
+              },
+              {
+                "confidence": 0.9795045256614685,
+                "emotion": "neutral",
+                "timestamp": 1768051447235
+              },
+              {
+                "confidence": 0.8867826461791992,
+                "emotion": "neutral",
+                "timestamp": 1768051447625
+              },
+              {
+                "confidence": 0.8323370218276978,
+                "emotion": "neutral",
+                "timestamp": 1768051448107
+              },
+              {
+                "confidence": 0.9633660316467285,
+                "emotion": "neutral",
+                "timestamp": 1768051448600
+              },
+              {
+                "confidence": 0.9430616497993469,
+                "emotion": "neutral",
+                "timestamp": 1768051449177
+              },
+              {
+                "confidence": 0.9646652936935425,
+                "emotion": "neutral",
+                "timestamp": 1768051449639
+              },
+              {
+                "confidence": 0.9644519090652466,
+                "emotion": "neutral",
+                "timestamp": 1768051450587
+              },
+              {
+                "confidence": 0.8693330883979797,
+                "emotion": "neutral",
+                "timestamp": 1768051451150
+              },
+              {
+                "confidence": 0.9968812465667725,
+                "emotion": "neutral",
+                "timestamp": 1768051451632
+              },
+              {
+                "confidence": 0.9906010627746582,
+                "emotion": "neutral",
+                "timestamp": 1768051452114
+              },
+              {
+                "confidence": 0.5062633156776428,
+                "emotion": "neutral",
+                "timestamp": 1768051452642
+              },
+              {
+                "confidence": 0.8802173733711243,
+                "emotion": "neutral",
+                "timestamp": 1768051453165
+              },
+              {
+                "confidence": 0.9252839088439941,
+                "emotion": "neutral",
+                "timestamp": 1768051453656
+              },
+              {
+                "confidence": 0.9407928586006165,
+                "emotion": "neutral",
+                "timestamp": 1768051454149
+              },
+              {
+                "confidence": 0.986767590045929,
+                "emotion": "neutral",
+                "timestamp": 1768051454656
+              },
+              {
+                "confidence": 0.9954492449760437,
+                "emotion": "neutral",
+                "timestamp": 1768051455154
+              },
+              {
+                "confidence": 0.8154208660125732,
+                "emotion": "neutral",
+                "timestamp": 1768051455634
+              },
+              {
+                "confidence": 0.7985080480575562,
+                "emotion": "neutral",
+                "timestamp": 1768051456147
+              },
+              {
+                "confidence": 0.8800057172775269,
+                "emotion": "neutral",
+                "timestamp": 1768051456684
+              },
+              {
+                "confidence": 0.6622856259346008,
+                "emotion": "neutral",
+                "timestamp": 1768051457153
+              },
+              {
+                "confidence": 0.9211713075637817,
+                "emotion": "neutral",
+                "timestamp": 1768051457676
+              },
+              {
+                "confidence": 0.5904207825660706,
+                "emotion": "neutral",
+                "timestamp": 1768051458166
+              },
+              {
+                "confidence": 0.939234733581543,
+                "emotion": "neutral",
+                "timestamp": 1768051458686
+              },
+              {
+                "confidence": 0.5091207027435303,
+                "emotion": "neutral",
+                "timestamp": 1768051459100
+              },
+              {
+                "confidence": 0.908902645111084,
+                "emotion": "neutral",
+                "timestamp": 1768051459731
+              },
+              {
+                "confidence": 0.9843834042549133,
+                "emotion": "neutral",
+                "timestamp": 1768051460165
+              },
+              {
+                "confidence": 0.9603709578514099,
+                "emotion": "neutral",
+                "timestamp": 1768051460603
+              },
+              {
+                "confidence": 0.9223703742027283,
+                "emotion": "neutral",
+                "timestamp": 1768051461151
+              },
+              {
+                "confidence": 0.9842077493667603,
+                "emotion": "neutral",
+                "timestamp": 1768051461598
+              },
+              {
+                "confidence": 0.7973738312721252,
+                "emotion": "neutral",
+                "timestamp": 1768051462154
+              },
+              {
+                "confidence": 0.990548312664032,
+                "emotion": "neutral",
+                "timestamp": 1768051462603
+              },
+              {
+                "confidence": 0.9262871146202087,
+                "emotion": "neutral",
+                "timestamp": 1768051463111
+              },
+              {
+                "confidence": 0.7936533689498901,
+                "emotion": "neutral",
+                "timestamp": 1768051463649
+              },
+              {
+                "confidence": 0.7626479864120483,
+                "emotion": "neutral",
+                "timestamp": 1768051464165
+              },
+              {
+                "confidence": 0.9199548959732056,
+                "emotion": "neutral",
+                "timestamp": 1768051464636
+              },
+              {
+                "confidence": 0.6980271935462952,
+                "emotion": "neutral",
+                "timestamp": 1768051465189
+              },
+              {
+                "confidence": 0.867438018321991,
+                "emotion": "neutral",
+                "timestamp": 1768051465698
+              },
+              {
+                "confidence": 0.9695332050323486,
+                "emotion": "neutral",
+                "timestamp": 1768051466172
+              },
+              {
+                "confidence": 0.85201096534729,
+                "emotion": "neutral",
+                "timestamp": 1768051466625
+              },
+              {
+                "confidence": 0.9912692308425903,
+                "emotion": "neutral",
+                "timestamp": 1768051467104
+              },
+              {
+                "confidence": 0.8542088866233826,
+                "emotion": "neutral",
+                "timestamp": 1768051467639
+              },
+              {
+                "confidence": 0.9320616722106934,
+                "emotion": "neutral",
+                "timestamp": 1768051468157
+              },
+              {
+                "confidence": 0.9369646310806274,
+                "emotion": "neutral",
+                "timestamp": 1768051468692
+              },
+              {
+                "confidence": 0.7875176668167114,
+                "emotion": "neutral",
+                "timestamp": 1768051469208
+              },
+              {
+                "confidence": 0.5868409276008606,
+                "emotion": "neutral",
+                "timestamp": 1768051469637
+              },
+              {
+                "confidence": 0.7997651100158691,
+                "emotion": "angry",
+                "timestamp": 1768051470101
+              },
+              {
+                "confidence": 0.9089379906654358,
+                "emotion": "angry",
+                "timestamp": 1768051470636
+              },
+              {
+                "confidence": 0.9220895171165466,
+                "emotion": "angry",
+                "timestamp": 1768051471182
+              },
+              {
+                "confidence": 0.7176961898803711,
+                "emotion": "angry",
+                "timestamp": 1768051471634
+              },
+              {
+                "confidence": 0.6254864931106567,
+                "emotion": "neutral",
+                "timestamp": 1768051472157
+              },
+              {
+                "confidence": 0.6410658955574036,
+                "emotion": "angry",
+                "timestamp": 1768051472659
+              },
+              {
+                "confidence": 0.7711387276649475,
+                "emotion": "angry",
+                "timestamp": 1768051473135
+              },
+              {
+                "confidence": 0.6186447739601135,
+                "emotion": "neutral",
+                "timestamp": 1768051473628
+              },
+              {
+                "confidence": 0.7390425205230713,
+                "emotion": "neutral",
+                "timestamp": 1768051474098
+              },
+              {
+                "confidence": 0.5827400088310242,
+                "emotion": "angry",
+                "timestamp": 1768051474628
+              },
+              {
+                "confidence": 0.9663434624671936,
+                "emotion": "angry",
+                "timestamp": 1768051475133
+              },
+              {
+                "confidence": 0.9888055324554443,
+                "emotion": "angry",
+                "timestamp": 1768051475621
+              },
+              {
+                "confidence": 0.5354547500610352,
+                "emotion": "angry",
+                "timestamp": 1768051476194
+              },
+              {
+                "confidence": 0.5680109858512878,
+                "emotion": "angry",
+                "timestamp": 1768051476625
+              },
+              {
+                "confidence": 0.9617069363594055,
+                "emotion": "neutral",
+                "timestamp": 1768051477157
+              },
+              {
+                "confidence": 0.6419480443000793,
+                "emotion": "angry",
+                "timestamp": 1768051477639
+              },
+              {
+                "confidence": 0.721284031867981,
+                "emotion": "angry",
+                "timestamp": 1768051478107
+              },
+              {
+                "confidence": 0.787778913974762,
+                "emotion": "angry",
+                "timestamp": 1768051478626
+              },
+              {
+                "confidence": 0.9034842252731323,
+                "emotion": "angry",
+                "timestamp": 1768051479140
+              },
+              {
+                "confidence": 0.5747299194335938,
+                "emotion": "angry",
+                "timestamp": 1768051479711
+              },
+              {
+                "confidence": 0.5791683793067932,
+                "emotion": "neutral",
+                "timestamp": 1768051480221
+              },
+              {
+                "confidence": 0.9287980794906616,
+                "emotion": "angry",
+                "timestamp": 1768051480624
+              },
+              {
+                "confidence": 0.8650758862495422,
+                "emotion": "angry",
+                "timestamp": 1768051481138
+              },
+              {
+                "confidence": 0.6932548880577087,
+                "emotion": "angry",
+                "timestamp": 1768051481642
+              },
+              {
+                "confidence": 0.9157813787460327,
+                "emotion": "neutral",
+                "timestamp": 1768051482117
+              },
+              {
+                "confidence": 0.9697859883308411,
+                "emotion": "angry",
+                "timestamp": 1768051482656
+              },
+              {
+                "confidence": 0.9417175650596619,
+                "emotion": "angry",
+                "timestamp": 1768051483095
+              },
+              {
+                "confidence": 0.8410564064979553,
+                "emotion": "angry",
+                "timestamp": 1768051483611
+              },
+              {
+                "confidence": 0.5938186049461365,
+                "emotion": "angry",
+                "timestamp": 1768051484184
+              },
+              {
+                "confidence": 0.7096502780914307,
+                "emotion": "angry",
+                "timestamp": 1768051484651
+              },
+              {
+                "confidence": 0.9083425402641296,
+                "emotion": "angry",
+                "timestamp": 1768051485204
+              },
+              {
+                "confidence": 0.9721731543540955,
+                "emotion": "angry",
+                "timestamp": 1768051485677
+              },
+              {
+                "confidence": 0.9602372050285339,
+                "emotion": "angry",
+                "timestamp": 1768051486110
+              },
+              {
+                "confidence": 0.9792130589485168,
+                "emotion": "angry",
+                "timestamp": 1768051486624
+              },
+              {
+                "confidence": 0.6049669981002808,
+                "emotion": "angry",
+                "timestamp": 1768051487113
+              },
+              {
+                "confidence": 0.9761922359466553,
+                "emotion": "angry",
+                "timestamp": 1768051487614
+              },
+              {
+                "confidence": 0.5899494886398315,
+                "emotion": "angry",
+                "timestamp": 1768051488756
+              },
+              {
+                "confidence": 0.6676431894302368,
+                "emotion": "angry",
+                "timestamp": 1768051488801
+              },
+              {
+                "confidence": 0.733961820602417,
+                "emotion": "angry",
+                "timestamp": 1768051489167
+              },
+              {
+                "confidence": 0.6361457705497742,
+                "emotion": "neutral",
+                "timestamp": 1768051489602
+              },
+              {
+                "confidence": 0.967481791973114,
+                "emotion": "angry",
+                "timestamp": 1768051490106
+              },
+              {
+                "confidence": 0.5171043872833252,
+                "emotion": "angry",
+                "timestamp": 1768051490660
+              },
+              {
+                "confidence": 0.8445615768432617,
+                "emotion": "angry",
+                "timestamp": 1768051491125
+              },
+              {
+                "confidence": 0.7166491150856018,
+                "emotion": "neutral",
+                "timestamp": 1768051491636
+              },
+              {
+                "confidence": 0.9433724880218506,
+                "emotion": "neutral",
+                "timestamp": 1768051492124
+              },
+              {
+                "confidence": 0.9710114598274231,
+                "emotion": "neutral",
+                "timestamp": 1768051492658
+              },
+              {
+                "confidence": 0.991551399230957,
+                "emotion": "neutral",
+                "timestamp": 1768051493106
+              },
+              {
+                "confidence": 0.9165101051330566,
+                "emotion": "neutral",
+                "timestamp": 1768051493623
+              },
+              {
+                "confidence": 0.709542989730835,
+                "emotion": "angry",
+                "timestamp": 1768051494131
+              },
+              {
+                "confidence": 0.8425652980804443,
+                "emotion": "neutral",
+                "timestamp": 1768051494641
+              },
+              {
+                "confidence": 0.6642197370529175,
+                "emotion": "angry",
+                "timestamp": 1768051495147
+              }
+            ],
+            "face_detected_count": 117,
+            "face_lost_count": 24,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "B",
+          "hesitation_flags": {
+            "frequentSwitching": true,
+            "longHesitation": true,
+            "rapidClicking": false
+          },
+          "hints_requested": 1,
+          "hints_used_array": [
+            {
+              "hint_text": "Think of something that could mean two things",
+              "timestamp": 1768051487749
+            }
+          ],
+          "inactivity_duration_ms": 4525,
+          "initial_option": "B",
+          "interaction_start_timestamp": 1768051422105,
+          "is_correct": true,
+          "knowledge_gaps": [],
+          "navigation_frequency": 0,
+          "navigation_pattern": "sequential",
+          "option_change_count": 2,
+          "option_change_history": [
+            {
+              "from": "B",
+              "timestamp": 1768051460318,
+              "to": "A"
+            },
+            {
+              "from": "A",
+              "timestamp": 1768051485207,
+              "to": "C"
+            }
+          ],
+          "question_id": "3b60abe9-0c6f-416a-8f80-0356550860aa",
+          "question_index": 0,
+          "question_text": "Which word best describes \"ambiguous\"?",
+          "response_time_seconds": 73,
+          "student_answer": "B",
+          "submission_iso_timestamp": "2026-01-10T13:24:55.584Z",
+          "submission_timestamp": 1768051495584,
+          "time_spent_per_question": 73,
+          "timestamp": "2026-01-10T13:24:55.636259"
+        },
+        {
+          "facial_metrics": {
+            "attention_score": 0.7682108924939082,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.8559334874153137,
+                "emotion": "angry",
+                "timestamp": 1768051502160
+              },
+              {
+                "confidence": 0.6677457094192505,
+                "emotion": "neutral",
+                "timestamp": 1768051502642
+              },
+              {
+                "confidence": 0.9778282642364502,
+                "emotion": "angry",
+                "timestamp": 1768051503177
+              },
+              {
+                "confidence": 0.9122600555419922,
+                "emotion": "angry",
+                "timestamp": 1768051503679
+              },
+              {
+                "confidence": 0.9588024616241455,
+                "emotion": "angry",
+                "timestamp": 1768051504141
+              },
+              {
+                "confidence": 0.8248847126960754,
+                "emotion": "angry",
+                "timestamp": 1768051504646
+              },
+              {
+                "confidence": 0.9864875674247742,
+                "emotion": "neutral",
+                "timestamp": 1768051505135
+              },
+              {
+                "confidence": 0.7976738810539246,
+                "emotion": "neutral",
+                "timestamp": 1768051505651
+              },
+              {
+                "confidence": 0.5619930624961853,
+                "emotion": "angry",
+                "timestamp": 1768051506078
+              },
+              {
+                "confidence": 0.9369240403175354,
+                "emotion": "neutral",
+                "timestamp": 1768051506648
+              },
+              {
+                "confidence": 0.8421220779418945,
+                "emotion": "neutral",
+                "timestamp": 1768051507141
+              },
+              {
+                "confidence": 0.9502172470092773,
+                "emotion": "neutral",
+                "timestamp": 1768051507653
+              },
+              {
+                "confidence": 0.5068078637123108,
+                "emotion": "angry",
+                "timestamp": 1768051508147
+              },
+              {
+                "confidence": 0.883578896522522,
+                "emotion": "neutral",
+                "timestamp": 1768051508687
+              },
+              {
+                "confidence": 0.6435446739196777,
+                "emotion": "neutral",
+                "timestamp": 1768051509166
+              },
+              {
+                "confidence": 0.7632149457931519,
+                "emotion": "neutral",
+                "timestamp": 1768051509603
+              },
+              {
+                "confidence": 0.874275267124176,
+                "emotion": "neutral",
+                "timestamp": 1768051510156
+              },
+              {
+                "confidence": 0.6652751564979553,
+                "emotion": "angry",
+                "timestamp": 1768051510631
+              },
+              {
+                "confidence": 0.5057816505432129,
+                "emotion": "neutral",
+                "timestamp": 1768051511119
+              },
+              {
+                "confidence": 0.5561969876289368,
+                "emotion": "neutral",
+                "timestamp": 1768051512831
+              },
+              {
+                "confidence": 0.9437903761863708,
+                "emotion": "angry",
+                "timestamp": 1768051513204
+              },
+              {
+                "confidence": 0.7836195230484009,
+                "emotion": "angry",
+                "timestamp": 1768051513650
+              },
+              {
+                "confidence": 0.7877088189125061,
+                "emotion": "angry",
+                "timestamp": 1768051514108
+              },
+              {
+                "confidence": 0.5674446225166321,
+                "emotion": "neutral",
+                "timestamp": 1768051514648
+              },
+              {
+                "confidence": 0.6100606322288513,
+                "emotion": "angry",
+                "timestamp": 1768051515129
+              },
+              {
+                "confidence": 0.6093112230300903,
+                "emotion": "angry",
+                "timestamp": 1768051515596
+              }
+            ],
+            "face_detected_count": 26,
+            "face_lost_count": 0,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "B",
+          "hesitation_flags": {
+            "frequentSwitching": false,
+            "longHesitation": false,
+            "rapidClicking": false
+          },
+          "hints_requested": 1,
+          "hints_used_array": [
+            {
+              "hint_text": "It uses \"have\" or \"has\"",
+              "timestamp": 1768051511494
+            }
+          ],
+          "inactivity_duration_ms": 1149,
+          "initial_option": "A",
+          "interaction_start_timestamp": 1768051501754,
+          "is_correct": true,
+          "knowledge_gaps": [],
+          "navigation_frequency": 0,
+          "navigation_pattern": "sequential",
+          "option_change_count": 1,
+          "option_change_history": [
+            {
+              "from": "A",
+              "timestamp": 1768051514609,
+              "to": "B"
+            }
+          ],
+          "question_id": "ad5561e4-b82b-47fa-a1f1-255f9163bd00",
+          "question_index": 1,
+          "question_text": "What tense is \"The students have completed their assignment\"?",
+          "response_time_seconds": 14,
+          "student_answer": "B",
+          "submission_iso_timestamp": "2026-01-10T13:25:15.901Z",
+          "submission_timestamp": 1768051515901,
+          "time_spent_per_question": 14,
+          "timestamp": "2026-01-10T13:25:15.975177"
+        },
+        {
+          "facial_metrics": {
+            "attention_score": 0.7812903654925963,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.8777667284011841,
+                "emotion": "angry",
+                "timestamp": 1768051519631
+              },
+              {
+                "confidence": 0.4981018006801605,
+                "emotion": "angry",
+                "timestamp": 1768051520158
+              },
+              {
+                "confidence": 0.8225120306015015,
+                "emotion": "angry",
+                "timestamp": 1768051520703
+              },
+              {
+                "confidence": 0.6850315928459167,
+                "emotion": "angry",
+                "timestamp": 1768051521185
+              },
+              {
+                "confidence": 0.940082311630249,
+                "emotion": "angry",
+                "timestamp": 1768051521635
+              },
+              {
+                "confidence": 0.8771296739578247,
+                "emotion": "angry",
+                "timestamp": 1768051522093
+              },
+              {
+                "confidence": 0.8727334141731262,
+                "emotion": "angry",
+                "timestamp": 1768051522699
+              },
+              {
+                "confidence": 0.9952874183654785,
+                "emotion": "angry",
+                "timestamp": 1768051523101
+              },
+              {
+                "confidence": 0.6097431182861328,
+                "emotion": "angry",
+                "timestamp": 1768051523624
+              },
+              {
+                "confidence": 0.7933616042137146,
+                "emotion": "angry",
+                "timestamp": 1768051524167
+              },
+              {
+                "confidence": 0.6106632351875305,
+                "emotion": "angry",
+                "timestamp": 1768051524604
+              },
+              {
+                "confidence": 0.8546996712684631,
+                "emotion": "angry",
+                "timestamp": 1768051525175
+              },
+              {
+                "confidence": 0.7447972297668457,
+                "emotion": "neutral",
+                "timestamp": 1768051525615
+              },
+              {
+                "confidence": 0.7112405896186829,
+                "emotion": "neutral",
+                "timestamp": 1768051526121
+              },
+              {
+                "confidence": 0.6158238649368286,
+                "emotion": "angry",
+                "timestamp": 1768051526675
+              },
+              {
+                "confidence": 0.5626581907272339,
+                "emotion": "neutral",
+                "timestamp": 1768051527146
+              },
+              {
+                "confidence": 0.9578700065612793,
+                "emotion": "neutral",
+                "timestamp": 1768051527611
+              },
+              {
+                "confidence": 0.9464234113693237,
+                "emotion": "neutral",
+                "timestamp": 1768051528104
+              },
+              {
+                "confidence": 0.9234181046485901,
+                "emotion": "neutral",
+                "timestamp": 1768051528673
+              },
+              {
+                "confidence": 0.8209880590438843,
+                "emotion": "neutral",
+                "timestamp": 1768051529133
+              },
+              {
+                "confidence": 0.9702727198600769,
+                "emotion": "neutral",
+                "timestamp": 1768051529625
+              },
+              {
+                "confidence": 0.8015473484992981,
+                "emotion": "angry",
+                "timestamp": 1768051530117
+              },
+              {
+                "confidence": 0.8077455759048462,
+                "emotion": "angry",
+                "timestamp": 1768051530704
+              },
+              {
+                "confidence": 0.6924269795417786,
+                "emotion": "neutral",
+                "timestamp": 1768051531111
+              },
+              {
+                "confidence": 0.9054512977600098,
+                "emotion": "neutral",
+                "timestamp": 1768051531648
+              },
+              {
+                "confidence": 0.8718023300170898,
+                "emotion": "angry",
+                "timestamp": 1768051532112
+              },
+              {
+                "confidence": 0.7308152914047241,
+                "emotion": "neutral",
+                "timestamp": 1768051532636
+              },
+              {
+                "confidence": 0.5313692688941956,
+                "emotion": "neutral",
+                "timestamp": 1768051533153
+              },
+              {
+                "confidence": 0.4979621171951294,
+                "emotion": "angry",
+                "timestamp": 1768051533633
+              },
+              {
+                "confidence": 0.8922588229179382,
+                "emotion": "neutral",
+                "timestamp": 1768051534136
+              },
+              {
+                "confidence": 0.5259227156639099,
+                "emotion": "angry",
+                "timestamp": 1768051534687
+              },
+              {
+                "confidence": 0.8568142056465149,
+                "emotion": "angry",
+                "timestamp": 1768051535110
+              },
+              {
+                "confidence": 0.8432765007019043,
+                "emotion": "angry",
+                "timestamp": 1768051535598
+              },
+              {
+                "confidence": 0.9158751964569092,
+                "emotion": "angry",
+                "timestamp": 1768051536184
+              }
+            ],
+            "face_detected_count": 34,
+            "face_lost_count": 0,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "B",
+          "hesitation_flags": {
+            "frequentSwitching": false,
+            "longHesitation": true,
+            "rapidClicking": false
+          },
+          "hints_requested": 0,
+          "hints_used_array": [],
+          "inactivity_duration_ms": 2727,
+          "initial_option": "B",
+          "interaction_start_timestamp": 1768051519599,
+          "is_correct": true,
+          "knowledge_gaps": [],
+          "navigation_frequency": 0,
+          "navigation_pattern": "sequential",
+          "option_change_count": 0,
+          "option_change_history": [],
+          "question_id": "4e579c91-b72c-415a-9b3e-a6d1a7d8b58c",
+          "question_index": 2,
+          "question_text": "Based on: \"The old library was closed for renovations, and the community had to use the temporary location for three months.\" Why did the community use a temporary location?",
+          "response_time_seconds": 17,
+          "student_answer": "B",
+          "submission_iso_timestamp": "2026-01-10T13:25:36.443Z",
+          "submission_timestamp": 1768051536443,
+          "time_spent_per_question": 17,
+          "timestamp": "2026-01-10T13:25:36.518448"
+        },
+        {
+          "facial_metrics": {
+            "attention_score": 0.8137122765183449,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.8471837639808655,
+                "emotion": "angry",
+                "timestamp": 1768051725214
+              },
+              {
+                "confidence": 0.9391942620277405,
+                "emotion": "angry",
+                "timestamp": 1768051725636
+              },
+              {
+                "confidence": 0.9782206416130066,
+                "emotion": "angry",
+                "timestamp": 1768051726164
+              },
+              {
+                "confidence": 0.8557476997375488,
+                "emotion": "angry",
+                "timestamp": 1768051726653
+              },
+              {
+                "confidence": 0.666266679763794,
+                "emotion": "neutral",
+                "timestamp": 1768051727103
+              },
+              {
+                "confidence": 0.6569305062294006,
+                "emotion": "angry",
+                "timestamp": 1768051727659
+              },
+              {
+                "confidence": 0.6266571283340454,
+                "emotion": "angry",
+                "timestamp": 1768051728141
+              },
+              {
+                "confidence": 0.9394975304603577,
+                "emotion": "angry",
+                "timestamp": 1768051728595
+              }
+            ],
+            "face_detected_count": 8,
+            "face_lost_count": 0,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "C",
+          "hesitation_flags": {
+            "frequentSwitching": false,
+            "longHesitation": false,
+            "rapidClicking": false
+          },
+          "hints_requested": 0,
+          "hints_used_array": [],
+          "inactivity_duration_ms": 2201,
+          "initial_option": "C",
+          "interaction_start_timestamp": 1768051724647,
+          "is_correct": false,
+          "knowledge_gaps": [
+            "Grammar"
+          ],
+          "navigation_frequency": 1,
+          "navigation_pattern": "sequential",
+          "option_change_count": 0,
+          "option_change_history": [],
+          "question_id": "e251555b-6e5b-4e50-bae3-532480b1ab17",
+          "question_index": 3,
+          "question_text": "Identify the correct use of its/it's",
+          "response_time_seconds": 4,
+          "student_answer": "C",
+          "submission_iso_timestamp": "2026-01-10T13:28:48.960Z",
+          "submission_timestamp": 1768051728960,
+          "time_spent_per_question": 4,
+          "timestamp": "2026-01-10T13:28:00.541335"
+        },
+        {
+          "facial_metrics": {
+            "attention_score": 0.8175305249169469,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.9848183393478394,
+                "emotion": "angry",
+                "timestamp": 1768051733697
+              },
+              {
+                "confidence": 0.8842104077339172,
+                "emotion": "angry",
+                "timestamp": 1768051734196
+              },
+              {
+                "confidence": 0.6941530704498291,
+                "emotion": "angry",
+                "timestamp": 1768051734671
+              },
+              {
+                "confidence": 0.9952571988105774,
+                "emotion": "angry",
+                "timestamp": 1768051735079
+              },
+              {
+                "confidence": 0.8908397555351257,
+                "emotion": "angry",
+                "timestamp": 1768051735617
+              },
+              {
+                "confidence": 0.981268584728241,
+                "emotion": "angry",
+                "timestamp": 1768051736147
+              },
+              {
+                "confidence": 0.8704284429550171,
+                "emotion": "neutral",
+                "timestamp": 1768051736697
+              },
+              {
+                "confidence": 0.5341836214065552,
+                "emotion": "angry",
+                "timestamp": 1768051737133
+              },
+              {
+                "confidence": 0.6481095552444458,
+                "emotion": "angry",
+                "timestamp": 1768051737723
+              },
+              {
+                "confidence": 0.47301697731018066,
+                "emotion": "angry",
+                "timestamp": 1768051738150
+              },
+              {
+                "confidence": 0.661781370639801,
+                "emotion": "neutral",
+                "timestamp": 1768051738615
+              },
+              {
+                "confidence": 0.6829127669334412,
+                "emotion": "angry",
+                "timestamp": 1768051739137
+              },
+              {
+                "confidence": 0.8943667411804199,
+                "emotion": "neutral",
+                "timestamp": 1768051739650
+              },
+              {
+                "confidence": 0.9824088215827942,
+                "emotion": "neutral",
+                "timestamp": 1768051740150
+              },
+              {
+                "confidence": 0.8419559001922607,
+                "emotion": "angry",
+                "timestamp": 1768051740639
+              },
+              {
+                "confidence": 0.9896366000175476,
+                "emotion": "neutral",
+                "timestamp": 1768051741219
+              },
+              {
+                "confidence": 0.4110061824321747,
+                "emotion": "surprised",
+                "timestamp": 1768051741638
+              },
+              {
+                "confidence": 0.9460131525993347,
+                "emotion": "neutral",
+                "timestamp": 1768051742154
+              },
+              {
+                "confidence": 0.8047385215759277,
+                "emotion": "neutral",
+                "timestamp": 1768051742694
+              },
+              {
+                "confidence": 0.798780620098114,
+                "emotion": "neutral",
+                "timestamp": 1768051743129
+              },
+              {
+                "confidence": 0.9293320178985596,
+                "emotion": "neutral",
+                "timestamp": 1768051743628
+              },
+              {
+                "confidence": 0.9927545189857483,
+                "emotion": "neutral",
+                "timestamp": 1768051744152
+              },
+              {
+                "confidence": 0.9805957078933716,
+                "emotion": "neutral",
+                "timestamp": 1768051744622
+              },
+              {
+                "confidence": 0.6489843726158142,
+                "emotion": "angry",
+                "timestamp": 1768051745203
+              },
+              {
+                "confidence": 0.9790699481964111,
+                "emotion": "neutral",
+                "timestamp": 1768051745618
+              },
+              {
+                "confidence": 0.995153546333313,
+                "emotion": "neutral",
+                "timestamp": 1768051746193
+              },
+              {
+                "confidence": 0.9917019009590149,
+                "emotion": "neutral",
+                "timestamp": 1768051746591
+              },
+              {
+                "confidence": 0.5776146650314331,
+                "emotion": "neutral",
+                "timestamp": 1768051747187
+              },
+              {
+                "confidence": 0.6811420321464539,
+                "emotion": "angry",
+                "timestamp": 1768051747639
+              },
+              {
+                "confidence": 0.758531391620636,
+                "emotion": "angry",
+                "timestamp": 1768051748126
+              },
+              {
+                "confidence": 0.6686816215515137,
+                "emotion": "neutral",
+                "timestamp": 1768051748644
+              },
+              {
+                "confidence": 0.9875284433364868,
+                "emotion": "neutral",
+                "timestamp": 1768051749137
+              }
+            ],
+            "face_detected_count": 32,
+            "face_lost_count": 0,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "B",
+          "hesitation_flags": {
+            "frequentSwitching": false,
+            "longHesitation": true,
+            "rapidClicking": false
+          },
+          "hints_requested": 0,
+          "hints_used_array": [],
+          "inactivity_duration_ms": 10440,
+          "initial_option": "B",
+          "interaction_start_timestamp": 1768051733330,
+          "is_correct": false,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "navigation_frequency": 0,
+          "navigation_pattern": "sequential",
+          "option_change_count": 0,
+          "option_change_history": [],
+          "question_id": "8b9076e0-4209-41ef-8c33-2de818ee5112",
+          "question_index": 5,
+          "question_text": "What is an antonym for \"bright\"?",
+          "response_time_seconds": 16,
+          "student_answer": "B",
+          "submission_iso_timestamp": "2026-01-10T13:29:09.226Z",
+          "submission_timestamp": 1768051749226,
+          "time_spent_per_question": 16,
+          "timestamp": "2026-01-10T13:29:09.284128"
+        },
+        {
+          "facial_metrics": {
+            "attention_score": 0.7922886908054352,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.5595393776893616,
+                "emotion": "angry",
+                "timestamp": 1768051764150
+              },
+              {
+                "confidence": 0.5543455481529236,
+                "emotion": "angry",
+                "timestamp": 1768051764702
+              },
+              {
+                "confidence": 0.9880232810974121,
+                "emotion": "angry",
+                "timestamp": 1768051765144
+              },
+              {
+                "confidence": 0.9445769786834717,
+                "emotion": "angry",
+                "timestamp": 1768051765638
+              },
+              {
+                "confidence": 0.4787278175354004,
+                "emotion": "angry",
+                "timestamp": 1768051766608
+              },
+              {
+                "confidence": 0.7697049975395203,
+                "emotion": "angry",
+                "timestamp": 1768051767208
+              },
+              {
+                "confidence": 0.8322766423225403,
+                "emotion": "neutral",
+                "timestamp": 1768051767642
+              },
+              {
+                "confidence": 0.9954917430877686,
+                "emotion": "neutral",
+                "timestamp": 1768051768160
+              },
+              {
+                "confidence": 0.9985244870185852,
+                "emotion": "neutral",
+                "timestamp": 1768051768674
+              },
+              {
+                "confidence": 0.8766138553619385,
+                "emotion": "neutral",
+                "timestamp": 1768051769213
+              },
+              {
+                "confidence": 0.8524254560470581,
+                "emotion": "neutral",
+                "timestamp": 1768051770212
+              },
+              {
+                "confidence": 0.83503258228302,
+                "emotion": "neutral",
+                "timestamp": 1768051771212
+              },
+              {
+                "confidence": 0.8059596419334412,
+                "emotion": "neutral",
+                "timestamp": 1768051771701
+              },
+              {
+                "confidence": 0.9957114458084106,
+                "emotion": "neutral",
+                "timestamp": 1768051772212
+              },
+              {
+                "confidence": 0.9881553649902344,
+                "emotion": "neutral",
+                "timestamp": 1768051772627
+              },
+              {
+                "confidence": 0.9992048144340515,
+                "emotion": "neutral",
+                "timestamp": 1768051773159
+              },
+              {
+                "confidence": 0.9988118410110474,
+                "emotion": "neutral",
+                "timestamp": 1768051773641
+              },
+              {
+                "confidence": 0.9313825964927673,
+                "emotion": "neutral",
+                "timestamp": 1768051774134
+              },
+              {
+                "confidence": 0.8492357134819031,
+                "emotion": "neutral",
+                "timestamp": 1768051774651
+              },
+              {
+                "confidence": 0.9740434288978577,
+                "emotion": "neutral",
+                "timestamp": 1768051775219
+              },
+              {
+                "confidence": 0.6830435395240784,
+                "emotion": "neutral",
+                "timestamp": 1768051775633
+              },
+              {
+                "confidence": 0.9829881191253662,
+                "emotion": "neutral",
+                "timestamp": 1768051776215
+              },
+              {
+                "confidence": 0.7313303351402283,
+                "emotion": "neutral",
+                "timestamp": 1768051776648
+              },
+              {
+                "confidence": 0.8379689455032349,
+                "emotion": "angry",
+                "timestamp": 1768051779227
+              },
+              {
+                "confidence": 0.6228818893432617,
+                "emotion": "neutral",
+                "timestamp": 1768051781105
+              },
+              {
+                "confidence": 0.9230097532272339,
+                "emotion": "neutral",
+                "timestamp": 1768051783197
+              },
+              {
+                "confidence": 0.9527459740638733,
+                "emotion": "neutral",
+                "timestamp": 1768051784205
+              },
+              {
+                "confidence": 0.6645618677139282,
+                "emotion": "angry",
+                "timestamp": 1768051785216
+              },
+              {
+                "confidence": 0.5380130410194397,
+                "emotion": "angry",
+                "timestamp": 1768051785647
+              },
+              {
+                "confidence": 0.9833771586418152,
+                "emotion": "neutral",
+                "timestamp": 1768051786630
+              },
+              {
+                "confidence": 0.6425228714942932,
+                "emotion": "neutral",
+                "timestamp": 1768051787178
+              },
+              {
+                "confidence": 0.9376689791679382,
+                "emotion": "neutral",
+                "timestamp": 1768051787627
+              },
+              {
+                "confidence": 0.5205411314964294,
+                "emotion": "angry",
+                "timestamp": 1768051788175
+              },
+              {
+                "confidence": 0.8229159712791443,
+                "emotion": "neutral",
+                "timestamp": 1768051788629
+              },
+              {
+                "confidence": 0.5290777087211609,
+                "emotion": "neutral",
+                "timestamp": 1768051789127
+              },
+              {
+                "confidence": 0.617337167263031,
+                "emotion": "angry",
+                "timestamp": 1768051789590
+              },
+              {
+                "confidence": 0.571149468421936,
+                "emotion": "angry",
+                "timestamp": 1768051790124
+              },
+              {
+                "confidence": 0.6414726972579956,
+                "emotion": "angry",
+                "timestamp": 1768051790635
+              },
+              {
+                "confidence": 0.8156203031539917,
+                "emotion": "neutral",
+                "timestamp": 1768051791159
+              },
+              {
+                "confidence": 0.9066173434257507,
+                "emotion": "angry",
+                "timestamp": 1768051791706
+              },
+              {
+                "confidence": 0.7746466994285583,
+                "emotion": "neutral",
+                "timestamp": 1768051792123
+              },
+              {
+                "confidence": 0.7976199388504028,
+                "emotion": "neutral",
+                "timestamp": 1768051792626
+              },
+              {
+                "confidence": 0.902738094329834,
+                "emotion": "neutral",
+                "timestamp": 1768051793138
+              },
+              {
+                "confidence": 0.5667256712913513,
+                "emotion": "angry",
+                "timestamp": 1768051793667
+              },
+              {
+                "confidence": 0.8247092962265015,
+                "emotion": "angry",
+                "timestamp": 1768051794183
+              },
+              {
+                "confidence": 0.9889200329780579,
+                "emotion": "neutral",
+                "timestamp": 1768051794683
+              },
+              {
+                "confidence": 0.7284162044525146,
+                "emotion": "neutral",
+                "timestamp": 1768051795184
+              },
+              {
+                "confidence": 0.9041085243225098,
+                "emotion": "angry",
+                "timestamp": 1768051796637
+              },
+              {
+                "confidence": 0.8200594186782837,
+                "emotion": "angry",
+                "timestamp": 1768051797161
+              },
+              {
+                "confidence": 0.9921739101409912,
+                "emotion": "neutral",
+                "timestamp": 1768051797637
+              },
+              {
+                "confidence": 0.5129542946815491,
+                "emotion": "neutral",
+                "timestamp": 1768051798145
+              },
+              {
+                "confidence": 0.9411453008651733,
+                "emotion": "angry",
+                "timestamp": 1768051798650
+              },
+              {
+                "confidence": 0.6750197410583496,
+                "emotion": "neutral",
+                "timestamp": 1768051799154
+              },
+              {
+                "confidence": 0.9939110279083252,
+                "emotion": "angry",
+                "timestamp": 1768051799634
+              },
+              {
+                "confidence": 0.9667789936065674,
+                "emotion": "angry",
+                "timestamp": 1768051800183
+              },
+              {
+                "confidence": 0.6125198006629944,
+                "emotion": "angry",
+                "timestamp": 1768051800623
+              },
+              {
+                "confidence": 0.6403372883796692,
+                "emotion": "angry",
+                "timestamp": 1768051801093
+              },
+              {
+                "confidence": 0.9660653471946716,
+                "emotion": "angry",
+                "timestamp": 1768051801637
+              },
+              {
+                "confidence": 0.8026780486106873,
+                "emotion": "neutral",
+                "timestamp": 1768051802138
+              },
+              {
+                "confidence": 0.6274800300598145,
+                "emotion": "neutral",
+                "timestamp": 1768051802635
+              },
+              {
+                "confidence": 0.5595191717147827,
+                "emotion": "neutral",
+                "timestamp": 1768051803151
+              },
+              {
+                "confidence": 0.8123463988304138,
+                "emotion": "angry",
+                "timestamp": 1768051803712
+              },
+              {
+                "confidence": 0.652790904045105,
+                "emotion": "angry",
+                "timestamp": 1768051804136
+              },
+              {
+                "confidence": 0.66777503490448,
+                "emotion": "angry",
+                "timestamp": 1768051804705
+              },
+              {
+                "confidence": 0.6116858124732971,
+                "emotion": "neutral",
+                "timestamp": 1768051805159
+              },
+              {
+                "confidence": 0.742146372795105,
+                "emotion": "angry",
+                "timestamp": 1768051805650
+              },
+              {
+                "confidence": 0.901036262512207,
+                "emotion": "angry",
+                "timestamp": 1768051806251
+              },
+              {
+                "confidence": 0.7271329760551453,
+                "emotion": "neutral",
+                "timestamp": 1768051806729
+              },
+              {
+                "confidence": 0.8865411877632141,
+                "emotion": "neutral",
+                "timestamp": 1768051807153
+              },
+              {
+                "confidence": 0.7231287956237793,
+                "emotion": "neutral",
+                "timestamp": 1768051807612
+              },
+              {
+                "confidence": 0.5260277986526489,
+                "emotion": "angry",
+                "timestamp": 1768051808131
+              },
+              {
+                "confidence": 0.5597586631774902,
+                "emotion": "neutral",
+                "timestamp": 1768051808683
+              },
+              {
+                "confidence": 0.9657230973243713,
+                "emotion": "angry",
+                "timestamp": 1768051809206
+              },
+              {
+                "confidence": 0.8937767744064331,
+                "emotion": "angry",
+                "timestamp": 1768051809629
+              },
+              {
+                "confidence": 0.5220889449119568,
+                "emotion": "angry",
+                "timestamp": 1768051810214
+              },
+              {
+                "confidence": 0.74256432056427,
+                "emotion": "angry",
+                "timestamp": 1768051810684
+              },
+              {
+                "confidence": 0.9556098580360413,
+                "emotion": "neutral",
+                "timestamp": 1768051811162
+              },
+              {
+                "confidence": 0.7871132493019104,
+                "emotion": "neutral",
+                "timestamp": 1768051811726
+              },
+              {
+                "confidence": 0.7870040535926819,
+                "emotion": "angry",
+                "timestamp": 1768051812134
+              },
+              {
+                "confidence": 0.9190373420715332,
+                "emotion": "angry",
+                "timestamp": 1768051812637
+              },
+              {
+                "confidence": 0.883923351764679,
+                "emotion": "neutral",
+                "timestamp": 1768051813216
+              },
+              {
+                "confidence": 0.9249706864356995,
+                "emotion": "angry",
+                "timestamp": 1768051813667
+              },
+              {
+                "confidence": 0.5704437494277954,
+                "emotion": "neutral",
+                "timestamp": 1768051814141
+              },
+              {
+                "confidence": 0.7502018809318542,
+                "emotion": "neutral",
+                "timestamp": 1768051814602
+              },
+              {
+                "confidence": 0.9081096053123474,
+                "emotion": "angry",
+                "timestamp": 1768051815106
+              },
+              {
+                "confidence": 0.8805433511734009,
+                "emotion": "neutral",
+                "timestamp": 1768051815617
+              },
+              {
+                "confidence": 0.9918780326843262,
+                "emotion": "angry",
+                "timestamp": 1768051816137
+              },
+              {
+                "confidence": 0.7163512706756592,
+                "emotion": "angry",
+                "timestamp": 1768051817616
+              },
+              {
+                "confidence": 0.5974373817443848,
+                "emotion": "neutral",
+                "timestamp": 1768051818648
+              },
+              {
+                "confidence": 0.8066050410270691,
+                "emotion": "neutral",
+                "timestamp": 1768051819184
+              },
+              {
+                "confidence": 0.49828797578811646,
+                "emotion": "neutral",
+                "timestamp": 1768051819620
+              },
+              {
+                "confidence": 0.997869074344635,
+                "emotion": "neutral",
+                "timestamp": 1768051820122
+              },
+              {
+                "confidence": 0.5953250527381897,
+                "emotion": "neutral",
+                "timestamp": 1768051820655
+              },
+              {
+                "confidence": 0.5118857026100159,
+                "emotion": "neutral",
+                "timestamp": 1768051821145
+              },
+              {
+                "confidence": 0.6428518295288086,
+                "emotion": "neutral",
+                "timestamp": 1768051821714
+              },
+              {
+                "confidence": 0.6767861247062683,
+                "emotion": "angry",
+                "timestamp": 1768051822131
+              },
+              {
+                "confidence": 0.7379236817359924,
+                "emotion": "neutral",
+                "timestamp": 1768051822603
+              },
+              {
+                "confidence": 0.5121641159057617,
+                "emotion": "neutral",
+                "timestamp": 1768051823216
+              },
+              {
+                "confidence": 0.9869950413703918,
+                "emotion": "neutral",
+                "timestamp": 1768051824186
+              },
+              {
+                "confidence": 0.9539688229560852,
+                "emotion": "neutral",
+                "timestamp": 1768051824698
+              },
+              {
+                "confidence": 0.9066707491874695,
+                "emotion": "neutral",
+                "timestamp": 1768051825134
+              },
+              {
+                "confidence": 0.9794235229492188,
+                "emotion": "neutral",
+                "timestamp": 1768051825695
+              },
+              {
+                "confidence": 0.9653227925300598,
+                "emotion": "neutral",
+                "timestamp": 1768051826141
+              },
+              {
+                "confidence": 0.9014844298362732,
+                "emotion": "neutral",
+                "timestamp": 1768051826642
+              },
+              {
+                "confidence": 0.9984754920005798,
+                "emotion": "neutral",
+                "timestamp": 1768051827104
+              },
+              {
+                "confidence": 0.760162889957428,
+                "emotion": "neutral",
+                "timestamp": 1768051827636
+              },
+              {
+                "confidence": 0.7026970982551575,
+                "emotion": "neutral",
+                "timestamp": 1768051828116
+              },
+              {
+                "confidence": 0.9092286229133606,
+                "emotion": "neutral",
+                "timestamp": 1768051828642
+              },
+              {
+                "confidence": 0.9832974672317505,
+                "emotion": "neutral",
+                "timestamp": 1768051829205
+              },
+              {
+                "confidence": 0.9674524664878845,
+                "emotion": "neutral",
+                "timestamp": 1768051829634
+              },
+              {
+                "confidence": 0.9936299920082092,
+                "emotion": "neutral",
+                "timestamp": 1768051830133
+              },
+              {
+                "confidence": 0.7860169410705566,
+                "emotion": "neutral",
+                "timestamp": 1768051830624
+              },
+              {
+                "confidence": 0.5567963123321533,
+                "emotion": "angry",
+                "timestamp": 1768051831162
+              },
+              {
+                "confidence": 0.781737744808197,
+                "emotion": "neutral",
+                "timestamp": 1768051831652
+              },
+              {
+                "confidence": 0.5329736471176147,
+                "emotion": "angry",
+                "timestamp": 1768051832162
+              },
+              {
+                "confidence": 0.7549803853034973,
+                "emotion": "angry",
+                "timestamp": 1768051832624
+              },
+              {
+                "confidence": 0.9203127026557922,
+                "emotion": "neutral",
+                "timestamp": 1768051833624
+              },
+              {
+                "confidence": 0.9592649340629578,
+                "emotion": "angry",
+                "timestamp": 1768051834144
+              },
+              {
+                "confidence": 0.5597586035728455,
+                "emotion": "angry",
+                "timestamp": 1768051835132
+              },
+              {
+                "confidence": 0.8091132640838623,
+                "emotion": "angry",
+                "timestamp": 1768051835640
+              },
+              {
+                "confidence": 0.6642087697982788,
+                "emotion": "neutral",
+                "timestamp": 1768051836212
+              },
+              {
+                "confidence": 0.902049720287323,
+                "emotion": "angry",
+                "timestamp": 1768051837287
+              },
+              {
+                "confidence": 0.9486894607543945,
+                "emotion": "angry",
+                "timestamp": 1768051837348
+              },
+              {
+                "confidence": 0.9719147682189941,
+                "emotion": "angry",
+                "timestamp": 1768051837664
+              },
+              {
+                "confidence": 0.5198537707328796,
+                "emotion": "angry",
+                "timestamp": 1768051838158
+              },
+              {
+                "confidence": 0.8138901591300964,
+                "emotion": "angry",
+                "timestamp": 1768051838595
+              }
+            ],
+            "face_detected_count": 126,
+            "face_lost_count": 28,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "B",
+          "hesitation_flags": {
+            "frequentSwitching": false,
+            "longHesitation": true,
+            "rapidClicking": false
+          },
+          "hints_requested": 1,
+          "hints_used_array": [
+            {
+              "hint_text": "A synonym means similar meaning",
+              "timestamp": 1768051836576
+            }
+          ],
+          "inactivity_duration_ms": 2205,
+          "initial_option": "C",
+          "interaction_start_timestamp": 1768051761743,
+          "is_correct": true,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "navigation_frequency": 0,
+          "navigation_pattern": "sequential",
+          "option_change_count": 1,
+          "option_change_history": [
+            {
+              "from": "C",
+              "timestamp": 1768051834680,
+              "to": "B"
+            }
+          ],
+          "question_id": "398dce29-5511-4d8c-9514-62f4b8080370",
+          "question_index": 6,
+          "question_text": "Which word is a synonym for \"happy\"?",
+          "response_time_seconds": 77,
+          "student_answer": "B",
+          "submission_iso_timestamp": "2026-01-10T13:30:39.095Z",
+          "submission_timestamp": 1768051839095,
+          "time_spent_per_question": 77,
+          "timestamp": "2026-01-10T13:30:39.138364"
+        },
+        {
+          "facial_metrics": {
+            "attention_score": 0.8922033905982971,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.9906337261199951,
+                "emotion": "angry",
+                "timestamp": 1768051841659
+              },
+              {
+                "confidence": 0.8828911781311035,
+                "emotion": "angry",
+                "timestamp": 1768051842190
+              },
+              {
+                "confidence": 0.8657599687576294,
+                "emotion": "angry",
+                "timestamp": 1768051842623
+              },
+              {
+                "confidence": 0.9408222436904907,
+                "emotion": "angry",
+                "timestamp": 1768051843143
+              },
+              {
+                "confidence": 0.9245738983154297,
+                "emotion": "angry",
+                "timestamp": 1768051843695
+              },
+              {
+                "confidence": 0.950350284576416,
+                "emotion": "angry",
+                "timestamp": 1768051844153
+              },
+              {
+                "confidence": 0.9549040794372559,
+                "emotion": "angry",
+                "timestamp": 1768051844699
+              },
+              {
+                "confidence": 0.9766383171081543,
+                "emotion": "angry",
+                "timestamp": 1768051845141
+              },
+              {
+                "confidence": 0.9986349940299988,
+                "emotion": "angry",
+                "timestamp": 1768051845608
+              },
+              {
+                "confidence": 0.7177712917327881,
+                "emotion": "angry",
+                "timestamp": 1768051846160
+              },
+              {
+                "confidence": 0.9922869205474854,
+                "emotion": "angry",
+                "timestamp": 1768051846653
+              },
+              {
+                "confidence": 0.8773911595344543,
+                "emotion": "angry",
+                "timestamp": 1768051847158
+              },
+              {
+                "confidence": 0.5097218751907349,
+                "emotion": "angry",
+                "timestamp": 1768051847639
+              },
+              {
+                "confidence": 0.9584667086601257,
+                "emotion": "angry",
+                "timestamp": 1768051848205
+              },
+              {
+                "confidence": 0.842204213142395,
+                "emotion": "angry",
+                "timestamp": 1768051848673
+              }
+            ],
+            "face_detected_count": 15,
+            "face_lost_count": 0,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "C",
+          "hesitation_flags": {
+            "frequentSwitching": false,
+            "longHesitation": false,
+            "rapidClicking": false
+          },
+          "hints_requested": 0,
+          "hints_used_array": [],
+          "inactivity_duration_ms": 820,
+          "initial_option": "C",
+          "interaction_start_timestamp": 1768051841445,
+          "is_correct": true,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "navigation_frequency": 0,
+          "navigation_pattern": "sequential",
+          "option_change_count": 0,
+          "option_change_history": [],
+          "question_id": "847a4595-affd-4831-9c8c-e9215f65185c",
+          "question_index": 7,
+          "question_text": "What does \"melancholy\" mean?",
+          "response_time_seconds": 7,
+          "student_answer": "C",
+          "submission_iso_timestamp": "2026-01-10T13:30:48.853Z",
+          "submission_timestamp": 1768051848853,
+          "time_spent_per_question": 7,
+          "timestamp": "2026-01-10T13:30:48.941717"
+        },
+        {
+          "facial_metrics": {
+            "attention_score": 0.7888396897099235,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.9572511911392212,
+                "emotion": "neutral",
+                "timestamp": 1768051853091
+              },
+              {
+                "confidence": 0.9895020127296448,
+                "emotion": "neutral",
+                "timestamp": 1768051853653
+              },
+              {
+                "confidence": 0.9013741612434387,
+                "emotion": "neutral",
+                "timestamp": 1768051854130
+              },
+              {
+                "confidence": 0.9716425538063049,
+                "emotion": "neutral",
+                "timestamp": 1768051855644
+              },
+              {
+                "confidence": 0.6329237222671509,
+                "emotion": "neutral",
+                "timestamp": 1768051856165
+              },
+              {
+                "confidence": 0.8887340426445007,
+                "emotion": "neutral",
+                "timestamp": 1768051856634
+              },
+              {
+                "confidence": 0.5984829664230347,
+                "emotion": "angry",
+                "timestamp": 1768051857137
+              },
+              {
+                "confidence": 0.8730756640434265,
+                "emotion": "neutral",
+                "timestamp": 1768051858137
+              },
+              {
+                "confidence": 0.753000020980835,
+                "emotion": "neutral",
+                "timestamp": 1768051858657
+              },
+              {
+                "confidence": 0.7366016507148743,
+                "emotion": "neutral",
+                "timestamp": 1768051859130
+              },
+              {
+                "confidence": 0.6976183652877808,
+                "emotion": "neutral",
+                "timestamp": 1768051859599
+              },
+              {
+                "confidence": 0.6697820425033569,
+                "emotion": "angry",
+                "timestamp": 1768051860154
+              },
+              {
+                "confidence": 0.9497067928314209,
+                "emotion": "neutral",
+                "timestamp": 1768051860619
+              },
+              {
+                "confidence": 0.7501345276832581,
+                "emotion": "neutral",
+                "timestamp": 1768051861144
+              },
+              {
+                "confidence": 0.5270580053329468,
+                "emotion": "neutral",
+                "timestamp": 1768051861654
+              },
+              {
+                "confidence": 0.8222517371177673,
+                "emotion": "neutral",
+                "timestamp": 1768051862192
+              },
+              {
+                "confidence": 0.9278817772865295,
+                "emotion": "neutral",
+                "timestamp": 1768051862643
+              },
+              {
+                "confidence": 0.5216515064239502,
+                "emotion": "neutral",
+                "timestamp": 1768051863179
+              },
+              {
+                "confidence": 0.7370758056640625,
+                "emotion": "neutral",
+                "timestamp": 1768051863717
+              },
+              {
+                "confidence": 0.7725883722305298,
+                "emotion": "neutral",
+                "timestamp": 1768051864111
+              },
+              {
+                "confidence": 0.8441333174705505,
+                "emotion": "neutral",
+                "timestamp": 1768051864671
+              },
+              {
+                "confidence": 0.8320029377937317,
+                "emotion": "neutral",
+                "timestamp": 1768051865152
+              }
+            ],
+            "face_detected_count": 22,
+            "face_lost_count": 3,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "B",
+          "hesitation_flags": {
+            "frequentSwitching": false,
+            "longHesitation": false,
+            "rapidClicking": false
+          },
+          "hints_requested": 0,
+          "hints_used_array": [],
+          "inactivity_duration_ms": 4341,
+          "initial_option": "B",
+          "interaction_start_timestamp": 1768051852866,
+          "is_correct": true,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "navigation_frequency": 0,
+          "navigation_pattern": "sequential",
+          "option_change_count": 0,
+          "option_change_history": [],
+          "question_id": "00796ae2-d3ff-44e3-933c-3fc448307b1c",
+          "question_index": 8,
+          "question_text": "What does \"persist\" mean?",
+          "response_time_seconds": 12,
+          "student_answer": "B",
+          "submission_iso_timestamp": "2026-01-10T13:31:05.323Z",
+          "submission_timestamp": 1768051865323,
+          "time_spent_per_question": 12,
+          "timestamp": "2026-01-10T13:31:05.389478"
+        },
+        {
+          "facial_metrics": {
+            "attention_score": 0.8025330752134323,
+            "camera_enabled": true,
+            "emotions_detected": [
+              {
+                "confidence": 0.8883726596832275,
+                "emotion": "neutral",
+                "timestamp": 1768051868136
+              },
+              {
+                "confidence": 0.8296830058097839,
+                "emotion": "neutral",
+                "timestamp": 1768051868611
+              },
+              {
+                "confidence": 0.8116521239280701,
+                "emotion": "angry",
+                "timestamp": 1768051869163
+              },
+              {
+                "confidence": 0.9661812782287598,
+                "emotion": "neutral",
+                "timestamp": 1768051870205
+              },
+              {
+                "confidence": 0.9593811631202698,
+                "emotion": "neutral",
+                "timestamp": 1768051870654
+              },
+              {
+                "confidence": 0.9950451850891113,
+                "emotion": "neutral",
+                "timestamp": 1768051871098
+              },
+              {
+                "confidence": 0.9172646403312683,
+                "emotion": "neutral",
+                "timestamp": 1768051871612
+              },
+              {
+                "confidence": 0.958878219127655,
+                "emotion": "angry",
+                "timestamp": 1768051872142
+              },
+              {
+                "confidence": 0.6440325975418091,
+                "emotion": "neutral",
+                "timestamp": 1768051872639
+              },
+              {
+                "confidence": 0.9927220940589905,
+                "emotion": "neutral",
+                "timestamp": 1768051873143
+              },
+              {
+                "confidence": 0.5149024128913879,
+                "emotion": "angry",
+                "timestamp": 1768051873665
+              },
+              {
+                "confidence": 0.5337488055229187,
+                "emotion": "angry",
+                "timestamp": 1768051874115
+              },
+              {
+                "confidence": 0.5765754580497742,
+                "emotion": "angry",
+                "timestamp": 1768051874720
+              },
+              {
+                "confidence": 0.496781587600708,
+                "emotion": "neutral",
+                "timestamp": 1768051875221
+              },
+              {
+                "confidence": 0.8695915341377258,
+                "emotion": "neutral",
+                "timestamp": 1768051875636
+              },
+              {
+                "confidence": 0.885716438293457,
+                "emotion": "neutral",
+                "timestamp": 1768051876188
+              }
+            ],
+            "face_detected_count": 16,
+            "face_lost_count": 1,
+            "face_presence_duration_seconds": 0
+          },
+          "final_option": "B",
+          "hesitation_flags": {
+            "frequentSwitching": false,
+            "longHesitation": false,
+            "rapidClicking": false
+          },
+          "hints_requested": 0,
+          "hints_used_array": [],
+          "inactivity_duration_ms": 1385,
+          "initial_option": "B",
+          "interaction_start_timestamp": 1768051867601,
+          "is_correct": true,
+          "knowledge_gaps": [
+            "Grammar",
+            "Vocabulary"
+          ],
+          "navigation_frequency": 0,
+          "navigation_pattern": "sequential",
+          "option_change_count": 0,
+          "option_change_history": [],
+          "question_id": "3ec20e74-2dd8-4684-a481-b73ab8d71cbf",
+          "question_index": 9,
+          "question_text": "Choose the correct pronoun: \"My friend and ____ went to the movies.\"",
+          "response_time_seconds": 9,
+          "student_answer": "B",
+          "submission_iso_timestamp": "2026-01-10T13:31:16.551Z",
+          "submission_timestamp": 1768051876551,
+          "time_spent_per_question": 9,
+          "timestamp": "2026-01-10T13:31:16.598891"
+        }
+      ],
+      "score_percentage": 70,
+      "session_end": null,
+      "session_id": "d9d5bd5c-7454-4097-b373-f0edc634fdf7",
+      "session_start": "2026-01-10T13:23:41.880967",
+      "status": "active",
+      "subject": "English",
+      "total_questions": 10
+    }
+  ],
+  "student_email": "test@example.com",
+  "student_id": "034d4056-a114-43e2-8d61-6d1bbba10291",
+  "student_name": "Yusuf Tunde",
+  "summary": {
+    "average_engagement": 0.7666342377246032,
+    "overall_score_percentage": 77.77777777777779,
+    "subjects_studied": [
+      "English"
+    ],
+    "total_correct_answers": 7,
+    "total_questions_answered": 9,
+    "total_sessions": 1
+  }
+}

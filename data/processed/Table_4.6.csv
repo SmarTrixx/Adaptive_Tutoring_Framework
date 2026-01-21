@@ -1,0 +1,4 @@
+Metric,Adaptive (Mean ± SD),Non-Adaptive (Mean ± SD)
+Average response time (seconds),23.8 ± 9.7,24.7 ± 10.2
+Option changes per response,0.73 ± 0.75,0.48 ± 0.48
+Hints used per response,0.53 ± 0.48,0.50 ± 0.53

@@ -1,0 +1,4241 @@
+{
+  "metadata": {
+    "timestamp": "2026-01-21T07:21:07.218183",
+    "num_learners_per_condition": 10,
+    "questions_per_learner": 10,
+    "conditions": [
+      "adaptive",
+      "non_adaptive"
+    ],
+    "random_seed": 42,
+    "learner_profiles": [
+      "High-Ability Stable",
+      "Average Learner",
+      "Low-Ability Struggling",
+      "Anxious Learner",
+      "Disengaging Learner"
+    ]
+  },
+  "adaptive": [
+    {
+      "learner_id": "ADAPT-001",
+      "profile": "High-Ability Stable",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-001-67218",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 6,
+      "final_accuracy": 0.6,
+      "final_engagement": 64.7,
+      "final_difficulty": 10,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.218416",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 11.71,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 95.9,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 6,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 96",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:09.313764",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 8.22,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 6,
+            "new_difficulty": 7,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:13.081561",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 12.08,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 90.77,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 91",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:16.221343",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 16.16,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 2,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 96.56,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 7,
+            "new_difficulty": 8,
+            "action_type": "increase",
+            "reason": "Performance: 75.0%, Engagement: 97",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:19.100878",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 9.12,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.8,
+            "previous_difficulty": 8,
+            "new_difficulty": 9,
+            "action_type": "increase",
+            "reason": "Performance: 80.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:23.700329",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 9.08,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 83.58,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 9,
+            "new_difficulty": 9,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 84",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:27.750972",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 14.56,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 95.42,
+            "engagement_level": "high",
+            "accuracy_recent": 0.714,
+            "previous_difficulty": 9,
+            "new_difficulty": 10,
+            "action_type": "increase",
+            "reason": "Performance: 71.4%, Engagement: 95",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:32.279528",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 16.52,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 10,
+            "new_difficulty": 10,
+            "action_type": "increase",
+            "reason": "Performance: 75.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:35.981068",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 11.72,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 83.04,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 10,
+            "new_difficulty": 10,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 83",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:39.266369",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 12.86,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 64.7,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 10,
+            "new_difficulty": 10,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 65",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-002",
+      "profile": "Average Learner",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-002-67219",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 5,
+      "final_accuracy": 0.5,
+      "final_engagement": 53.8,
+      "final_difficulty": 7,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.219379",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 24.05,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 96.8,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 6,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 97",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:09.563034",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 20.76,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 6,
+            "new_difficulty": 7,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:14.424482",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 22.78,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 90.17,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 90",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:18.712014",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 16.94,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 2,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 71.02,
+            "engagement_level": "high",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 71",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:23.348180",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 22.1,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 85.8,
+            "engagement_level": "high",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 86",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:26.946299",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 22.96,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 66.22,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 66",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:31.733039",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 20.25,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 56.77,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.429,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 42.9%, Engagement: 57",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.407131",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 27.66,
+            "student_answer": "B",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 62.45,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 62",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:36.501370",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 17.09,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 69.88,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.556,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 55.6%, Engagement: 70",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:39.920289",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 9.8,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 53.8,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 54",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-003",
+      "profile": "Low-Ability Struggling",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-003-67220",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 4,
+      "final_accuracy": 0.4,
+      "final_engagement": 21.88,
+      "final_difficulty": 3,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.220208",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 34.62,
+            "student_answer": "B",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 92.79,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 6,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 93",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:09.969627",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 27.01,
+            "student_answer": "A",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 73.67,
+            "engagement_level": "high",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 74",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:14.515714",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 32.63,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 81.52,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 82",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:18.605489",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 28.11,
+            "student_answer": "A",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 66.57,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 67",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:22.232075",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 27.97,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 48.36,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.4,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 40.0%, Engagement: 48",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.437639",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 45.01,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 59.55,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 60",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:27.695314",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 19.58,
+            "student_answer": "C",
+            "hints_used": 2,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 46.06,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.429,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 42.9%, Engagement: 46",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:32.482369",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 35.27,
+            "student_answer": "C",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 21.47,
+            "engagement_level": "low",
+            "accuracy_recent": 0.375,
+            "previous_difficulty": 6,
+            "new_difficulty": 5,
+            "action_type": "decrease",
+            "reason": "Performance: 37.5%, Engagement: 21",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:35.529396",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 33.44,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 33.15,
+            "engagement_level": "low",
+            "accuracy_recent": 0.444,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 44.4%, Engagement: 33",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:39.193203",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 49.74,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 21.88,
+            "engagement_level": "low",
+            "accuracy_recent": 0.4,
+            "previous_difficulty": 5,
+            "new_difficulty": 3,
+            "action_type": "decrease",
+            "reason": "Performance: 40.0%, Engagement: 22",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-004",
+      "profile": "Anxious Learner",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-004-67221",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 6,
+      "final_accuracy": 0.6,
+      "final_engagement": 43.07,
+      "final_difficulty": 5,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.221135",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 20.36,
+            "student_answer": "C",
+            "hints_used": 1,
+            "option_changes": 2,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 51.47,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 0.0%, Engagement: 51",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:10.221805",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 28.9,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 57.59,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 58",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:15.056958",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 19.53,
+            "student_answer": "A",
+            "hints_used": 1,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 71.58,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 72",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:17.687188",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 24.97,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 52.47,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 52",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:20.397400",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 33.25,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 60.14,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 60",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.759524",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 46.12,
+            "student_answer": "B",
+            "hints_used": 1,
+            "option_changes": 2,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 65.37,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 65",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:27.338913",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 10.67,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 46.1,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.571,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 57.1%, Engagement: 46",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:29.684938",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 2,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 24.36,
+            "engagement_level": "low",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 24",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:32.625970",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 10.72,
+            "student_answer": "B",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 33.0,
+            "engagement_level": "low",
+            "accuracy_recent": 0.556,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 55.6%, Engagement: 33",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.835891",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 22.29,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 43.07,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 43",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-005",
+      "profile": "Disengaging Learner",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-005-67223",
+      "total_questions_attempted": 6,
+      "total_questions_correct": 2,
+      "final_accuracy": 0.333,
+      "final_engagement": 3.82,
+      "final_difficulty": 4,
+      "disengaged": true,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.223746",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 24.32,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 94.06,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 6,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 94",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:11.724922",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 5.93,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 77.95,
+            "engagement_level": "high",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 78",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:15.258444",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 45.32,
+            "student_answer": "B",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 4
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 46.88,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 6,
+            "new_difficulty": 5,
+            "action_type": "decrease",
+            "reason": "Performance: 33.3%, Engagement: 47",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:17.932366",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 55.47,
+            "student_answer": "D",
+            "hints_used": 1,
+            "option_changes": 1,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 56.82,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 57",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:20.664319",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 34.12,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 48.22,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.4,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 40.0%, Engagement: 48",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:23.411914",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 61.57,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 3.82,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 5,
+            "new_difficulty": 4,
+            "action_type": "decrease",
+            "reason": "Performance: 33.3%, Engagement: 4",
+            "disengaged": true
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-006",
+      "profile": "High-Ability Stable",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-006-67224",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 5,
+      "final_accuracy": 0.5,
+      "final_engagement": 43.19,
+      "final_difficulty": 9,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.224356",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 9.58,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 94.5,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 6,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 95",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:11.479686",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 10.01,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 6,
+            "new_difficulty": 7,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:14.336870",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 11.76,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 7,
+            "new_difficulty": 8,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:17.329514",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 9.06,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 81.72,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 8,
+            "new_difficulty": 8,
+            "action_type": "maintain",
+            "reason": "Performance: 75.0%, Engagement: 82",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:21.626298",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 11.84,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 91.6,
+            "engagement_level": "high",
+            "accuracy_recent": 0.8,
+            "previous_difficulty": 8,
+            "new_difficulty": 9,
+            "action_type": "increase",
+            "reason": "Performance: 80.0%, Engagement: 92",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.445104",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 11.4,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 72.57,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 9,
+            "new_difficulty": 9,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 73",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:29.387270",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 7.74,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 63.96,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.571,
+            "previous_difficulty": 9,
+            "new_difficulty": 9,
+            "action_type": "maintain",
+            "reason": "Performance: 57.1%, Engagement: 64",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:32.524582",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 13.74,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 52.94,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 9,
+            "new_difficulty": 9,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 53",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.770301",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 14.47,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 33.54,
+            "engagement_level": "low",
+            "accuracy_recent": 0.444,
+            "previous_difficulty": 9,
+            "new_difficulty": 9,
+            "action_type": "maintain",
+            "reason": "Performance: 44.4%, Engagement: 34",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:37.368383",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 9.15,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 43.19,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 9,
+            "new_difficulty": 9,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 43",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-007",
+      "profile": "Average Learner",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-007-67225",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 8,
+      "final_accuracy": 0.8,
+      "final_engagement": 71.06,
+      "final_difficulty": 2,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.225181",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 15.36,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 40.85,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 4,
+            "action_type": "decrease",
+            "reason": "Performance: 0.0%, Engagement: 41",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:10.952571",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 23.7,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 16.63,
+            "engagement_level": "low",
+            "accuracy_recent": 0.0,
+            "previous_difficulty": 4,
+            "new_difficulty": 3,
+            "action_type": "decrease",
+            "reason": "Performance: 0.0%, Engagement: 17",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:15.270014",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 23.99,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 7.32,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 3,
+            "new_difficulty": 2,
+            "action_type": "decrease",
+            "reason": "Performance: 33.3%, Engagement: 7",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:19.212644",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 24.33,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 19.39,
+            "engagement_level": "low",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 2,
+            "new_difficulty": 2,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 19",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:22.519105",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 18.68,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 27.62,
+            "engagement_level": "low",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 2,
+            "new_difficulty": 2,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 28",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:25.255591",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 20.55,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 35.98,
+            "engagement_level": "low",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 2,
+            "new_difficulty": 2,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 36",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:28.738511",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 17.37,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 46.15,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.714,
+            "previous_difficulty": 2,
+            "new_difficulty": 2,
+            "action_type": "maintain",
+            "reason": "Performance: 71.4%, Engagement: 46",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:31.311680",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 14.15,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 55.63,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 2,
+            "new_difficulty": 2,
+            "action_type": "maintain",
+            "reason": "Performance: 75.0%, Engagement: 56",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:33.363410",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 18.6,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 64.15,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.778,
+            "previous_difficulty": 2,
+            "new_difficulty": 2,
+            "action_type": "maintain",
+            "reason": "Performance: 77.8%, Engagement: 64",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:36.724646",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 18.49,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 71.06,
+            "engagement_level": "high",
+            "accuracy_recent": 0.8,
+            "previous_difficulty": 2,
+            "new_difficulty": 2,
+            "action_type": "maintain",
+            "reason": "Performance: 80.0%, Engagement: 71",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-008",
+      "profile": "Low-Ability Struggling",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-008-67226",
+      "total_questions_attempted": 6,
+      "total_questions_correct": 2,
+      "final_accuracy": 0.333,
+      "final_engagement": 0,
+      "final_difficulty": 1,
+      "disengaged": true,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.226201",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 26.23,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 49.85,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 4,
+            "action_type": "decrease",
+            "reason": "Performance: 0.0%, Engagement: 50",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:09.268646",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 22.18,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 19.19,
+            "engagement_level": "low",
+            "accuracy_recent": 0.0,
+            "previous_difficulty": 4,
+            "new_difficulty": 3,
+            "action_type": "decrease",
+            "reason": "Performance: 0.0%, Engagement: 19",
+            "disengaged": true
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:13.527023",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 29.0,
+            "student_answer": "A",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 17.41,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 3,
+            "new_difficulty": 2,
+            "action_type": "decrease",
+            "reason": "Performance: 33.3%, Engagement: 17",
+            "disengaged": true
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:16.729145",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 43.91,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 32.35,
+            "engagement_level": "low",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 2,
+            "new_difficulty": 2,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 32",
+            "disengaged": true
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:19.084500",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 28.99,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 20.69,
+            "engagement_level": "low",
+            "accuracy_recent": 0.4,
+            "previous_difficulty": 2,
+            "new_difficulty": 1,
+            "action_type": "decrease",
+            "reason": "Performance: 40.0%, Engagement: 21",
+            "disengaged": true
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:22.947582",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 38.19,
+            "student_answer": "B",
+            "hints_used": 1,
+            "option_changes": 1,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 0,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 1,
+            "new_difficulty": 1,
+            "action_type": "decrease",
+            "reason": "Performance: 33.3%, Engagement: 0",
+            "disengaged": true
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-009",
+      "profile": "Anxious Learner",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-009-67226",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 6,
+      "final_accuracy": 0.6,
+      "final_engagement": 53.94,
+      "final_difficulty": 8,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.226779",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 28.81,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 90.71,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 6,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 91",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:09.927050",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 3.98,
+            "student_answer": "B",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 69.94,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 70",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:14.652284",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 24.14,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 81.83,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 82",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:18.751485",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 15.87,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 92.86,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 6,
+            "new_difficulty": 7,
+            "action_type": "increase",
+            "reason": "Performance: 75.0%, Engagement: 93",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:20.829080",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 24.37,
+            "student_answer": "B",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 79.22,
+            "engagement_level": "high",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 79",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.783608",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 12.61,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 88.92,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 7,
+            "new_difficulty": 7,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 89",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:28.008652",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 19.56,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 2,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 94.8,
+            "engagement_level": "high",
+            "accuracy_recent": 0.714,
+            "previous_difficulty": 7,
+            "new_difficulty": 8,
+            "action_type": "increase",
+            "reason": "Performance: 71.4%, Engagement: 95",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:30.765849",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 8.03,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 76.15,
+            "engagement_level": "high",
+            "accuracy_recent": 0.625,
+            "previous_difficulty": 8,
+            "new_difficulty": 8,
+            "action_type": "maintain",
+            "reason": "Performance: 62.5%, Engagement: 76",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.321167",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 11.88,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 2,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 56.69,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.556,
+            "previous_difficulty": 8,
+            "new_difficulty": 8,
+            "action_type": "maintain",
+            "reason": "Performance: 55.6%, Engagement: 57",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:39.240607",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 16.34,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 53.94,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 8,
+            "new_difficulty": 8,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 54",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "ADAPT-010",
+      "profile": "Disengaging Learner",
+      "condition": "adaptive",
+      "session_id": "sess-ADAPT-010-67227",
+      "total_questions_attempted": 6,
+      "total_questions_correct": 2,
+      "final_accuracy": 0.333,
+      "final_engagement": 12.38,
+      "final_difficulty": 5,
+      "disengaged": true,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.227655",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 62.51,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 3,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 82.44,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 6,
+            "action_type": "increase",
+            "reason": "Performance: 100.0%, Engagement: 82",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:10.881450",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 43.72,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 4
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 65.17,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 65",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:15.444687",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 20.87,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 3,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 73.62,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 74",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:19.100439",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 22.78,
+            "student_answer": "B",
+            "hints_used": 2,
+            "option_changes": 3,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 55.34,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 55",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:22.332764",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 27.95,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 45.83,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.4,
+            "previous_difficulty": 6,
+            "new_difficulty": 6,
+            "action_type": "maintain",
+            "reason": "Performance: 40.0%, Engagement: 46",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:27.228825",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 27.97,
+            "student_answer": "D",
+            "hints_used": 1,
+            "option_changes": 2,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 12.38,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 6,
+            "new_difficulty": 5,
+            "action_type": "decrease",
+            "reason": "Performance: 33.3%, Engagement: 12",
+            "disengaged": true
+          }
+        }
+      ]
+    }
+  ],
+  "non_adaptive": [
+    {
+      "learner_id": "NONADAPT-001",
+      "profile": "High-Ability Stable",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-001-67228",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 9,
+      "final_accuracy": 0.9,
+      "final_engagement": 100,
+      "final_difficulty": 5,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.228219",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 15.11,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 99.54,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:11.108617",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 12.86,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:15.348916",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 11.17,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:17.517274",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 7.94,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:19.754179",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 13.91,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.450905",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 12.37,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:27.723832",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 12.0,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:30.609524",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 14.6,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.845040",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 14.15,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 93.87,
+            "engagement_level": "high",
+            "accuracy_recent": 0.889,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 88.9%, Engagement: 94",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:39.007825",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 13.27,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.9,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 90.0%, Engagement: 100",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-002",
+      "profile": "Average Learner",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-002-67229",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 6,
+      "final_accuracy": 0.6,
+      "final_engagement": 28.4,
+      "final_difficulty": 5,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.229079",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 18.25,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 45.63,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 0.0%, Engagement: 46",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:11.969540",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 28.37,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 12.98,
+            "engagement_level": "low",
+            "accuracy_recent": 0.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 0.0%, Engagement: 13",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:15.374534",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 27.46,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 3.88,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 33.3%, Engagement: 4",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:18.558258",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 25.81,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 17.11,
+            "engagement_level": "low",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 17",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:23.379134",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 22.84,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 28.46,
+            "engagement_level": "low",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 28",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:26.771937",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 18.2,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 34.62,
+            "engagement_level": "low",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 35",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:29.476337",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 15.18,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 48.48,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.714,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 71.4%, Engagement: 48",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:33.441103",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 18.34,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 35.15,
+            "engagement_level": "low",
+            "accuracy_recent": 0.625,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 62.5%, Engagement: 35",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:38.292769",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 21.41,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 15.54,
+            "engagement_level": "low",
+            "accuracy_recent": 0.556,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 55.6%, Engagement: 16",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:43.139801",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 23.91,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 28.4,
+            "engagement_level": "low",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 28",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-003",
+      "profile": "Low-Ability Struggling",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-003-67229",
+      "total_questions_attempted": 9,
+      "total_questions_correct": 3,
+      "final_accuracy": 0.333,
+      "final_engagement": 0,
+      "final_difficulty": 5,
+      "disengaged": true,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.229735",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 35.25,
+            "student_answer": "B",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 97.89,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 98",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:11.017680",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 22.62,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 81.95,
+            "engagement_level": "high",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 82",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:13.095020",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 42.07,
+            "student_answer": "A",
+            "hints_used": 1,
+            "option_changes": 1,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 91.72,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 92",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:17.429071",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 18.24,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 76.0,
+            "engagement_level": "high",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 76",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:19.522523",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 43.51,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 81.65,
+            "engagement_level": "high",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 82",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:22.347571",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 29.46,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 67.59,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 68",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:25.638169",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 29.05,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 54.62,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.429,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 42.9%, Engagement: 55",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:30.120427",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 21.65,
+            "student_answer": "D",
+            "hints_used": 1,
+            "option_changes": 2,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 30.81,
+            "engagement_level": "low",
+            "accuracy_recent": 0.375,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 37.5%, Engagement: 31",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.615743",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 31.0,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 0,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 33.3%, Engagement: 0",
+            "disengaged": true
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-004",
+      "profile": "Anxious Learner",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-004-67230",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 7,
+      "final_accuracy": 0.7,
+      "final_engagement": 94.97,
+      "final_difficulty": 5,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.230368",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 14.03,
+            "student_answer": "C",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 93.52,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 94",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:10.964124",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 26.07,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:15.887764",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 6.37,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:18.707575",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 24.11,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 90.9,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 75.0%, Engagement: 91",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:22.299023",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 25.88,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 2,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.8,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 80.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.765763",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 22.11,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 2,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.833,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 83.3%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:27.098432",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 25.41,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 91.91,
+            "engagement_level": "high",
+            "accuracy_recent": 0.714,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 71.4%, Engagement: 92",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:30.002690",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 23.57,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 75.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.502753",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 24.66,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 81.65,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 82",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:38.230030",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 5.1,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 94.97,
+            "engagement_level": "high",
+            "accuracy_recent": 0.7,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 70.0%, Engagement: 95",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-005",
+      "profile": "Disengaging Learner",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-005-67231",
+      "total_questions_attempted": 6,
+      "total_questions_correct": 1,
+      "final_accuracy": 0.167,
+      "final_engagement": 0,
+      "final_difficulty": 5,
+      "disengaged": true,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.231039",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 67.13,
+            "student_answer": "C",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 4
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 87.46,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 87",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:09.895755",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 36.09,
+            "student_answer": "B",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 76.62,
+            "engagement_level": "high",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 77",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:12.335088",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 65.43,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 4
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 34.57,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 33.3%, Engagement: 35",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:16.614719",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 2.67,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 1.29,
+            "engagement_level": "low",
+            "accuracy_recent": 0.25,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 25.0%, Engagement: 1",
+            "disengaged": true
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:20.021482",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 19.13,
+            "student_answer": "A",
+            "hints_used": 2,
+            "option_changes": 1,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 0,
+            "engagement_level": "low",
+            "accuracy_recent": 0.2,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 20.0%, Engagement: 0",
+            "disengaged": true
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.516572",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 61.56,
+            "student_answer": "A",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 0,
+            "engagement_level": "low",
+            "accuracy_recent": 0.167,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 16.7%, Engagement: 0",
+            "disengaged": true
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-006",
+      "profile": "High-Ability Stable",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-006-67231",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 9,
+      "final_accuracy": 0.9,
+      "final_engagement": 100,
+      "final_difficulty": 5,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.231568",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 9.6,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 98.11,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 98",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:11.743700",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 12.83,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:16.497510",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 12.9,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:18.781028",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 11.29,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:21.711723",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 10.71,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.697153",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 14.16,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:27.623751",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 13.65,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:32.157036",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 14.76,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.699574",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 10.06,
+            "student_answer": "B",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 90.36,
+            "engagement_level": "high",
+            "accuracy_recent": 0.889,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 88.9%, Engagement: 90",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:38.531360",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 12.05,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.9,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 90.0%, Engagement: 100",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-007",
+      "profile": "Average Learner",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-007-67232",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 9,
+      "final_accuracy": 0.9,
+      "final_engagement": 100,
+      "final_difficulty": 5,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.232373",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 9.43,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 98.17,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 98",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:11.636151",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 22.45,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:15.925501",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 25.81,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:20.579390",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 24.69,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:25.096919",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 21.75,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:28.504249",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 11.86,
+            "student_answer": "C",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:31.219568",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 22.65,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.944710",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 19.19,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:38.522888",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 26.86,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 90.23,
+            "engagement_level": "high",
+            "accuracy_recent": 0.889,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 88.9%, Engagement: 90",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:41.283839",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 28.77,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.9,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 90.0%, Engagement: 100",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-008",
+      "profile": "Low-Ability Struggling",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-008-67233",
+      "total_questions_attempted": 6,
+      "total_questions_correct": 2,
+      "final_accuracy": 0.333,
+      "final_engagement": 0,
+      "final_difficulty": 5,
+      "disengaged": true,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.233233",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 15.08,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 44.42,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 0.0%, Engagement: 44",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:11.667726",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 40.77,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 1,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 54.57,
+            "engagement_level": "medium",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 55",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:16.635094",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 23.42,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 2,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 21.18,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 33.3%, Engagement: 21",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:19.630868",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 33.44,
+            "student_answer": "D",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 0,
+            "engagement_level": "low",
+            "accuracy_recent": 0.25,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 25.0%, Engagement: 0",
+            "disengaged": true
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:22.732909",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 42.1,
+            "student_answer": "C",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 8.21,
+            "engagement_level": "low",
+            "accuracy_recent": 0.4,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 40.0%, Engagement: 8",
+            "disengaged": true
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.973116",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 24.37,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 0,
+            "engagement_level": "low",
+            "accuracy_recent": 0.333,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 33.3%, Engagement: 0",
+            "disengaged": true
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-009",
+      "profile": "Anxious Learner",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-009-67233",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 7,
+      "final_accuracy": 0.7,
+      "final_engagement": 75.63,
+      "final_difficulty": 5,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.233929",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 24.84,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 99.53,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:09.662267",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 5.68,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:14.508738",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 32.43,
+            "student_answer": "C",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 2
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 89.0,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 89",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:16.849084",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 20.73,
+            "student_answer": "C",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 75.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:21.844971",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 14.01,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.8,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 80.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:26.747655",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 39.75,
+            "student_answer": "B",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 82.48,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 82",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:30.273922",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 6.78,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 95.51,
+            "engagement_level": "high",
+            "accuracy_recent": 0.714,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 71.4%, Engagement: 96",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:33.928863",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 18.11,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 0
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 75.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:36.879946",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 18.7,
+            "student_answer": "B",
+            "hints_used": 0,
+            "option_changes": 3,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.778,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 77.8%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:39.267045",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 2,
+            "student_answer": "C",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 1
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 75.63,
+            "engagement_level": "high",
+            "accuracy_recent": 0.7,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 70.0%, Engagement: 76",
+            "disengaged": false
+          }
+        }
+      ]
+    },
+    {
+      "learner_id": "NONADAPT-010",
+      "profile": "Disengaging Learner",
+      "condition": "non-adaptive",
+      "session_id": "sess-NONADAPT-010-67234",
+      "total_questions_attempted": 10,
+      "total_questions_correct": 6,
+      "final_accuracy": 0.6,
+      "final_engagement": 71.49,
+      "final_difficulty": 5,
+      "disengaged": false,
+      "interactions": [
+        {
+          "timestamp": "2026-01-21T07:21:07.234936",
+          "question_number": 1,
+          "request": {
+            "response_time_seconds": 56.16,
+            "student_answer": "A",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 95.03,
+            "engagement_level": "high",
+            "accuracy_recent": 1.0,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 100.0%, Engagement: 95",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:09.740844",
+          "question_number": 2,
+          "request": {
+            "response_time_seconds": 43.1,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 86.05,
+            "engagement_level": "high",
+            "accuracy_recent": 0.5,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 50.0%, Engagement: 86",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:14.586485",
+          "question_number": 3,
+          "request": {
+            "response_time_seconds": 18.86,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 96.03,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 96",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:18.467977",
+          "question_number": 4,
+          "request": {
+            "response_time_seconds": 25.73,
+            "student_answer": "A",
+            "hints_used": 0,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.75,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 75.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:21.714842",
+          "question_number": 5,
+          "request": {
+            "response_time_seconds": 40.58,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 100,
+            "engagement_level": "high",
+            "accuracy_recent": 0.8,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 80.0%, Engagement: 100",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:24.826463",
+          "question_number": 6,
+          "request": {
+            "response_time_seconds": 22.82,
+            "student_answer": "D",
+            "hints_used": 1,
+            "option_changes": 1,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 89.02,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 89",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:29.422386",
+          "question_number": 7,
+          "request": {
+            "response_time_seconds": 49.3,
+            "student_answer": "D",
+            "hints_used": 2,
+            "option_changes": 1,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 70.47,
+            "engagement_level": "high",
+            "accuracy_recent": 0.571,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 57.1%, Engagement: 70",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:32.914497",
+          "question_number": 8,
+          "request": {
+            "response_time_seconds": 47.66,
+            "student_answer": "D",
+            "hints_used": 1,
+            "option_changes": 3,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 78.33,
+            "engagement_level": "high",
+            "accuracy_recent": 0.625,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 62.5%, Engagement: 78",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:34.939029",
+          "question_number": 9,
+          "request": {
+            "response_time_seconds": 54.85,
+            "student_answer": "A",
+            "hints_used": 2,
+            "option_changes": 2,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": true,
+            "engagement_score": 89.03,
+            "engagement_level": "high",
+            "accuracy_recent": 0.667,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 66.7%, Engagement: 89",
+            "disengaged": false
+          }
+        },
+        {
+          "timestamp": "2026-01-21T07:21:37.522995",
+          "question_number": 10,
+          "request": {
+            "response_time_seconds": 29.46,
+            "student_answer": "C",
+            "hints_used": 1,
+            "option_changes": 0,
+            "pauses_during_response": 3
+          },
+          "response": {
+            "is_correct": false,
+            "engagement_score": 71.49,
+            "engagement_level": "high",
+            "accuracy_recent": 0.6,
+            "previous_difficulty": 5,
+            "new_difficulty": 5,
+            "action_type": "maintain",
+            "reason": "Performance: 60.0%, Engagement: 71",
+            "disengaged": false
+          }
+        }
+      ]
+    }
+  ]
+}
